@@ -1,0 +1,6 @@
+{
+  "name": "Velloxis SaaS",
+  "description": "Plataforma SaaS de Onboarding de Clientes, Trava de Escopo (Scope Lockdown) e Proteção Jurídica com Trilha de Auditoria SHA-256 e Device Locking.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

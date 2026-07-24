@@ -1,0 +1,89 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", "SF Mono", monospace;
+
+  --color-brand-indigo: #3525cd;
+  --color-brand-ultramarine: #4f46e5;
+  --color-dark-obsidian: #080c14;
+  --color-dark-slate: #0f172a;
+  --color-dark-border: #131126;
+  --color-emerald-accent: #10b981;
+  --color-amber-accent: #f59e0b;
+}
+
+@layer utilities {
+  .badge-pill {
+    @apply inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-[10px] font-mono font-semibold uppercase tracking-widest border transition-all duration-200;
+  }
+  
+  .glass-card {
+    @apply bg-white/90 dark:bg-[#0f172a]/90 backdrop-blur-md border border-[#c7c4d8]/35 dark:border-[#131126] shadow-sm hover:shadow-md transition-all duration-300;
+  }
+
+  .glow-indigo {
+    box-shadow: 0 0 30px -4px rgba(53, 37, 205, 0.4);
+  }
+
+  .glow-emerald {
+    box-shadow: 0 0 25px -3px rgba(16, 185, 129, 0.35);
+  }
+
+  .glow-amber {
+    box-shadow: 0 0 25px -3px rgba(245, 158, 11, 0.35);
+  }
+
+  /* High impact CTA magnet styling */
+  .cta-primary-btn {
+    @apply relative overflow-hidden inline-flex items-center justify-center gap-3 font-extrabold text-white rounded-2xl bg-gradient-to-r from-[#3525cd] via-[#4f46e5] to-[#3525cd] bg-[length:200%_auto] hover:bg-[position:right_center] transition-all duration-300 shadow-xl shadow-[#3525cd]/35 hover:shadow-2xl hover:shadow-[#4f46e5]/50 hover:scale-[1.03] active:scale-[0.98] ring-2 ring-[#4f46e5]/40 hover:ring-[#10b981]/60 transform-gpu cursor-pointer;
+  }
+
+  /* Shimmer effect for CTAs */
+  .cta-shimmer::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+      60deg,
+      transparent 30%,
+      rgba(255, 255, 255, 0.25) 50%,
+      transparent 70%
+    );
+    transform: rotate(30deg);
+    animation: ctaShimmer 4s infinite linear;
+    pointer-events: none;
+  }
+}
+
+@keyframes ctaShimmer {
+  0% {
+    transform: translateX(-100%) rotate(30deg);
+  }
+  20%, 100% {
+    transform: translateX(100%) rotate(30deg);
+  }
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(53, 37, 205, 0.3);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(53, 37, 205, 0.6);
+}
+
