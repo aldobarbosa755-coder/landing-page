@@ -52,7 +52,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenChangelog, onOpenLegal }) 
               <li><a href="#features" className="hover:text-white transition-colors">FormSteps Onboarding</a></li>
               <li><a href="#features" className="hover:text-white transition-colors">Client Tracking & Scope Lock</a></li>
               <li><a href="#features" className="hover:text-white transition-colors">SHA-256 Audit Trail</a></li>
-              <li><a href="/pricing" onClick={(e) => { e.preventDefault(); if (onOpenLegal) onOpenLegal('all'); else window.history.pushState({}, '', '/pricing'); }} className="hover:text-white transition-colors">Plans & Licenses</a></li>
+              <li><a href="#pricing" className="hover:text-white transition-colors">Plans & Licenses</a></li>
             </ul>
           </div>
 
@@ -64,7 +64,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenChangelog, onOpenLegal }) 
               <li><a href="#testimonials" className="hover:text-white transition-colors">Software & UX Agencies</a></li>
               <li><a href="#testimonials" className="hover:text-white transition-colors">Design & Branding Studios</a></li>
               <li><a href="#testimonials" className="hover:text-white transition-colors">Technology Consultants</a></li>
-              <li><a href="/pricing" onClick={(e) => { e.preventDefault(); window.history.pushState({}, '', '/pricing'); window.dispatchEvent(new PopStateEvent('popstate')); }} className="hover:text-white transition-colors">Enterprise Software Scale</a></li>
+              <li><a href="#pricing" className="hover:text-white transition-colors">Enterprise Software Scale</a></li>
             </ul>
           </div>
 
@@ -74,52 +74,40 @@ export const Footer: React.FC<FooterProps> = ({ onOpenChangelog, onOpenLegal }) 
             <ul className="space-y-2">
               <li><a href="#faq" className="hover:text-white transition-colors">Help Center & FAQ</a></li>
               <li>
-                <a
-                  href="/terms"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    if (onOpenLegal) onOpenLegal('terms');
-                  }}
-                  className="hover:text-white transition-colors text-left block"
+                <button
+                  type="button"
+                  onClick={() => onOpenLegal?.('terms')}
+                  className="hover:text-white transition-colors text-left cursor-pointer"
                 >
                   Terms of Service
-                </a>
+                </button>
               </li>
               <li>
-                <a
-                  href="/privacy"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    if (onOpenLegal) onOpenLegal('privacy');
-                  }}
-                  className="hover:text-white transition-colors text-left block"
+                <button
+                  type="button"
+                  onClick={() => onOpenLegal?.('privacy')}
+                  className="hover:text-white transition-colors text-left cursor-pointer"
                 >
                   Privacy Policy
-                </a>
+                </button>
               </li>
               <li>
-                <a
-                  href="/refunds"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    if (onOpenLegal) onOpenLegal('refund');
-                  }}
-                  className="hover:text-white transition-colors text-left block"
+                <button
+                  type="button"
+                  onClick={() => onOpenLegal?.('refund')}
+                  className="hover:text-white transition-colors text-left cursor-pointer"
                 >
                   Refund Policy
-                </a>
+                </button>
               </li>
               <li>
-                <a
-                  href="/terms"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    if (onOpenLegal) onOpenLegal('all');
-                  }}
-                  className="hover:text-white transition-colors text-left block"
+                <button
+                  type="button"
+                  onClick={() => onOpenLegal?.('all')}
+                  className="hover:text-white transition-colors text-left cursor-pointer"
                 >
                   SHA-256 Cryptographic Verification
-                </a>
+                </button>
               </li>
             </ul>
           </div>

@@ -15,8 +15,10 @@ import { FloatingBar } from './components/FloatingBar';
 import { Footer } from './components/Footer';
 import { ChangelogDrawer } from './components/ChangelogDrawer';
 import { PricingPage } from './components/PricingPage';
+import { TermsPage } from './components/TermsPage';
+import { PrivacyPage } from './components/PrivacyPage';
+import { RefundsPage } from './components/RefundsPage';
 import { LegalModal } from './components/LegalModal';
-import { PolicyPage } from './components/PolicyPage';
 
 export default function App() {
   const [isTrialModalOpen, setIsTrialModalOpen] = useState(false);
@@ -33,14 +35,15 @@ export default function App() {
   };
 
   const handleOpenLegal = (tab: 'all' | 'privacy' | 'terms' | 'refund' = 'all') => {
-    if (tab === 'privacy') {
-      navigateTo('/privacy');
-    } else if (tab === 'terms') {
+    if (tab === 'terms') {
       navigateTo('/terms');
+    } else if (tab === 'privacy') {
+      navigateTo('/privacy');
     } else if (tab === 'refund') {
       navigateTo('/refunds');
     } else {
-      navigateTo('/terms');
+      setLegalTab(tab);
+      setIsLegalModalOpen(true);
     }
   };
 
@@ -60,45 +63,43 @@ export default function App() {
     setIsTrialModalOpen(false);
   };
 
-  const normalizedPath = currentPath.toLowerCase().replace(/\/$/, '');
+  const cleanPath = currentPath.replace(/\/$/, '');
 
-  if (normalizedPath === '/pricing') {
+  if (cleanPath === '/pricing') {
     return (
       <PricingPage
         onNavigateHome={() => navigateTo('/')}
+        onNavigate={navigateTo}
         onOpenChangelog={() => setIsChangelogOpen(true)}
       />
     );
   }
 
-  if (normalizedPath === '/terms' || normalizedPath === '/terms-of-service') {
+  if (cleanPath === '/terms') {
     return (
-      <PolicyPage
-        type="terms"
-        onNavigateHome={() => navigateTo('/')}
-        onNavigateTo={navigateTo}
+      <TermsPage
+        onNavigate={navigateTo}
+        onOpenTrial={() => handleOpenTrial('pro')}
         onOpenChangelog={() => setIsChangelogOpen(true)}
       />
     );
   }
 
-  if (normalizedPath === '/privacy' || normalizedPath === '/privacy-policy') {
+  if (cleanPath === '/privacy') {
     return (
-      <PolicyPage
-        type="privacy"
-        onNavigateHome={() => navigateTo('/')}
-        onNavigateTo={navigateTo}
+      <PrivacyPage
+        onNavigate={navigateTo}
+        onOpenTrial={() => handleOpenTrial('pro')}
         onOpenChangelog={() => setIsChangelogOpen(true)}
       />
     );
   }
 
-  if (normalizedPath === '/refunds' || normalizedPath === '/refund' || normalizedPath === '/refund-policy') {
+  if (cleanPath === '/refunds' || cleanPath === '/refund') {
     return (
-      <PolicyPage
-        type="refund"
-        onNavigateHome={() => navigateTo('/')}
-        onNavigateTo={navigateTo}
+      <RefundsPage
+        onNavigate={navigateTo}
+        onOpenTrial={() => handleOpenTrial('pro')}
         onOpenChangelog={() => setIsChangelogOpen(true)}
       />
     );
@@ -107,7 +108,7 @@ export default function App() {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-indigo-500 selection:text-white antialiased">
       {/* Navigation Header */}
-      <Header onOpenTrial={handleOpenTrial} />
+      <Header onOpenTrial={handleOpenTrial} onNavigate={navigateTo} />
 
       {/* Main Content */}
       <main>

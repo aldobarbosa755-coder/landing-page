@@ -7,18 +7,26 @@ import { Check, ShieldCheck, ArrowRight, Lock, HelpCircle, FileText, CreditCard,
 
 interface PricingPageProps {
   onNavigateHome: () => void;
+  onNavigate?: (path: string) => void;
   onOpenChangelog?: () => void;
 }
 
-export const PricingPage: React.FC<PricingPageProps> = ({ onNavigateHome, onOpenChangelog }) => {
+export const PricingPage: React.FC<PricingPageProps> = ({ onNavigateHome, onNavigate, onOpenChangelog }) => {
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'annual'>('monthly');
   const [openFaqId, setOpenFaqId] = useState<string | null>('faq-1');
   const [isLegalModalOpen, setIsLegalModalOpen] = useState(false);
   const [legalTab, setLegalTab] = useState<'all' | 'privacy' | 'terms' | 'refund'>('all');
 
   const openLegal = (tab: 'all' | 'privacy' | 'terms' | 'refund') => {
-    setLegalTab(tab);
-    setIsLegalModalOpen(true);
+    if (onNavigate) {
+      if (tab === 'terms') onNavigate('/terms');
+      else if (tab === 'privacy') onNavigate('/privacy');
+      else if (tab === 'refund') onNavigate('/refunds');
+      else onNavigate('/terms');
+    } else {
+      setLegalTab(tab);
+      setIsLegalModalOpen(true);
+    }
   };
 
   const handleSubscribe = () => {
@@ -28,7 +36,7 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onNavigateHome, onOpen
   return (
     <div className="min-h-screen dark:bg-[#080c14] bg-[#f7f8fc] text-slate-100 font-sans selection:bg-[#3525cd] selection:text-white antialiased">
       {/* Header */}
-      <Header onOpenTrial={handleSubscribe} />
+      <Header onOpenTrial={handleSubscribe} onNavigate={onNavigate || onNavigateHome} />
 
       <main className="pt-28 pb-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
@@ -59,6 +67,34 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onNavigateHome, onOpen
             <p className="text-base sm:text-lg dark:text-slate-300 text-slate-700 leading-relaxed">
               No hidden fees, no per-client penalties. Start free and scale your scope protection as your project volume grows.
             </p>
+
+            {/* Quick Legal Switcher Tabs */}
+            <div className="pt-2 flex items-center justify-center gap-2 overflow-x-auto pb-2 font-mono text-xs">
+              <button
+                onClick={() => onNavigate ? onNavigate('/terms') : openLegal('terms')}
+                className="px-4 py-2 rounded-xl dark:bg-[#0f172a] bg-slate-200 dark:text-slate-300 text-slate-700 hover:text-white dark:border-[#1e293b] border-slate-300 font-bold shrink-0 cursor-pointer transition-colors"
+              >
+                1. Terms of Service
+              </button>
+              <button
+                onClick={() => onNavigate ? onNavigate('/privacy') : openLegal('privacy')}
+                className="px-4 py-2 rounded-xl dark:bg-[#0f172a] bg-slate-200 dark:text-slate-300 text-slate-700 hover:text-white dark:border-[#1e293b] border-slate-300 font-bold shrink-0 cursor-pointer transition-colors"
+              >
+                2. Privacy Policy
+              </button>
+              <button
+                onClick={() => onNavigate ? onNavigate('/refunds') : openLegal('refund')}
+                className="px-4 py-2 rounded-xl dark:bg-[#0f172a] bg-slate-200 dark:text-slate-300 text-slate-700 hover:text-white dark:border-[#1e293b] border-slate-300 font-bold shrink-0 cursor-pointer transition-colors"
+              >
+                3. Refund Policy
+              </button>
+              <button
+                onClick={() => onNavigate ? onNavigate('/pricing') : undefined}
+                className="px-4 py-2 rounded-xl bg-[#3525cd] text-white font-bold shadow-lg shadow-[#3525cd]/30 shrink-0 cursor-pointer"
+              >
+                Plans & Pricing
+              </button>
+            </div>
 
             {/* Monthly / Annual Billing Switcher */}
             <div className="pt-4 flex items-center justify-center gap-4">

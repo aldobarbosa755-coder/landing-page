@@ -4,9 +4,10 @@ import { VelloxisLogo } from './VelloxisLogo';
 
 interface HeaderProps {
   onOpenTrial: (plan?: string) => void;
+  onNavigate?: (path: string) => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ onOpenTrial }) => {
+export const Header: React.FC<HeaderProps> = ({ onOpenTrial, onNavigate }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isDark, setIsDark] = useState(true);
@@ -41,6 +42,30 @@ export const Header: React.FC<HeaderProps> = ({ onOpenTrial }) => {
     { name: 'FAQ', href: '#faq' },
   ];
 
+  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (href.startsWith('/')) {
+      e.preventDefault();
+      if (onNavigate) {
+        onNavigate(href);
+      } else {
+        window.history.pushState({}, '', href);
+        window.dispatchEvent(new Event('popstate'));
+      }
+      setMobileMenuOpen(false);
+    } else if (href.startsWith('#')) {
+      if (window.location.pathname !== '/') {
+        e.preventDefault();
+        if (onNavigate) {
+          onNavigate('/' + href);
+        } else {
+          window.history.pushState({}, '', '/' + href);
+          window.dispatchEvent(new Event('popstate'));
+        }
+        setMobileMenuOpen(false);
+      }
+    }
+  };
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -53,7 +78,11 @@ export const Header: React.FC<HeaderProps> = ({ onOpenTrial }) => {
         <div className="flex items-center justify-between">
           
           {/* Logo */}
-          <a href="/" className="flex items-center group shrink-0">
+          <a
+            href="/"
+            onClick={(e) => handleLinkClick(e, '/')}
+            className="flex items-center group shrink-0"
+          >
             <VelloxisLogo size={36} />
           </a>
 
@@ -63,6 +92,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenTrial }) => {
               <a
                 key={link.name}
                 href={link.href}
+                onClick={(e) => handleLinkClick(e, link.href)}
                 className="text-xs lg:text-sm font-bold whitespace-nowrap dark:text-slate-300 text-slate-700 hover:text-[#4f46e5] dark:hover:text-white px-3 lg:px-4 py-1.5 rounded-full hover:bg-[#3525cd]/15 transition-all duration-200"
               >
                 {link.name}
@@ -125,7 +155,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenTrial }) => {
               <a
                 key={link.name}
                 href={link.href}
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={(e) => handleLinkClick(e, link.href)}
                 className="text-sm font-semibold dark:text-slate-200 text-slate-800 hover:text-[#4f46e5] px-3 py-2.5 rounded-xl hover:bg-[#3525cd]/10 transition-colors"
               >
                 {link.name}
