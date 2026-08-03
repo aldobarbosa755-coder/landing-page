@@ -65,113 +65,119 @@ export default function App() {
 
   const cleanPath = currentPath.replace(/\/$/, '');
 
-  if (cleanPath === '/pricing') {
+  const renderCurrentView = () => {
+    if (cleanPath === '/pricing') {
+      return (
+        <PricingPage
+          onNavigateHome={() => navigateTo('/')}
+          onNavigate={navigateTo}
+          onOpenChangelog={() => setIsChangelogOpen(true)}
+        />
+      );
+    }
+
+    if (cleanPath === '/terms') {
+      return (
+        <TermsPage
+          onNavigate={navigateTo}
+          onOpenTrial={() => handleOpenTrial('pro')}
+          onOpenChangelog={() => setIsChangelogOpen(true)}
+        />
+      );
+    }
+
+    if (cleanPath === '/privacy') {
+      return (
+        <PrivacyPage
+          onNavigate={navigateTo}
+          onOpenTrial={() => handleOpenTrial('pro')}
+          onOpenChangelog={() => setIsChangelogOpen(true)}
+        />
+      );
+    }
+
+    if (cleanPath === '/refunds' || cleanPath === '/refund') {
+      return (
+        <RefundsPage
+          onNavigate={navigateTo}
+          onOpenTrial={() => handleOpenTrial('pro')}
+          onOpenChangelog={() => setIsChangelogOpen(true)}
+        />
+      );
+    }
+
     return (
-      <PricingPage
-        onNavigateHome={() => navigateTo('/')}
-        onNavigate={navigateTo}
-        onOpenChangelog={() => setIsChangelogOpen(true)}
-      />
-    );
-  }
+      <div className="min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-indigo-500 selection:text-white antialiased">
+        {/* Navigation Header */}
+        <Header onOpenTrial={handleOpenTrial} onNavigate={navigateTo} />
 
-  if (cleanPath === '/terms') {
-    return (
-      <TermsPage
-        onNavigate={navigateTo}
-        onOpenTrial={() => handleOpenTrial('pro')}
-        onOpenChangelog={() => setIsChangelogOpen(true)}
-      />
-    );
-  }
+        {/* Main Content */}
+        <main>
+          {/* Conversion Hero */}
+          <Hero
+            onOpenTrial={handleOpenTrial}
+            onOpenVideoModal={() => {
+              const testimonialsEl = document.getElementById('testimonials');
+              testimonialsEl?.scrollIntoView({ behavior: 'smooth' });
+            }}
+          />
 
-  if (cleanPath === '/privacy') {
-    return (
-      <PrivacyPage
-        onNavigate={navigateTo}
-        onOpenTrial={() => handleOpenTrial('pro')}
-        onOpenChangelog={() => setIsChangelogOpen(true)}
-      />
-    );
-  }
+          {/* Live Interactive Product Playground */}
+          <InteractiveDashboardMockup />
 
-  if (cleanPath === '/refunds' || cleanPath === '/refund') {
-    return (
-      <RefundsPage
-        onNavigate={navigateTo}
-        onOpenTrial={() => handleOpenTrial('pro')}
-        onOpenChangelog={() => setIsChangelogOpen(true)}
-      />
-    );
-  }
+          {/* Social Proof & Trusted Logos */}
+          <SocialProofLogos />
 
-  return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-indigo-500 selection:text-white antialiased">
-      {/* Navigation Header */}
-      <Header onOpenTrial={handleOpenTrial} onNavigate={navigateTo} />
+          {/* Pain vs Solution Comparison */}
+          <PainVsSolution onOpenTrial={() => handleOpenTrial('pro')} />
 
-      {/* Main Content */}
-      <main>
-        {/* Conversion Hero */}
-        <Hero
-          onOpenTrial={handleOpenTrial}
-          onOpenVideoModal={() => {
-            const testimonialsEl = document.getElementById('testimonials');
-            testimonialsEl?.scrollIntoView({ behavior: 'smooth' });
-          }}
+          {/* Feature Explorer Tabs */}
+          <FeatureTabs onOpenTrial={() => handleOpenTrial('pro')} />
+
+          {/* Interactive ROI Calculator */}
+          <RoiCalculator onOpenTrial={() => handleOpenTrial('pro')} />
+
+          {/* Real Customer Testimonials */}
+          <TestimonialsSection onOpenTrial={() => handleOpenTrial('pro')} />
+
+          {/* Pricing Tiers & Guarantees */}
+          <PricingSection onOpenTrial={handleOpenTrial} />
+
+          {/* FAQ Accordion */}
+          <FaqSection />
+
+          {/* Bottom Conversion Banner */}
+          <ConversionCtaBanner onOpenTrial={handleOpenTrial} />
+        </main>
+
+        {/* Footer */}
+        <Footer
+          onOpenChangelog={() => setIsChangelogOpen(true)}
+          onOpenLegal={handleOpenLegal}
         />
 
-        {/* Live Interactive Product Playground */}
-        <InteractiveDashboardMockup />
+        {/* Floating Sticky Conversion Bar on Scroll */}
+        <FloatingBar onOpenTrial={() => handleOpenTrial('pro')} />
+      </div>
+    );
+  };
 
-        {/* Social Proof & Trusted Logos */}
-        <SocialProofLogos />
+  return (
+    <div key={cleanPath || 'home'} className="animate-page-fade">
+      {renderCurrentView()}
 
-        {/* Pain vs Solution Comparison */}
-        <PainVsSolution onOpenTrial={() => handleOpenTrial('pro')} />
-
-        {/* Feature Explorer Tabs */}
-        <FeatureTabs onOpenTrial={() => handleOpenTrial('pro')} />
-
-        {/* Interactive ROI Calculator */}
-        <RoiCalculator onOpenTrial={() => handleOpenTrial('pro')} />
-
-        {/* Real Customer Testimonials (Crucial User Request) */}
-        <TestimonialsSection onOpenTrial={() => handleOpenTrial('pro')} />
-
-        {/* Pricing Tiers & Guarantees */}
-        <PricingSection onOpenTrial={handleOpenTrial} />
-
-        {/* FAQ Accordion */}
-        <FaqSection />
-
-        {/* Bottom Conversion Banner */}
-        <ConversionCtaBanner onOpenTrial={handleOpenTrial} />
-      </main>
-
-      {/* Footer */}
-      <Footer
-        onOpenChangelog={() => setIsChangelogOpen(true)}
-        onOpenLegal={handleOpenLegal}
-      />
-
-      {/* Floating Sticky Conversion Bar on Scroll */}
-      <FloatingBar onOpenTrial={() => handleOpenTrial('pro')} />
-
-      {/* Free Trial Modal */}
+      {/* Modals & Drawers */}
       <TrialModal
         isOpen={isTrialModalOpen}
         onClose={handleCloseTrial}
         defaultPlan={selectedPlan}
       />
 
-      {/* Interactive System Changelog & Release Notes Drawer */}
       <ChangelogDrawer
         isOpen={isChangelogOpen}
         onClose={() => setIsChangelogOpen(false)}
       />
 
-      {/* Legal & Policy Modal (Privacy Policy, Terms, Refund Policy) */}
       <LegalModal
         isOpen={isLegalModalOpen}
         onClose={() => setIsLegalModalOpen(false)}
