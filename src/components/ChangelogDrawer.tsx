@@ -10,7 +10,7 @@ type FilterCategory = 'all' | 'new' | 'improved' | 'fixed';
 
 export const ChangelogDrawer: React.FC<ChangelogDrawerProps> = ({ isOpen, onClose }) => {
   const [activeFilter, setActiveFilter] = useState<FilterCategory>('all');
-  const [lastSyncTime, setLastSyncTime] = useState<string>('Agora mesmo');
+  const [lastSyncTime, setLastSyncTime] = useState<string>('Just now');
   const [isSyncing, setIsSyncing] = useState<boolean>(false);
 
   // Automatic live sync effect that listens or polls for SaaS release updates
@@ -21,14 +21,14 @@ export const ChangelogDrawer: React.FC<ChangelogDrawerProps> = ({ isOpen, onClos
       setIsSyncing(true);
       try {
         // Attempt live fetch from SaaS endpoint if available
-        await fetch('https://velloxis.aldolima.dev.br/', { mode: 'no-cors' }).catch(() => {});
+        await fetch('https://app.aldolima.dev.br/', { mode: 'no-cors' }).catch(() => {});
       } catch (err) {
-        // Silent catch for CORS, fallback to local synchronized state
+        // Fallback to local synchronized state
       } finally {
         setTimeout(() => {
           setIsSyncing(false);
           const now = new Date();
-          setLastSyncTime(now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', second: '2-digit' }));
+          setLastSyncTime(now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit' }));
         }, 600);
       }
     };
@@ -45,33 +45,33 @@ export const ChangelogDrawer: React.FC<ChangelogDrawerProps> = ({ isOpen, onClos
       version: 'v2.5.0',
       tag: 'LATEST',
       tagColor: 'bg-[#3525cd]/20 text-[#818cf8] border-[#3525cd]/40',
-      date: '24 de Julho de 2026',
-      subtitle: 'Navegação de Release Notes, Ecossistema GitHub/Figma/Discord e Selos de Confiança.',
+      date: 'July 24, 2026',
+      subtitle: 'Release Notes Drawer, GitHub/Figma/Discord Ecosystem, and Verified Trust Seals.',
       changes: [
         {
           type: 'new',
-          title: 'Release Notes & Changing Drawer',
-          description: 'Painel interativo de notas de atualização acessível no rodapé e simulação para o cliente acompanhar a evolução contínua do sistema.',
+          title: 'Release Notes & Live Changelog Drawer',
+          description: 'Interactive update notes drawer accessible from the footer, automatically syncing SaaS version updates.',
         },
         {
           type: 'new',
-          title: 'Ecossistema & Integrações Nativas',
-          description: 'Inclusão de suporte nativo a workflows com GitHub (repositórios), Figma (protótipos) e Discord (notificações de aceite em tempo real).',
+          title: 'Ecosystem & Native Integrations',
+          description: 'Native workflow support with GitHub (repositories), Figma (prototypes), and Discord (real-time approval webhooks).',
         },
         {
           type: 'improved',
-          title: 'Guia Explicativo de Selos de Confiança (Trust Seals)',
-          description: 'Badges explicativos e selos de validação para freelancers incorporarem em propostas no LinkedIn, aumentando a taxa de conversão.',
+          title: 'Verified Trust Seals & Badges',
+          description: 'Verifiable trust seal badges for freelancers to embed on LinkedIn proposals, boosting conversion rates.',
         },
         {
           type: 'improved',
-          title: 'Contraste Aprimorado em Dark Mode',
-          description: 'Refinamento do estilo visual em modo escuro para headers, badges de segurança SHA-256 e visualização de entregáveis.',
+          title: 'Enhanced Dark Mode Contrast',
+          description: 'Refined visual hierarchy in dark mode for headers, SHA-256 security badges, and deliverable previews.',
         },
         {
           type: 'fixed',
-          title: 'Ajuste de Layout Auto-Fit no Portal de Acompanhamento',
-          description: 'Correção no alinhamento responsivo dos cards de progresso e botões de Chave Mestre em telas menores.',
+          title: 'Auto-Fit Layout Alignment in Client Portal',
+          description: 'Fixed responsive alignment of progress cards and Master Key action triggers on mobile viewports.',
         },
       ],
     },
@@ -79,18 +79,18 @@ export const ChangelogDrawer: React.FC<ChangelogDrawerProps> = ({ isOpen, onClos
       version: 'v2.4.2',
       tag: 'STABLE',
       tagColor: 'bg-[#10b981]/20 text-[#10b981] border-[#10b981]/40',
-      date: '18 de Julho de 2026',
-      subtitle: 'Limpeza de badges de status e ajuste de containers de temas.',
+      date: 'July 18, 2026',
+      subtitle: 'Streamlined system status badges and theme container refinements.',
       changes: [
         {
           type: 'improved',
-          title: 'Badge de Status do Sistema Simplificado',
-          description: 'Indicação direta e minimalista no rodapé exibindo a versão estável do motor de onboarding.',
+          title: 'Simplified System Status Indicator',
+          description: 'Minimalist footer indicator displaying the active stable version of the onboarding engine.',
         },
         {
           type: 'fixed',
-          title: 'Sobrescrita de Cores em Containers Cluros',
-          description: 'Correção na herança de cores para elementos de contexto em modo claro.',
+          title: 'Light Container Contrast Inheritance',
+          description: 'Fixed color inheritance for context elements when operating in light mode.',
         },
       ],
     },
@@ -98,23 +98,23 @@ export const ChangelogDrawer: React.FC<ChangelogDrawerProps> = ({ isOpen, onClos
       version: 'v2.4.1',
       tag: 'STABLE',
       tagColor: 'bg-[#10b981]/20 text-[#10b981] border-[#10b981]/40',
-      date: '05 de Julho de 2026',
-      subtitle: 'Analisador de Risco Contratual por IA e Gerador de Badges.',
+      date: 'July 05, 2026',
+      subtitle: 'AI Contract Risk Analyzer and Embeddable Badge Generator.',
       changes: [
         {
           type: 'new',
-          title: 'Analisador de Risco Contratual por IA (Gemini)',
-          description: 'Módulos inteligentes de IA que detectam cláusulas abusivas e ambiguidades de escopo antes do envio da proposta.',
+          title: 'AI Contract Risk Analyzer (Gemini)',
+          description: 'Smart AI modules that scan contracts for predatory clauses and scope ambiguities prior to proposal sending.',
         },
         {
           type: 'improved',
-          title: 'Gerador de Badges e Selos de Confiança',
-          description: 'Geração de badges embutidos com cópia em 1 clique para portfólio e assinaturas de e-mail.',
+          title: 'Trust Seal & Badge Generator',
+          description: 'Generate 1-click embeddable badges for portfolios and email signatures.',
         },
         {
           type: 'fixed',
-          title: 'Protocolo de Chave Mestre de Revisão',
-          description: 'Portal direto com suporte a Chave Mestre criptografada para reaberturas controladas de etapas concluídas.',
+          title: 'Master Key Scope Protocol',
+          description: 'Direct portal support for encrypted Master Keys to perform controlled scope re-openings.',
         },
       ],
     },
@@ -143,12 +143,12 @@ export const ChangelogDrawer: React.FC<ChangelogDrawerProps> = ({ isOpen, onClos
               </h2>
             </div>
             <p className="text-xs text-slate-300">
-              Acompanhe as melhorias da plataforma. As mudanças no SaaS são refletidas automaticamente aqui.
+              Track platform enhancements. SaaS changes are automatically synchronized here.
             </p>
             <div className="flex items-center gap-2 pt-0.5">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#10b981]/15 text-[#10b981] border border-[#10b981]/30 text-[11px] font-mono font-bold">
                 <RefreshCw className={`w-3 h-3 ${isSyncing ? 'animate-spin' : ''}`} />
-                <span>Sync Automático com SaaS: {lastSyncTime}</span>
+                <span>Auto-Sync with SaaS: {lastSyncTime}</span>
               </span>
             </div>
           </div>
@@ -156,7 +156,7 @@ export const ChangelogDrawer: React.FC<ChangelogDrawerProps> = ({ isOpen, onClos
           <button
             onClick={onClose}
             className="self-end sm:self-center p-2 rounded-xl bg-slate-800/60 hover:bg-slate-700 text-slate-400 hover:text-white transition-all cursor-pointer"
-            aria-label="Fechar"
+            aria-label="Close"
           >
             <X className="w-5 h-5" />
           </button>
@@ -164,54 +164,54 @@ export const ChangelogDrawer: React.FC<ChangelogDrawerProps> = ({ isOpen, onClos
 
         {/* Category Filters Bar */}
         <div className="px-5 py-3 border-b border-[#1e293b] bg-[#0d1322] flex items-center gap-2 overflow-x-auto text-xs font-mono">
-          <span className="text-slate-500 font-bold uppercase text-[10px] tracking-wider shrink-0 mr-1">Filtros:</span>
+          <span className="text-slate-500 font-bold uppercase text-[10px] tracking-wider shrink-0 mr-1">Filter:</span>
           
           <button
             onClick={() => setActiveFilter('all')}
-            className={`px-3 py-1.5 rounded-lg font-bold transition-all shrink-0 flex items-center gap-1.5 ${
+            className={`px-3 py-1.5 rounded-lg font-bold transition-all shrink-0 flex items-center gap-1.5 cursor-pointer ${
               activeFilter === 'all'
                 ? 'bg-[#3525cd] text-white shadow-md'
                 : 'bg-[#151d30] text-slate-400 hover:text-white border border-[#1e293b]'
             }`}
           >
             <Layers className="w-3.5 h-3.5" />
-            <span>Todas (All)</span>
+            <span>All Updates</span>
           </button>
 
           <button
             onClick={() => setActiveFilter('new')}
-            className={`px-3 py-1.5 rounded-lg font-bold transition-all shrink-0 flex items-center gap-1.5 ${
+            className={`px-3 py-1.5 rounded-lg font-bold transition-all shrink-0 flex items-center gap-1.5 cursor-pointer ${
               activeFilter === 'new'
                 ? 'bg-[#3525cd] text-white shadow-md'
                 : 'bg-[#151d30] text-slate-400 hover:text-white border border-[#1e293b]'
             }`}
           >
             <Zap className="w-3.5 h-3.5 text-amber-400" />
-            <span>⚡ Novas (New)</span>
+            <span>⚡ New Features</span>
           </button>
 
           <button
             onClick={() => setActiveFilter('improved')}
-            className={`px-3 py-1.5 rounded-lg font-bold transition-all shrink-0 flex items-center gap-1.5 ${
+            className={`px-3 py-1.5 rounded-lg font-bold transition-all shrink-0 flex items-center gap-1.5 cursor-pointer ${
               activeFilter === 'improved'
                 ? 'bg-[#3525cd] text-white shadow-md'
                 : 'bg-[#151d30] text-slate-400 hover:text-white border border-[#1e293b]'
             }`}
           >
             <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
-            <span>✨ Melhorias</span>
+            <span>✨ Improvements</span>
           </button>
 
           <button
             onClick={() => setActiveFilter('fixed')}
-            className={`px-3 py-1.5 rounded-lg font-bold transition-all shrink-0 flex items-center gap-1.5 ${
+            className={`px-3 py-1.5 rounded-lg font-bold transition-all shrink-0 flex items-center gap-1.5 cursor-pointer ${
               activeFilter === 'fixed'
                 ? 'bg-[#3525cd] text-white shadow-md'
                 : 'bg-[#151d30] text-slate-400 hover:text-white border border-[#1e293b]'
             }`}
           >
             <Wrench className="w-3.5 h-3.5 text-emerald-400" />
-            <span>🛠️ Correções</span>
+            <span>🛠️ Fixes</span>
           </button>
         </div>
 
@@ -250,17 +250,17 @@ export const ChangelogDrawer: React.FC<ChangelogDrawerProps> = ({ isOpen, onClos
                     <div className="flex items-start gap-2">
                       {item.type === 'new' && (
                         <span className="px-2 py-0.5 rounded bg-amber-500/20 text-amber-400 font-mono text-[10px] font-bold uppercase shrink-0 mt-0.5">
-                          ⚡ Novo
+                          ⚡ New
                         </span>
                       )}
                       {item.type === 'improved' && (
                         <span className="px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-400 font-mono text-[10px] font-bold uppercase shrink-0 mt-0.5">
-                          ✨ Melhoria
+                          ✨ Improved
                         </span>
                       )}
                       {item.type === 'fixed' && (
                         <span className="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-mono text-[10px] font-bold uppercase shrink-0 mt-0.5">
-                          🛠️ Correção
+                          🛠️ Fix
                         </span>
                       )}
 
@@ -289,7 +289,7 @@ export const ChangelogDrawer: React.FC<ChangelogDrawerProps> = ({ isOpen, onClos
             onClick={onClose}
             className="px-5 py-2.5 rounded-xl bg-[#3525cd] hover:bg-[#4f46e5] text-white font-bold transition-all cursor-pointer shadow-md"
           >
-            Fechar Janela
+            Close Window
           </button>
         </div>
 

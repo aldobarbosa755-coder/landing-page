@@ -15,13 +15,13 @@ export const PainVsSolution: React.FC<PainVsSolutionProps> = ({ onOpenTrial }) =
         <div className="text-center max-w-3xl mx-auto space-y-4">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#3525cd]/10 text-[#4f46e5] border border-[#3525cd]/30 text-xs font-mono font-bold uppercase tracking-wider">
             <Lock className="w-3.5 h-3.5 text-[#10b981]" />
-            <span>O Que o Velloxis Resolve</span>
+            <span>What Velloxis Solves</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-black dark:text-white text-slate-950 tracking-tight leading-[1.2]">
-            Pare de Aceitar Alterações Infinitas e Perder Dinheiro em Projetos
+            Stop Accepting Infinite Revisions & Losing Money on Projects
           </h2>
           <p className="text-base sm:text-lg dark:text-slate-300 text-slate-700 leading-relaxed max-w-2xl mx-auto">
-            Freelancers e agências perdem até 30% da margem de lucro cobrindo "pequenos ajustes" fora do orçamento. Veja o contraste imediato com a blindagem do Velloxis:
+            Freelancers and agencies lose up to 30% of profit margins covering "small out-of-scope tweaks". Compare the traditional chaos with Velloxis Scope Protection:
           </p>
         </div>
 
@@ -35,8 +35,8 @@ export const PainVsSolution: React.FC<PainVsSolutionProps> = ({ onOpenTrial }) =
                 <XCircle className="w-6 h-6" />
               </div>
               <div>
-                <h3 className="text-lg font-black dark:text-white text-slate-900">Sem Velloxis (O Caos Tradicional)</h3>
-                <p className="text-xs text-rose-500 font-bold">Scope creep constante, reuniões sem fim e disputas de entrega</p>
+                <h3 className="text-lg font-black dark:text-white text-slate-900">Without Velloxis (Traditional Chaos)</h3>
+                <p className="text-xs text-rose-500 font-bold">Uncontrolled scope creep, endless meetings, and delivery disputes</p>
               </div>
             </div>
 
@@ -55,7 +55,7 @@ export const PainVsSolution: React.FC<PainVsSolutionProps> = ({ onOpenTrial }) =
             </div>
 
             <div className="pt-2 text-center text-xs text-slate-400 font-mono italic">
-              * Resultado: Horas não pagas, estresse e desgaste na relação com o cliente.
+              * Outcome: Unpaid working hours, high stress, and strained client relationships.
             </div>
           </div>
 
@@ -66,8 +66,8 @@ export const PainVsSolution: React.FC<PainVsSolutionProps> = ({ onOpenTrial }) =
                 <ShieldCheck className="w-6 h-6" />
               </div>
               <div>
-                <h3 className="text-lg font-black dark:text-white text-slate-900">Com o Velloxis (Proteção Total)</h3>
-                <p className="text-xs text-[#10b981] font-bold">Escopo trancado, Chave Mestre e Trilha SHA-256 imutável</p>
+                <h3 className="text-lg font-black dark:text-white text-slate-900">With Velloxis (Total Protection)</h3>
+                <p className="text-xs text-[#10b981] font-bold">Scope lockdown, Master Keys, and immutable SHA-256 audit logs</p>
               </div>
             </div>
 
@@ -88,13 +88,13 @@ export const PainVsSolution: React.FC<PainVsSolutionProps> = ({ onOpenTrial }) =
             <div className="pt-2 flex flex-wrap items-center justify-between gap-4 border-t dark:border-[#131126] border-[#c7c4d8]/35 pt-4">
               <span className="text-xs font-mono font-bold text-[#10b981] flex items-center gap-1.5">
                 <CheckCircle2 className="w-4 h-4 text-[#10b981]" />
-                <span>Zero alterações sem orçamento aprovado</span>
+                <span>Zero unbudgeted feature additions</span>
               </span>
               <button
                 onClick={onOpenTrial}
-                className="cta-primary-btn cta-shimmer px-6 py-3 text-xs font-extrabold shadow-lg shadow-[#3525cd]/30"
+                className="cta-primary-btn cta-shimmer px-6 py-3 text-xs font-extrabold shadow-lg shadow-[#3525cd]/30 cursor-pointer"
               >
-                <span>Proteger Meus Projetos</span>
+                <span>Protect My Projects</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
             </div>

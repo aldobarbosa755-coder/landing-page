@@ -44,7 +44,7 @@ export interface FaqItem {
   id: string;
   question: string;
   answer: string;
-  category: 'Geral' | 'Trava de Escopo' | 'Segurança & SHA-256' | 'Device-Lock' | 'Preços & Whitelabel';
+  category: 'General' | 'Scope Lockdown' | 'Security & SHA-256' | 'Device-Lock' | 'Pricing & Whitelabel' | 'Geral' | 'Trava de Escopo' | 'Segurança & SHA-256' | 'Preços & Whitelabel';
 }
 
 export interface FeatureDetail {
@@ -83,7 +83,5 @@ export interface ProjectScopeItem {
   id: string;
   title: string;
   description: string;
-  status: 'Pendente' | 'Em Produção' | 'Aprovado' | 'Trancado';
-  deliverables: string[];
+  status: 'Pendente' | 'Em Produção' | 'Aprovado' | 'Trancado' | 'Pending' | 'In Production' | 'Approved' | 'Locked';
 }
-

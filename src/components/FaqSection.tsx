@@ -4,13 +4,13 @@ import { ChevronDown, HelpCircle, Search, MessageCircle } from 'lucide-react';
 
 export const FaqSection: React.FC = () => {
   const [openId, setOpenId] = useState<string | null>('faq-1');
-  const [selectedCategory, setSelectedCategory] = useState<string>('Todas');
+  const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState<string>('');
 
-  const categories = ['Todas', 'Geral', 'Preços e Planos', 'Integrações', 'Segurança & LGPD'];
+  const categories = ['All', 'Scope Lockdown', 'Device-Lock', 'Security & SHA-256', 'Pricing & Whitelabel', 'General'];
 
   const filteredFaqs = faqList.filter((item) => {
-    const matchesCategory = selectedCategory === 'Todas' || item.category === selectedCategory;
+    const matchesCategory = selectedCategory === 'All' || item.category === selectedCategory;
     const matchesSearch =
       item.question.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.answer.toLowerCase().includes(searchQuery.toLowerCase());
@@ -25,13 +25,13 @@ export const FaqSection: React.FC = () => {
         <div className="text-center space-y-3 max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#3525cd]/10 text-[#4f46e5] border border-[#3525cd]/30 text-[10px] font-mono font-bold uppercase tracking-widest">
             <HelpCircle className="w-3.5 h-3.5" />
-            <span>Perguntas Frequentes</span>
+            <span>Frequently Asked Questions</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-black dark:text-white text-slate-950 tracking-tight">
-            Tire Suas Dúvidas Sobre a Proteção de Escopo
+            Have Questions About Scope Protection?
           </h2>
           <p className="text-sm dark:text-slate-300 text-slate-600">
-            Respostas transparentes sobre o Velloxis, validade de provas eletrônicas e a Trava de Escopo.
+            Transparent answers about Velloxis, legal proof validity, and Scope Lockdown.
           </p>
         </div>
 
@@ -42,7 +42,7 @@ export const FaqSection: React.FC = () => {
               <button
                 key={cat}
                 onClick={() => setSelectedCategory(cat)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                   selectedCategory === cat
                     ? 'bg-[#3525cd] text-white shadow-md'
                     : 'dark:text-slate-400 text-slate-600 dark:hover:text-white hover:text-slate-950 hover:bg-slate-100 dark:hover:bg-slate-800'
@@ -59,7 +59,7 @@ export const FaqSection: React.FC = () => {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Pesquisar pergunta..."
+              placeholder="Search question..."
               className="w-full dark:bg-[#080c14] bg-slate-50 dark:text-white text-slate-900 text-xs pl-9 pr-3 py-2 rounded-xl border dark:border-[#131126] border-[#c7c4d8]/35 focus:outline-none focus:border-[#3525cd]"
             />
           </div>
@@ -76,7 +76,7 @@ export const FaqSection: React.FC = () => {
               >
                 <button
                   onClick={() => setOpenId(isOpen ? null : item.id)}
-                  className="w-full p-5 text-left flex items-center justify-between gap-4 hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors"
+                  className="w-full p-5 text-left flex items-center justify-between gap-4 hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors cursor-pointer"
                 >
                   <span className="text-sm sm:text-base font-bold dark:text-white text-slate-900">
                     {item.question}
@@ -99,16 +99,16 @@ export const FaqSection: React.FC = () => {
         {/* Still Have Questions Box */}
         <div className="p-6 rounded-2xl dark:bg-[#0f172a] bg-white border dark:border-[#131126] border-[#c7c4d8]/35 text-center space-y-3 shadow-sm">
           <p className="text-xs dark:text-slate-300 text-slate-600">
-            Ainda tem alguma dúvida específica sobre o seu tipo de projeto ou contrato?
+            Have a specific question about your agency setup or client contracts?
           </p>
           <a
-            href="https://wa.me/5511999999999?text=Olá,%20tenho%20dúvidas%20sobre%20o%20Velloxis"
+            href="https://app.aldolima.dev.br"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 text-xs font-mono font-bold text-[#10b981] bg-[#10b981]/10 hover:bg-[#10b981]/20 border border-[#10b981]/30 px-4 py-2.5 rounded-xl transition-all"
           >
             <MessageCircle className="w-4 h-4" />
-            <span>Falar com um Especialista em Proteção de Escopo</span>
+            <span>Speak with a Scope Protection Specialist</span>
           </a>
         </div>
 

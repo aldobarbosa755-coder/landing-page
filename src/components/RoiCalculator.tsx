@@ -7,7 +7,7 @@ interface RoiCalculatorProps {
 
 export const RoiCalculator: React.FC<RoiCalculatorProps> = ({ onOpenTrial }) => {
   const [projectsPerMonth, setProjectsPerMonth] = useState<number>(4);
-  const [averageProjectValue, setAverageProjectValue] = useState<number>(6000);
+  const [averageProjectValue, setAverageProjectValue] = useState<number>(1500);
   const [unpaidAdjustmentHours, setUnpaidAdjustmentHours] = useState<number>(24);
 
   // Calculations
@@ -15,12 +15,12 @@ export const RoiCalculator: React.FC<RoiCalculatorProps> = ({ onOpenTrial }) => 
   const wastedMoneyInScopeCreep = unpaidAdjustmentHours * hourlyRate;
   const annualLoss = wastedMoneyInScopeCreep * 12;
 
-  // Potential aditiional revenue with Master Keys & Scope Lockdown (conservative 25% ad-on billing)
+  // Potential additional revenue with Master Keys & Scope Lockdown (conservative 85% ad-on billing)
   const additionalAditionsBillable = Math.round(wastedMoneyInScopeCreep * 0.85);
   const totalSavedAndBilledMonthly = wastedMoneyInScopeCreep + additionalAditionsBillable;
   const totalSavedAndBilledAnnual = totalSavedAndBilledMonthly * 12;
 
-  const proPlanCost = 197; // Annualized monthly plan
+  const proPlanCost = 49; // Monthly Pro plan
   const roiMultiplier = Math.max(Math.round(totalSavedAndBilledMonthly / proPlanCost), 1);
 
   return (
@@ -31,13 +31,13 @@ export const RoiCalculator: React.FC<RoiCalculatorProps> = ({ onOpenTrial }) => 
         <div className="text-center max-w-3xl mx-auto space-y-4">
           <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#10b981]/10 text-[#10b981] border border-[#10b981]/30 text-[10px] font-mono font-bold uppercase tracking-widest">
             <Calculator className="w-3.5 h-3.5" />
-            <span>Calculadora de Economia contra Scope Creep</span>
+            <span>Scope Creep ROI & Savings Calculator</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-black dark:text-white text-slate-950 tracking-tight">
-            Quanto Dinheiro Sua Agência ou Freelance Perde em Alterações Gratuitas?
+            How Much Money Is Your Agency Losing On Unpaid Revisions?
           </h2>
           <p className="text-base dark:text-slate-300 text-slate-700">
-            Ajuste os controles abaixo e veja o impacto financeiro direto da Trava de Escopo (Scope Lockdown) do Velloxis na sua operação:
+            Adjust the sliders below to calculate the direct financial ROI of enforcing Velloxis Scope Lockdown in your workflow:
           </p>
         </div>
 
@@ -48,17 +48,17 @@ export const RoiCalculator: React.FC<RoiCalculatorProps> = ({ onOpenTrial }) => 
           <div className="lg:col-span-6 space-y-8">
             <h3 className="text-lg font-black dark:text-white text-slate-900 border-b dark:border-[#131126] border-[#c7c4d8]/35 pb-3 flex items-center gap-2">
               <Sparkles className="w-5 h-5 text-[#f59e0b]" />
-              <span>1. Insira os dados da sua operação atual</span>
+              <span>1. Enter Your Agency Metrics</span>
             </h3>
 
             {/* Slider 1: Projects Per Month */}
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <label className="text-xs sm:text-sm font-bold dark:text-slate-200 text-slate-800">
-                  Projetos Entregues por Mês:
+                  Projects Delivered Per Month:
                 </label>
                 <span className="text-sm font-mono font-extrabold text-[#4f46e5] dark:bg-[#080c14] bg-slate-100 px-3 py-1 rounded-xl border dark:border-[#131126] border-[#c7c4d8]/35">
-                  {projectsPerMonth} projetos/mês
+                  {projectsPerMonth} projects/mo
                 </span>
               </div>
               <input
@@ -71,9 +71,9 @@ export const RoiCalculator: React.FC<RoiCalculatorProps> = ({ onOpenTrial }) => 
                 className="w-full h-2 bg-slate-200 dark:bg-slate-800 rounded-lg appearance-none cursor-pointer accent-[#3525cd]"
               />
               <div className="flex justify-between text-[10px] font-mono text-slate-500">
-                <span>1 projeto</span>
-                <span>12 projetos</span>
-                <span>25+ projetos</span>
+                <span>1 project</span>
+                <span>12 projects</span>
+                <span>25+ projects</span>
               </div>
             </div>
 
@@ -81,25 +81,25 @@ export const RoiCalculator: React.FC<RoiCalculatorProps> = ({ onOpenTrial }) => 
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <label className="text-xs sm:text-sm font-bold dark:text-slate-200 text-slate-800">
-                  Valor Médio por Projeto (R$):
+                  Average Project Value ($):
                 </label>
                 <span className="text-sm font-mono font-extrabold text-[#10b981] dark:bg-[#080c14] bg-slate-100 px-3 py-1 rounded-xl border dark:border-[#131126] border-[#c7c4d8]/35">
-                  R$ {averageProjectValue.toLocaleString('pt-BR')}
+                  ${averageProjectValue.toLocaleString('en-US')}
                 </span>
               </div>
               <input
                 type="range"
-                min="1000"
-                max="30000"
-                step="500"
+                min="500"
+                max="10000"
+                step="250"
                 value={averageProjectValue}
                 onChange={(e) => setAverageProjectValue(Number(e.target.value))}
                 className="w-full h-2 bg-slate-200 dark:bg-slate-800 rounded-lg appearance-none cursor-pointer accent-[#10b981]"
               />
               <div className="flex justify-between text-[10px] font-mono text-slate-500">
-                <span>R$ 1.000</span>
-                <span>R$ 15.000</span>
-                <span>R$ 30.000+</span>
+                <span>$500</span>
+                <span>$5,000</span>
+                <span>$10,000+</span>
               </div>
             </div>
 
@@ -107,10 +107,10 @@ export const RoiCalculator: React.FC<RoiCalculatorProps> = ({ onOpenTrial }) => 
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <label className="text-xs sm:text-sm font-bold dark:text-slate-200 text-slate-800">
-                  Horas Gastas com Refeitos/Alterações Não Pagas/Mês:
+                  Unpaid Revision Hours Spent Per Month:
                 </label>
                 <span className="text-sm font-mono font-extrabold text-[#f59e0b] dark:bg-[#080c14] bg-slate-100 px-3 py-1 rounded-xl border dark:border-[#131126] border-[#c7c4d8]/35">
-                  {unpaidAdjustmentHours}h de retrabalho
+                  {unpaidAdjustmentHours}h rework
                 </span>
               </div>
               <input
@@ -123,16 +123,16 @@ export const RoiCalculator: React.FC<RoiCalculatorProps> = ({ onOpenTrial }) => 
                 className="w-full h-2 bg-slate-200 dark:bg-slate-800 rounded-lg appearance-none cursor-pointer accent-[#f59e0b]"
               />
               <div className="flex justify-between text-[10px] font-mono text-slate-500">
-                <span>4h / mês</span>
-                <span>50h / mês</span>
-                <span>100h / mês</span>
+                <span>4h / mo</span>
+                <span>50h / mo</span>
+                <span>100h / mo</span>
               </div>
             </div>
 
             <div className="p-4 rounded-2xl dark:bg-[#080c14] bg-slate-50 border dark:border-[#131126] border-[#c7c4d8]/35 text-xs text-slate-600 dark:text-slate-300 space-y-1">
-              <span className="text-slate-500 font-medium">Custo Estimado da Sua Hora Técnica:</span>
+              <span className="text-slate-500 font-medium">Estimated Hourly Rate:</span>
               <p className="font-extrabold dark:text-white text-slate-900">
-                R$ {hourlyRate}/hora • Prejuízo Anual Estimado em Retrabalho: <span className="text-rose-500 font-black">R$ {annualLoss.toLocaleString('pt-BR')}</span>
+                ${hourlyRate}/hr • Estimated Annual Unpaid Rework Loss: <span className="text-rose-500 font-black">${annualLoss.toLocaleString('en-US')}</span>
               </p>
             </div>
           </div>
@@ -143,7 +143,7 @@ export const RoiCalculator: React.FC<RoiCalculatorProps> = ({ onOpenTrial }) => 
               <div className="flex items-center justify-between border-b border-indigo-500/20 pb-3">
                 <span className="text-xs font-mono font-extrabold uppercase tracking-widest text-[#818cf8] flex items-center gap-1.5">
                   <Lock className="w-4 h-4 text-[#10b981]" />
-                  2. Seu Ganho Direto com Velloxis
+                  2. Direct Financial Gain With Velloxis
                 </span>
                 <span className="text-[10px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-[#10b981]/15 text-[#10b981] border border-[#10b981]/30 uppercase tracking-widest">
                   Scope Lockdown Active
@@ -152,35 +152,35 @@ export const RoiCalculator: React.FC<RoiCalculatorProps> = ({ onOpenTrial }) => 
 
               {/* Extra Monthly Savings */}
               <div className="space-y-1">
-                <span className="text-xs text-slate-400 font-medium">Recuperação Financeira + Aditivos Faturados / Mês:</span>
+                <span className="text-xs text-slate-400 font-medium">Monthly Savings + Recovered Billed Additions:</span>
                 <div className="text-3xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#10b981] via-teal-300 to-[#818cf8]">
-                  +R$ {totalSavedAndBilledMonthly.toLocaleString('pt-BR')} /mês
+                  +${totalSavedAndBilledMonthly.toLocaleString('en-US')} /mo
                 </div>
               </div>
 
               {/* Secondary Metrics */}
               <div className="grid grid-cols-2 gap-4 pt-2">
                 <div className="p-3.5 rounded-2xl bg-slate-800/80 border border-slate-700/80 text-left">
-                  <span className="text-[11px] font-mono text-slate-400 uppercase">Proteção Anual Total:</span>
+                  <span className="text-[11px] font-mono text-slate-400 uppercase">Annual Financial Protection:</span>
                   <div className="text-lg font-black text-white mt-1">
-                    +R$ {totalSavedAndBilledAnnual.toLocaleString('pt-BR')}
+                    +${totalSavedAndBilledAnnual.toLocaleString('en-US')}
                   </div>
                 </div>
 
                 <div className="p-3.5 rounded-2xl bg-slate-800/80 border border-slate-700/80 text-left">
-                  <span className="text-[11px] font-mono text-slate-400 uppercase">Horas Livres Recuperadas:</span>
+                  <span className="text-[11px] font-mono text-slate-400 uppercase">Reclaimed Free Hours:</span>
                   <div className="text-lg font-black text-[#818cf8] mt-1 flex items-center gap-1">
                     <Clock className="w-4 h-4" />
-                    <span>{unpaidAdjustmentHours}h livres /mês</span>
+                    <span>{unpaidAdjustmentHours}h free /mo</span>
                   </div>
                 </div>
               </div>
 
               {/* ROI Badge */}
               <div className="p-4 rounded-2xl bg-[#3525cd]/20 border border-[#3525cd]/40 flex items-center justify-between">
-                <span className="text-xs font-bold text-slate-200">Retorno do Investimento em Relação ao Plano Pro:</span>
+                <span className="text-xs font-bold text-slate-200">ROI vs Pro Subscription Plan:</span>
                 <span className="text-xs font-mono font-black text-[#f59e0b] bg-[#f59e0b]/15 px-3 py-1 rounded-xl border border-[#f59e0b]/30">
-                  🚀 {roiMultiplier}x mais economia que a mensalidade!
+                  🚀 {roiMultiplier}x return on software cost!
                 </span>
               </div>
             </div>
@@ -189,15 +189,15 @@ export const RoiCalculator: React.FC<RoiCalculatorProps> = ({ onOpenTrial }) => 
             <div className="space-y-3 pt-4">
               <button
                 onClick={onOpenTrial}
-                className="cta-primary-btn cta-shimmer w-full py-4 text-sm sm:text-base font-extrabold shadow-2xl shadow-[#3525cd]/40"
+                className="cta-primary-btn cta-shimmer w-full py-4 text-sm sm:text-base font-extrabold shadow-2xl shadow-[#3525cd]/40 cursor-pointer"
               >
-                <span>Proteger Meus Projetos com Velloxis</span>
+                <span>Protect My Projects With Velloxis</span>
                 <ArrowRight className="w-5 h-5" />
               </button>
 
               <div className="flex items-center justify-center gap-2 text-[11px] font-mono text-slate-300">
                 <ShieldCheck className="w-3.5 h-3.5 text-[#10b981]" />
-                <span>Zero risco • Plano Start 100% Gratuito • Sem cartão de crédito</span>
+                <span>Zero Risk • 100% Free Starter Plan • No Credit Card Required</span>
               </div>
             </div>
 

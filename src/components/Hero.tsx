@@ -36,26 +36,26 @@ export const Hero: React.FC<HeroProps> = ({ onOpenTrial, onOpenVideoModal }) => 
 
           {/* Main Headline */}
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black dark:text-white text-slate-950 tracking-tight leading-[1.2] sm:leading-[1.18] max-w-4xl mx-auto">
-            Onboarding Autônomo,{' '}
+            Autonomous Onboarding,{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#3525cd] via-[#4f46e5] to-[#10b981] inline-block">
-              Trava de Escopo
+              Scope Lockdown
             </span>{' '}
-            e Proteção Jurídica para Seus Projetos
+            & Legal Protection for Your Projects
           </h1>
 
           {/* Subtitle */}
           <p className="text-lg sm:text-xl dark:text-slate-300 text-slate-700 max-w-3xl mx-auto font-normal leading-relaxed pt-2">
-            Elimine o <strong className="dark:text-white text-slate-950 font-bold">Scope Creep</strong> (alterações infinitas sem orçamento), reuniões desgastantes e disputas de entrega. Tranque o briefing, exija <strong className="dark:text-white text-slate-950 font-bold">Chave Mestre</strong> para reaberturas e emita relatórios com <strong className="dark:text-white text-slate-950 font-bold">Hash Criptográfico SHA-256</strong>.
+            Eliminate <strong className="dark:text-white text-slate-950 font-bold">Scope Creep</strong> (unpaid feature requests), exhausting client meetings, and project disputes. Freeze project briefings, require <strong className="dark:text-white text-slate-950 font-bold">Master Keys</strong> for scope reopenings, and issue certified audit logs with <strong className="dark:text-white text-slate-950 font-bold">SHA-256 Cryptographic Hashes</strong>.
           </p>
 
           {/* Primary Action Buttons */}
           <div className="pt-6 flex flex-col sm:flex-row items-center justify-center gap-4">
             <button
               onClick={() => onOpenTrial('starter')}
-              className="cta-primary-btn cta-shimmer w-full sm:w-auto px-9 py-4 sm:py-5 text-base sm:text-lg group shadow-2xl shadow-[#3525cd]/40"
+              className="cta-primary-btn cta-shimmer w-full sm:w-auto px-9 py-4 sm:py-5 text-base sm:text-lg group shadow-2xl shadow-[#3525cd]/40 cursor-pointer"
             >
               <Key className="w-5 h-5 text-amber-300 group-hover:rotate-12 transition-transform duration-200" />
-              <span>Criar Conta Grátis Agora</span>
+              <span>Create Free Account Now</span>
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1.5 transition-transform duration-200" />
             </button>
 
@@ -66,7 +66,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenTrial, onOpenVideoModal }) => 
               <div className="w-8 h-8 rounded-xl bg-[#3525cd]/20 flex items-center justify-center text-[#4f46e5] shrink-0">
                 <Play className="w-4 h-4 fill-[#3525cd] ml-0.5" />
               </div>
-              <span>Testar Dashboard ao Vivo</span>
+              <span>Test Live Simulator</span>
             </a>
           </div>
 
@@ -74,15 +74,15 @@ export const Hero: React.FC<HeroProps> = ({ onOpenTrial, onOpenVideoModal }) => 
           <div className="pt-2 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs font-semibold text-slate-500 dark:text-slate-400">
             <div className="flex items-center gap-1.5">
               <CheckCircle2 className="w-4 h-4 text-[#10b981]" />
-              <span>Sem necessidade de cartão de crédito</span>
+              <span>No credit card required</span>
             </div>
             <div className="flex items-center gap-1.5">
               <CheckCircle2 className="w-4 h-4 text-[#10b981]" />
-              <span>Configuração em menos de 3 minutos</span>
+              <span>Setup in less than 3 minutes</span>
             </div>
             <div className="flex items-center gap-1.5">
               <ShieldCheck className="w-4 h-4 text-[#10b981]" />
-              <span>Proteção com validade de prova eletrônica</span>
+              <span>Certified electronic evidence protection</span>
             </div>
           </div>
 
@@ -90,30 +90,30 @@ export const Hero: React.FC<HeroProps> = ({ onOpenTrial, onOpenVideoModal }) => 
           <div className="pt-8 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
             <div className="p-4 rounded-2xl dark:bg-[#0f172a]/80 bg-white/80 border dark:border-[#131126] border-[#c7c4d8]/35 backdrop-blur-sm text-center shadow-sm">
               <div className="text-xl sm:text-2xl font-black text-[#10b981] font-sans">
-                R$ 0
+                $0
               </div>
-              <p className="text-[11px] font-mono font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mt-1">Perdas p/ Scope Creep</p>
+              <p className="text-[11px] font-mono font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mt-1">Scope Creep Losses</p>
             </div>
 
             <div className="p-4 rounded-2xl dark:bg-[#0f172a]/80 bg-white/80 border dark:border-[#131126] border-[#c7c4d8]/35 backdrop-blur-sm text-center shadow-sm">
               <div className="text-xl sm:text-2xl font-black dark:text-white text-slate-900 font-sans">
                 SHA-256
               </div>
-              <p className="text-[11px] font-mono font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mt-1">Hash Criptográfico</p>
+              <p className="text-[11px] font-mono font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mt-1">Cryptographic Hash</p>
             </div>
 
             <div className="p-4 rounded-2xl dark:bg-[#0f172a]/80 bg-white/80 border dark:border-[#131126] border-[#c7c4d8]/35 backdrop-blur-sm text-center shadow-sm">
               <div className="text-xl sm:text-2xl font-black text-[#4f46e5] font-sans">
                 100%
               </div>
-              <p className="text-[11px] font-mono font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mt-1">Device-Lock Blindado</p>
+              <p className="text-[11px] font-mono font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mt-1">Device-Lock Secured</p>
             </div>
 
             <div className="p-4 rounded-2xl dark:bg-[#0f172a]/80 bg-white/80 border dark:border-[#131126] border-[#c7c4d8]/35 backdrop-blur-sm text-center shadow-sm">
               <div className="text-xl sm:text-2xl font-black text-[#3525cd] dark:text-[#818cf8] font-sans">
                 85%
               </div>
-              <p className="text-[11px] font-mono font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mt-1">Economia de Onboarding</p>
+              <p className="text-[11px] font-mono font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mt-1">Onboarding Time Saved</p>
             </div>
           </div>
 

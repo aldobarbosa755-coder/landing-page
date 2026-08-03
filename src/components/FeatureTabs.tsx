@@ -34,13 +34,13 @@ export const FeatureTabs: React.FC<FeatureTabsProps> = ({ onOpenTrial }) => {
         <div className="text-center max-w-3xl mx-auto space-y-4">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#3525cd]/10 text-[#4f46e5] border border-[#3525cd]/30 text-xs font-mono font-bold uppercase tracking-wider">
             <Lock className="w-3.5 h-3.5 text-[#10b981]" />
-            <span>Módulos do Velloxis</span>
+            <span>Velloxis Platform Modules</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-black dark:text-white text-slate-950 tracking-tight">
-            Tudo o Que Você Precisa Para Proteger Seus Projetos do Início ao Fim
+            Everything You Need To Protect Projects From Start To Finish
           </h2>
           <p className="text-base dark:text-slate-300 text-slate-600">
-            Uma arquitetura completa combinando Whitelabel, Onboarding Autônomo, Scope Lockdown e Trilha SHA-256.
+            A complete architecture combining Whitelabel, Autonomous Onboarding, Scope Lockdown, and SHA-256 Audit Trails.
           </p>
         </div>
 
@@ -52,7 +52,7 @@ export const FeatureTabs: React.FC<FeatureTabsProps> = ({ onOpenTrial }) => {
               <button
                 key={feat.id}
                 onClick={() => setActiveFeatureId(feat.id)}
-                className={`flex items-center gap-2.5 px-5 py-3 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 ${
+                className={`flex items-center gap-2.5 px-5 py-3 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer ${
                   isActive
                     ? 'bg-gradient-to-r from-[#3525cd] to-[#4f46e5] text-white shadow-md'
                     : 'dark:text-slate-400 text-slate-600 dark:hover:text-slate-200 hover:text-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800/50'
@@ -96,9 +96,9 @@ export const FeatureTabs: React.FC<FeatureTabsProps> = ({ onOpenTrial }) => {
             <div className="pt-4 flex items-center gap-4">
               <button
                 onClick={onOpenTrial}
-                className="cta-primary-btn cta-shimmer px-7 py-3.5 text-xs sm:text-sm font-extrabold shadow-xl shadow-[#3525cd]/30"
+                className="cta-primary-btn cta-shimmer px-7 py-3.5 text-xs sm:text-sm font-extrabold shadow-xl shadow-[#3525cd]/30 cursor-pointer"
               >
-                <span>Ativar Módulo no Meu Negócio</span>
+                <span>Activate Module in My Business</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
             </div>

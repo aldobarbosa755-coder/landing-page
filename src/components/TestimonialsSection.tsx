@@ -21,39 +21,39 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({ onOpen
   const useCases = [
     {
       id: 1,
-      badge: 'Escopo & Aditivos',
+      badge: 'Scope & Revisions',
       icon: Lock,
-      title: 'Ajustes "Extras" no Meio do Projeto',
-      problem: 'Pedidos de mudanças no chat sem orçamento adicional.',
-      solution: 'Escopo congelado após aceite. Aditivos exigem Chave Mestre de Segurança.',
-      metric: '100% Bloqueio sem Chave'
+      title: '"Extra" Tweaks Mid-Project',
+      problem: 'Mid-project change requests submitted via chat without additional budget.',
+      solution: 'Scope locked post-approval. Re-openings require a Master Security Key.',
+      metric: '100% Lock Without Key'
     },
     {
       id: 2,
-      badge: 'Proteção Jurídica',
+      badge: 'Legal Protection',
       icon: FileCheck2,
-      title: 'Contestações ou "Não Sabia"',
-      problem: 'Cliente nega o briefing original ou solicita chargeback.',
-      solution: 'Trilha de auditoria SHA-256 com IP, data UTC e prova em PDF.',
-      metric: 'Auditoria Imutável'
+      title: 'Disputes or "I Didn\'t Know" Claims',
+      problem: 'Client denies the original briefing scope or files a payment chargeback.',
+      solution: 'SHA-256 audit log tracking IP, UTC timestamp, and verifiable PDF proof.',
+      metric: 'Immutable Audit Trail'
     },
     {
       id: 3,
-      badge: 'Segurança de Acesso',
+      badge: 'Access Security',
       icon: Key,
-      title: 'Vazamento de Links e Protótipos',
-      problem: 'Links de homologação repassados a terceiros não autorizados.',
-      solution: 'Fingerprint Device-Locking vinculando a sessão ao navegador do cliente.',
-      metric: 'Device Lock Ativo'
+      title: 'Leaked Preview Links & Prototypes',
+      problem: 'Private review and homologation links forwarded to unauthorized third parties.',
+      solution: 'Fingerprint Device-Locking binding the review session to the client browser.',
+      metric: 'Active Device Lock'
     },
     {
       id: 4,
-      badge: 'Inteligência Contratual',
+      badge: 'Contract Intelligence',
       icon: Cpu,
-      title: 'Cláusulas Abusivas em Contratos',
-      problem: 'Contratos extensos com armadilhas de prazos e retenção de código.',
-      solution: 'Auditoria por IA (Gemini) apontando riscos e ambiguidades em segundos.',
-      metric: 'Análise em < 5 Segundos'
+      title: 'Abusive Contractual Clauses',
+      problem: 'Lengthy contracts hidden with deadline traps and source code retention risks.',
+      solution: 'AI Contract Audit (Gemini) pinpointing risks and ambiguity in seconds.',
+      metric: 'Analysis in < 5 Seconds'
     }
   ];
 
@@ -65,13 +65,13 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({ onOpen
         <div className="text-center max-w-2xl mx-auto space-y-3">
           <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#4f46e5]/10 text-[#4f46e5] border border-[#4f46e5]/30 text-[10px] font-mono font-bold uppercase tracking-widest">
             <ShieldCheck className="w-3.5 h-3.5 text-[#10b981]" />
-            <span>Casos de Uso Práticos</span>
+            <span>Practical Use Cases</span>
           </div>
           <h2 className="text-2xl sm:text-4xl font-black dark:text-white text-slate-950 tracking-tight">
-            O Que o Velloxis Resolve Na Prática
+            What Velloxis Solves In Practice
           </h2>
           <p className="text-sm dark:text-slate-300 text-slate-700 leading-relaxed">
-            4 riscos operacionais e financeiros eliminados diretamente na arquitetura da plataforma.
+            4 operational and financial risks eliminated directly at the platform architecture layer.
           </p>
         </div>
 
@@ -79,19 +79,19 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({ onOpen
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 p-4 rounded-2xl dark:bg-[#0d1326] bg-white border dark:border-[#1e293b] border-slate-200 shadow-md">
           <div className="text-center space-y-0.5 border-r dark:border-[#1e293b] border-slate-200 last:border-0 p-1.5">
             <div className="text-xl sm:text-2xl font-black text-[#10b981]">100%</div>
-            <p className="text-[11px] font-mono dark:text-slate-300 text-slate-600 font-bold">Bloqueio sem Chave</p>
+            <p className="text-[11px] font-mono dark:text-slate-300 text-slate-600 font-bold">Lock Without Key</p>
           </div>
           <div className="text-center space-y-0.5 border-r dark:border-[#1e293b] border-slate-200 last:border-0 p-1.5">
             <div className="text-xl sm:text-2xl font-black text-[#818cf8]">SHA-256</div>
-            <p className="text-[11px] font-mono dark:text-slate-300 text-slate-600 font-bold">Trilha Criptográfica</p>
+            <p className="text-[11px] font-mono dark:text-slate-300 text-slate-600 font-bold">Cryptographic Trail</p>
           </div>
           <div className="text-center space-y-0.5 border-r dark:border-[#1e293b] border-slate-200 last:border-0 p-1.5">
             <div className="text-xl sm:text-2xl font-black text-[#38bdf8]">Device-Lock</div>
-            <p className="text-[11px] font-mono dark:text-slate-300 text-slate-600 font-bold">Fingerprint Browser</p>
+            <p className="text-[11px] font-mono dark:text-slate-300 text-slate-600 font-bold">Browser Fingerprint</p>
           </div>
           <div className="text-center space-y-0.5 p-1.5">
             <div className="text-xl sm:text-2xl font-black text-[#f59e0b]">Zero</div>
-            <p className="text-[11px] font-mono dark:text-slate-300 text-slate-600 font-bold">Alterações sem Registro</p>
+            <p className="text-[11px] font-mono dark:text-slate-300 text-slate-600 font-bold">Unregistered Tweaks</p>
           </div>
         </div>
 
@@ -129,7 +129,7 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({ onOpen
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs pt-1">
                   <div className="p-2.5 rounded-xl dark:bg-[#1a1325]/50 bg-rose-50/80 border border-rose-500/15 space-y-1">
                     <span className="text-rose-500 font-bold text-[10px] uppercase font-mono flex items-center gap-1">
-                      <AlertTriangle className="w-3 h-3" /> Problema:
+                      <AlertTriangle className="w-3 h-3" /> Problem:
                     </span>
                     <p className="dark:text-slate-300 text-slate-700 leading-snug text-[11px]">
                       {useCase.problem}
@@ -138,7 +138,7 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({ onOpen
 
                   <div className="p-2.5 rounded-xl dark:bg-[#0c1f17]/50 bg-emerald-50/80 border border-emerald-500/15 space-y-1">
                     <span className="text-emerald-500 font-bold text-[10px] uppercase font-mono flex items-center gap-1">
-                      <CheckCircle2 className="w-3 h-3" /> Solução Velloxis:
+                      <CheckCircle2 className="w-3 h-3" /> Velloxis Solution:
                     </span>
                     <p className="dark:text-slate-300 text-slate-700 leading-snug text-[11px]">
                       {useCase.solution}
@@ -153,15 +153,15 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({ onOpen
         {/* CTA Banner inside Use Cases */}
         <div className="p-6 rounded-2xl bg-gradient-to-r from-[#3525cd] via-[#4f46e5] to-[#2517a8] text-white border border-[#4f46e5]/40 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xl">
           <div className="space-y-1 text-center sm:text-left">
-            <h3 className="text-lg font-black">Pronto Para Eliminar o Scope Creep?</h3>
-            <p className="text-xs text-indigo-100">Proteja seus entregáveis e briefing com o plano Start gratuito do Velloxis.</p>
+            <h3 className="text-lg font-black">Ready To Eliminate Scope Creep?</h3>
+            <p className="text-xs text-indigo-100">Protect your project deliverables and briefing with the free Velloxis Starter plan.</p>
           </div>
           <button
             onClick={() => onOpenTrial('starter')}
             className="shrink-0 px-6 py-3 rounded-xl bg-white text-slate-950 hover:bg-slate-100 text-xs font-black transition-all shadow-lg hover:scale-105 active:scale-95 flex items-center gap-2 cursor-pointer"
           >
             <Lock className="w-4 h-4 text-[#10b981]" />
-            <span>Criar Conta Grátis Agora</span>
+            <span>Create Free Account Now</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </button>
         </div>

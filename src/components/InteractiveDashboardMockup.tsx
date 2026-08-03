@@ -51,24 +51,24 @@ export const InteractiveDashboardMockup: React.FC<InteractiveDashboardMockupProp
   const [scopeItems, setScopeItems] = useState<ProjectScopeItem[]>([
     {
       id: '1',
-      title: 'Design do Sistema & Figma UI/UX',
-      description: 'Layout responsivo para desktop e mobile com guia de estilos completo.',
+      title: 'Design System & Figma UI/UX',
+      description: 'Responsive desktop & mobile layouts with complete brand design tokens.',
       status: 'Aprovado',
-      deliverables: ['Design System', 'Protótipo Interativo', 'Design Figma']
+      deliverables: ['Design System', 'Interactive Prototype', 'Figma Files']
     },
     {
       id: '2',
-      title: 'Desenvolvimento do Front-end & Portal',
-      description: 'Aplicação web em React + TypeScript com rotas protegidas.',
+      title: 'Front-end Development & Client Portal',
+      description: 'Production web application built with React + TypeScript & protected routes.',
       status: 'Aprovado',
-      deliverables: ['Código Fonte Git', 'Portal Responsivo', 'Testes de Usabilidade']
+      deliverables: ['Git Source Code', 'Responsive Portal', 'Usability Audits']
     },
     {
       id: '3',
-      title: 'Integração de APIs & Banco de Dados RLS',
-      description: 'Configuração de webhooks, segurança RLS e envio de notificações.',
+      title: 'API Integration & Database RLS',
+      description: 'Real-time webhooks, Supabase RLS policies, and automated notifications.',
       status: 'Em Produção',
-      deliverables: ['Webhooks Activos', 'Documentação API', 'Logs SHA-256']
+      deliverables: ['Active Webhooks', 'API Documentation', 'SHA-256 Audit Logs']
     }
   ]);
 
@@ -78,7 +78,7 @@ export const InteractiveDashboardMockup: React.FC<InteractiveDashboardMockupProp
       id: 'evt-001',
       timestamp: '2026-07-24 10:14:02 UTC',
       action: 'ONBOARDING_SUBMITTED_AND_SIGNED',
-      actor: 'Nexus Retail Group (Cliente)',
+      actor: 'Nexus Retail Group (Client)',
       ipAddress: '189.23.12.9',
       deviceInfo: 'MacBook Pro • Safari 18.2',
       sha256Hash: 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
@@ -98,7 +98,7 @@ export const InteractiveDashboardMockup: React.FC<InteractiveDashboardMockupProp
       id: 'evt-003',
       timestamp: '2026-07-24 14:05:12 UTC',
       action: 'PHASE_1_DESIGN_APPROVED',
-      actor: 'Lucas M. (Aprovador)',
+      actor: 'Lucas M. (Approver)',
       ipAddress: '189.23.12.9',
       deviceInfo: 'MacBook Pro • Safari 18.2',
       sha256Hash: 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3',
@@ -113,7 +113,7 @@ export const InteractiveDashboardMockup: React.FC<InteractiveDashboardMockupProp
     if (masterKeys.includes(cleanKey)) {
       setMasterKeys(masterKeys.filter((k) => k !== cleanKey));
       setIsScopeLocked(false);
-      setMasterKeyStatus(`✅ Chave ${cleanKey} consumida com sucesso! Escopo reaberto para ajustes autorizados.`);
+      setMasterKeyStatus(`✅ Master Key ${cleanKey} consumed successfully! Scope unlocked for authorized adjustments.`);
       setMasterKeyInput('');
 
       // Add new audit event
@@ -121,7 +121,7 @@ export const InteractiveDashboardMockup: React.FC<InteractiveDashboardMockupProp
         id: `evt-${Date.now()}`,
         timestamp: new Date().toISOString().replace('T', ' ').substring(0, 19) + ' UTC',
         action: 'MASTER_KEY_CONSUMED_SCOPE_UNLOCKED',
-        actor: 'Agência / Cliente Autorizado',
+        actor: 'Agency / Authorized Client',
         ipAddress: '177.82.12.9',
         deviceInfo: 'MacBook Pro • Chrome 126',
         sha256Hash: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15) + '99a4',
@@ -129,7 +129,7 @@ export const InteractiveDashboardMockup: React.FC<InteractiveDashboardMockupProp
       };
       setAuditEvents((prev) => [newAudit, ...prev]);
     } else {
-      setMasterKeyStatus('❌ Chave Mestre inválida ou já consumida.');
+      setMasterKeyStatus('❌ Invalid Master Key or already consumed.');
     }
   };
 
@@ -182,7 +182,7 @@ export const InteractiveDashboardMockup: React.FC<InteractiveDashboardMockupProp
               }`}
             >
               <Building2 className="w-3.5 h-3.5" />
-              <span>Painel Agência</span>
+              <span>Agency Dashboard</span>
             </button>
 
             <button
@@ -194,7 +194,7 @@ export const InteractiveDashboardMockup: React.FC<InteractiveDashboardMockupProp
               }`}
             >
               <FileCheck2 className="w-3.5 h-3.5" />
-              <span>FormSteps Onboarding</span>
+              <span>Onboarding Form</span>
             </button>
 
             <button
@@ -206,7 +206,7 @@ export const InteractiveDashboardMockup: React.FC<InteractiveDashboardMockupProp
               }`}
             >
               <Laptop className="w-3.5 h-3.5" />
-              <span>Portal do Cliente</span>
+              <span>Client Portal</span>
             </button>
 
             <button
@@ -218,7 +218,7 @@ export const InteractiveDashboardMockup: React.FC<InteractiveDashboardMockupProp
               }`}
             >
               <ShieldCheck className="w-3.5 h-3.5 text-[#10b981]" />
-              <span>Trilha SHA-256</span>
+              <span>SHA-256 Audit Log</span>
             </button>
           </div>
         </div>

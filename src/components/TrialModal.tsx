@@ -15,7 +15,7 @@ export const TrialModal: React.FC<TrialModalProps> = ({ isOpen, onClose, default
     email: '',
     whatsapp: '',
     companyName: '',
-    teamSize: '1-5 pessoas',
+    teamSize: '1-5 people',
     selectedPlan: defaultPlan
   });
 
@@ -46,7 +46,7 @@ export const TrialModal: React.FC<TrialModalProps> = ({ isOpen, onClose, default
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-5 right-5 p-2 text-slate-400 hover:text-white rounded-full bg-slate-800/80"
+          className="absolute top-5 right-5 p-2 text-slate-400 hover:text-white rounded-full bg-slate-800/80 cursor-pointer"
         >
           <X className="w-5 h-5" />
         </button>
@@ -57,48 +57,48 @@ export const TrialModal: React.FC<TrialModalProps> = ({ isOpen, onClose, default
             <div className="space-y-2">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#3525cd]/10 text-[#4f46e5] text-xs font-mono font-bold uppercase tracking-wider">
                 <Lock className="w-3.5 h-3.5 text-[#10b981]" />
-                <span>Acesso Gratuito e Imediato • Sem Cartão</span>
+                <span>Instant Free Access • No Card Required</span>
               </div>
-              <h3 className="text-2xl font-black dark:text-white text-slate-950">Criar Sua Conta Velloxis</h3>
+              <h3 className="text-2xl font-black dark:text-white text-slate-950">Create Your Velloxis Account</h3>
               <p className="text-xs dark:text-slate-400 text-slate-600">
-                Preencha os dados abaixo para receber seu acesso com Trava de Escopo e Trilha SHA-256 ativas.
+                Fill out the details below to initialize your account with active Scope Lockdown and SHA-256 Audit Trails.
               </p>
             </div>
 
             <form onSubmit={handleSubmitForm} className="space-y-4">
               <div className="space-y-1">
-                <label className="text-xs font-bold dark:text-slate-300 text-slate-700">Seu Nome Completo:</label>
+                <label className="text-xs font-bold dark:text-slate-300 text-slate-700">Full Name:</label>
                 <input
                   type="text"
                   required
                   value={formData.fullName}
                   onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                  placeholder="Ex: Gabriel Alcantara"
+                  placeholder="e.g. Alex Morgan"
                   className="w-full dark:bg-[#080c14] bg-slate-50 dark:text-white text-slate-900 text-xs px-3.5 py-3 rounded-xl border dark:border-[#131126] border-[#c7c4d8]/35 focus:outline-none focus:border-[#3525cd]"
                 />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="space-y-1">
-                  <label className="text-xs font-bold dark:text-slate-300 text-slate-700">E-mail Comercial:</label>
+                  <label className="text-xs font-bold dark:text-slate-300 text-slate-700">Work Email:</label>
                   <input
                     type="email"
                     required
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    placeholder="gabriel@estudio.com"
+                    placeholder="alex@studio.com"
                     className="w-full dark:bg-[#080c14] bg-slate-50 dark:text-white text-slate-900 text-xs px-3.5 py-3 rounded-xl border dark:border-[#131126] border-[#c7c4d8]/35 focus:outline-none focus:border-[#3525cd]"
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-xs font-bold dark:text-slate-300 text-slate-700">WhatsApp Comercial:</label>
+                  <label className="text-xs font-bold dark:text-slate-300 text-slate-700">Phone / WhatsApp:</label>
                   <input
                     type="tel"
                     required
                     value={formData.whatsapp}
                     onChange={(e) => setFormData({ ...formData, whatsapp: e.target.value })}
-                    placeholder="(11) 99999-9999"
+                    placeholder="+1 (555) 019-2834"
                     className="w-full dark:bg-[#080c14] bg-slate-50 dark:text-white text-slate-900 text-xs px-3.5 py-3 rounded-xl border dark:border-[#131126] border-[#c7c4d8]/35 focus:outline-none focus:border-[#3525cd]"
                   />
                 </div>
@@ -106,7 +106,7 @@ export const TrialModal: React.FC<TrialModalProps> = ({ isOpen, onClose, default
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="space-y-1">
-                  <label className="text-xs font-bold dark:text-slate-300 text-slate-700">Nome do Estúdio / Agência:</label>
+                  <label className="text-xs font-bold dark:text-slate-300 text-slate-700">Studio / Agency Name:</label>
                   <input
                     type="text"
                     required
@@ -118,16 +118,16 @@ export const TrialModal: React.FC<TrialModalProps> = ({ isOpen, onClose, default
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-xs font-bold dark:text-slate-300 text-slate-700">Tamanho da Equipe:</label>
+                  <label className="text-xs font-bold dark:text-slate-300 text-slate-700">Team Size:</label>
                   <select
                     value={formData.teamSize}
                     onChange={(e) => setFormData({ ...formData, teamSize: e.target.value })}
                     className="w-full dark:bg-[#080c14] bg-slate-50 dark:text-white text-slate-900 text-xs px-3.5 py-3 rounded-xl border dark:border-[#131126] border-[#c7c4d8]/35 focus:outline-none focus:border-[#3525cd]"
                   >
-                    <option value="1 pessoa">1 pessoa (Freelancer)</option>
-                    <option value="2-5 pessoas">2 a 5 pessoas (Estúdio Small)</option>
-                    <option value="6-20 pessoas">6 a 20 pessoas (Agência Pro)</option>
-                    <option value="20+ pessoas">Mais de 20 pessoas (Software House)</option>
+                    <option value="1 person">Solo Developer / Freelancer</option>
+                    <option value="2-5 people">2 to 5 people (Small Studio)</option>
+                    <option value="6-20 people">6 to 20 people (Growth Agency)</option>
+                    <option value="20+ people">20+ people (Enterprise Software House)</option>
                   </select>
                 </div>
               </div>
@@ -135,17 +135,17 @@ export const TrialModal: React.FC<TrialModalProps> = ({ isOpen, onClose, default
               <div className="pt-2">
                 <button
                   type="submit"
-                  className="cta-primary-btn cta-shimmer w-full py-4 text-sm font-extrabold shadow-2xl shadow-[#3525cd]/40"
+                  className="cta-primary-btn cta-shimmer w-full py-4 text-sm font-extrabold shadow-2xl shadow-[#3525cd]/40 cursor-pointer"
                 >
                   <Key className="w-4 h-4 text-amber-300" />
-                  <span>Ativar Minha Conta Gratuitamente</span>
+                  <span>Activate My Free Account</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
 
               <div className="flex items-center justify-center gap-2 text-[11px] text-slate-500 pt-1">
                 <ShieldCheck className="w-3.5 h-3.5 text-[#10b981]" />
-                <span>Zero compromisso • Sem necessidade de cartão de crédito</span>
+                <span>Zero commitment • No credit card required</span>
               </div>
             </form>
           </div>
@@ -159,9 +159,9 @@ export const TrialModal: React.FC<TrialModalProps> = ({ isOpen, onClose, default
             </div>
 
             <div className="space-y-2">
-              <h3 className="text-xl font-bold dark:text-white text-slate-900">Gerando Instância Criptográfica Velloxis...</h3>
+              <h3 className="text-xl font-bold dark:text-white text-slate-900">Provisioning Velloxis Instance...</h3>
               <p className="text-xs text-slate-500 dark:text-slate-400">
-                Aguarde enquanto configuramos seu ambiente Whitelabel e chaves de segurança SHA-256.
+                Please wait while we configure your Whitelabel environment and SHA-256 cryptographic keys.
               </p>
             </div>
 
@@ -169,7 +169,7 @@ export const TrialModal: React.FC<TrialModalProps> = ({ isOpen, onClose, default
               <div className="w-full bg-slate-200 dark:bg-slate-800 h-2 rounded-full overflow-hidden">
                 <div className="bg-gradient-to-r from-[#3525cd] to-[#10b981] h-full rounded-full transition-all duration-300" style={{ width: `${setupProgress}%` }} />
               </div>
-              <p className="text-[10px] text-[#4f46e5] font-mono font-bold">{setupProgress}% concluído</p>
+              <p className="text-[10px] text-[#4f46e5] font-mono font-bold">{setupProgress}% completed</p>
             </div>
           </div>
         )}
@@ -182,31 +182,31 @@ export const TrialModal: React.FC<TrialModalProps> = ({ isOpen, onClose, default
             </div>
 
             <div className="space-y-2">
-              <h3 className="text-2xl font-black dark:text-white text-slate-900">Parabéns, {formData.fullName}! 🎉</h3>
+              <h3 className="text-2xl font-black dark:text-white text-slate-900">Congratulations, {formData.fullName}! 🎉</h3>
               <p className="text-xs dark:text-slate-300 text-slate-700 leading-relaxed max-w-sm mx-auto">
-                Sua conta do <strong className="dark:text-white text-slate-900">Velloxis</strong> para <strong className="dark:text-white text-slate-900">{formData.companyName}</strong> foi ativada com sucesso!
+                Your <strong className="dark:text-white text-slate-900">Velloxis</strong> workspace for <strong className="dark:text-white text-slate-900">{formData.companyName}</strong> has been provisioned successfully!
               </p>
             </div>
 
             <div className="p-4 rounded-2xl dark:bg-[#080c14] bg-slate-50 border dark:border-[#131126] border-[#c7c4d8]/35 text-left text-xs space-y-2">
               <div className="flex items-center justify-between text-slate-500 dark:text-slate-300 border-b dark:border-[#131126] border-[#c7c4d8]/35 pb-2">
-                <span>Plano Selecionado:</span>
-                <span className="font-bold text-[#4f46e5] uppercase">{formData.selectedPlan.toUpperCase()} (ATIVO)</span>
+                <span>Selected Plan:</span>
+                <span className="font-bold text-[#4f46e5] uppercase">{formData.selectedPlan.toUpperCase()} (ACTIVE)</span>
               </div>
               <div className="flex items-center justify-between text-slate-500 dark:text-slate-300">
-                <span>E-mail de Acesso:</span>
+                <span>Account Email:</span>
                 <span className="font-bold dark:text-white text-slate-900">{formData.email}</span>
               </div>
             </div>
 
             <button
               onClick={() => {
-                window.open('https://velloxis.aldolima.dev.br/', '_blank', 'noopener,noreferrer');
+                window.open('https://app.aldolima.dev.br', '_blank', 'noopener,noreferrer');
               }}
               className="w-full py-4 rounded-2xl bg-[#10b981] hover:bg-emerald-500 text-slate-950 font-black text-sm flex items-center justify-center gap-2 shadow-xl shadow-[#10b981]/20 transition-all cursor-pointer"
             >
               <Lock className="w-4 h-4 text-slate-950" />
-              <span>Acessar Meu Painel de Proteção Agora</span>
+              <span>Access My Protection Dashboard Now</span>
             </button>
           </div>
         )}

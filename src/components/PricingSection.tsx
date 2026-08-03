@@ -15,20 +15,20 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onOpenTrial }) =
         <div className="text-center max-w-3xl mx-auto space-y-4">
           <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#3525cd]/10 text-[#4f46e5] border border-[#3525cd]/30 text-[10px] font-mono font-bold uppercase tracking-widest">
             <Lock className="w-3.5 h-3.5 text-[#10b981]" />
-            <span>Planos & Faturamento Oficial Velloxis</span>
+            <span>Velloxis Official Pricing & Plans</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-black dark:text-white text-slate-950 tracking-tight">
-            Planos Transparentes Para Proteger Seus Projetos
+            Transparent Plans To Protect Your Projects
           </h2>
           <p className="text-base dark:text-slate-300 text-slate-700">
-            Escolha a melhor opção para a escala do seu negócio. Comece grátis e escale conforme suas entregas aumentam.
+            Choose the right plan for your agency scale. Start for free and scale as your client volume grows.
           </p>
         </div>
 
         {/* Pricing Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
           {pricingPlans.map((plan) => {
-            const priceText = plan.priceDisplayMonthly || `US$ ${plan.monthlyPrice}.00`;
+            const priceText = plan.priceDisplayMonthly || `$${plan.monthlyPrice}.00`;
             const isPro = plan.id === 'pro';
 
             return (
@@ -120,9 +120,9 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onOpenTrial }) =
             <ShieldCheck className="w-6 h-6" />
           </div>
           <div className="space-y-1">
-            <h4 className="text-sm font-black dark:text-white text-slate-900">Segurança & Conformidade Comercial Garantida</h4>
+            <h4 className="text-sm font-black dark:text-white text-slate-900">Security & Commercial Guarantee</h4>
             <p className="text-xs dark:text-slate-300 text-slate-600 leading-relaxed">
-              Todos os planos contam com proteção de escopo criptográfica SHA-256 e blindagem jurídica. Mude de plano ou cancele a qualquer momento direto no seu painel.
+              All plans include SHA-256 cryptographic scope protection and digital signature verification. Upgrade, downgrade, or cancel anytime directly from your agency dashboard.
             </p>
           </div>
         </div>

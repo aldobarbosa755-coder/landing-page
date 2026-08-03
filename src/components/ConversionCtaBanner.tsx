@@ -25,15 +25,15 @@ export const ConversionCtaBanner: React.FC<ConversionCtaBannerProps> = ({ onOpen
           
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#10b981]/15 text-[#10b981] border border-[#10b981]/30 text-xs font-mono font-bold uppercase tracking-wider">
             <Lock className="w-3.5 h-3.5" />
-            <span>BLINDAGEM JURÍDICA E DE ESCOPO IMEDIATA</span>
+            <span>IMMEDIATE LEGAL & SCOPE SHIELDING</span>
           </div>
 
           <h2 className="text-3xl sm:text-5xl font-black dark:text-white text-slate-950 tracking-tight leading-tight">
-            Pronto Para Eliminar o Scope Creep dos Seus Projetos?
+            Ready To Eliminate Scope Creep From Your Projects?
           </h2>
 
           <p className="text-base sm:text-lg dark:text-slate-300 text-slate-700 max-w-2xl mx-auto leading-relaxed">
-            Crie seu primeiro formulário de onboarding em 2 minutos, tranque o briefing com aprovação formal e exija Chaves Mestre para qualquer alteração.
+            Create your first onboarding form in 2 minutes, freeze project briefing sign-offs, and require Master Keys for any out-of-scope additions.
           </p>
 
           {/* Quick Lead Capture Form */}
@@ -43,15 +43,15 @@ export const ConversionCtaBanner: React.FC<ConversionCtaBannerProps> = ({ onOpen
               required
               value={quickEmail}
               onChange={(e) => setQuickEmail(e.target.value)}
-              placeholder="Digite seu melhor e-mail comercial..."
+              placeholder="Enter your work email address..."
               className="w-full dark:bg-[#080c14] bg-slate-50 text-slate-900 dark:text-white text-sm px-5 py-4 rounded-2xl border dark:border-[#131126] border-[#c7c4d8]/35 focus:outline-none focus:border-[#3525cd] shadow-inner"
             />
             <button
               type="submit"
-              className="cta-primary-btn cta-shimmer w-full sm:w-auto shrink-0 px-9 py-4 sm:py-4.5 text-sm sm:text-base font-extrabold shadow-2xl shadow-[#3525cd]/40 border border-[#4f46e5]/50"
+              className="cta-primary-btn cta-shimmer w-full sm:w-auto shrink-0 px-9 py-4 sm:py-4.5 text-sm sm:text-base font-extrabold shadow-2xl shadow-[#3525cd]/40 border border-[#4f46e5]/50 cursor-pointer"
             >
               <Key className="w-4.5 h-4.5 text-amber-300" />
-              <span>Ativar Minha Conta Grátis</span>
+              <span>Activate Free Account</span>
               <ArrowRight className="w-4.5 h-4.5" />
             </button>
           </form>
@@ -60,15 +60,15 @@ export const ConversionCtaBanner: React.FC<ConversionCtaBannerProps> = ({ onOpen
           <div className="flex flex-wrap items-center justify-center gap-6 text-xs dark:text-slate-400 text-slate-600 font-medium pt-2">
             <div className="flex items-center gap-1.5">
               <CheckCircle2 className="w-4 h-4 text-[#10b981]" />
-              <span>Sem cartão de crédito</span>
+              <span>No credit card required</span>
             </div>
             <div className="flex items-center gap-1.5">
               <CheckCircle2 className="w-4 h-4 text-[#10b981]" />
-              <span>Setup em menos de 3 minutos</span>
+              <span>Setup in less than 3 minutes</span>
             </div>
             <div className="flex items-center gap-1.5">
               <ShieldCheck className="w-4 h-4 text-[#10b981]" />
-              <span>Garantia de satisfação de 30 dias</span>
+              <span>14-day money-back guarantee</span>
             </div>
           </div>
 

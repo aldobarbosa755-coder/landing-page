@@ -33,11 +33,11 @@ export const Header: React.FC<HeaderProps> = ({ onOpenTrial }) => {
   }, []);
 
   const navLinks = [
-    { name: 'O que Resolvemos', href: '#features' },
-    { name: 'Simulador ao Vivo', href: '#demo' },
-    { name: 'Calculadora de ROI', href: '#calculator' },
-    { name: 'Casos de Uso', href: '#testimonials' },
-    { name: 'Planos', href: '#pricing' },
+    { name: 'Features', href: '#features' },
+    { name: 'Live Simulator', href: '#demo' },
+    { name: 'ROI Calculator', href: '#calculator' },
+    { name: 'Use Cases', href: '#testimonials' },
+    { name: 'Pricing', href: '/pricing' },
     { name: 'FAQ', href: '#faq' },
   ];
 
@@ -53,7 +53,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenTrial }) => {
         <div className="flex items-center justify-between">
           
           {/* Logo */}
-          <a href="#" className="flex items-center group shrink-0">
+          <a href="/" className="flex items-center group shrink-0">
             <VelloxisLogo size={36} />
           </a>
 
@@ -75,23 +75,25 @@ export const Header: React.FC<HeaderProps> = ({ onOpenTrial }) => {
             <button
               onClick={toggleTheme}
               className="p-2 rounded-xl dark:bg-[#0f172a] bg-slate-100 dark:text-slate-300 text-slate-700 hover:text-[#3525cd] dark:hover:text-white border border-[#131126] dark:border-[#131126] border-[#c7c4d8]/35 transition-colors cursor-pointer"
-              title="Alternar Modo Claro/Escuro"
+              title="Toggle Light/Dark Theme"
             >
               {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-[#3525cd]" />}
             </button>
 
-            <button
-              onClick={() => onOpenTrial('starter')}
+            <a
+              href="https://app.aldolima.dev.br"
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-xs font-bold whitespace-nowrap dark:text-slate-300 text-slate-700 hover:text-[#3525cd] dark:hover:text-white px-3 py-2 transition-colors cursor-pointer"
             >
-              Entrar
-            </button>
+              Log In
+            </a>
             <button
               onClick={() => onOpenTrial('pro')}
-              className="cta-primary-btn cta-shimmer text-xs font-black px-4 lg:px-5 py-2.5 whitespace-nowrap shadow-lg shadow-[#3525cd]/40 border border-[#4f46e5]/50 group"
+              className="cta-primary-btn cta-shimmer text-xs font-black px-4 lg:px-5 py-2.5 whitespace-nowrap shadow-lg shadow-[#3525cd]/40 border border-[#4f46e5]/50 group cursor-pointer"
             >
               <Key className="w-3.5 h-3.5 text-amber-300 group-hover:rotate-12 transition-transform duration-200" />
-              <span>Criar Conta Grátis</span>
+              <span>Create Free Account</span>
               <ArrowRight className="w-3.5 h-3.5 text-white/90 group-hover:translate-x-1 transition-transform duration-200" />
             </button>
           </div>
@@ -107,7 +109,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenTrial }) => {
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-2 rounded-xl bg-slate-800/80 text-slate-300 border border-slate-700"
-              aria-label="Abrir Menu"
+              aria-label="Open Menu"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -134,18 +136,17 @@ export const Header: React.FC<HeaderProps> = ({ onOpenTrial }) => {
           <div className="pt-3 border-t border-[#131126] flex flex-col gap-2">
             <div className="flex items-center gap-2 text-xs font-mono text-slate-400 px-1 py-1">
               <ShieldCheck className="w-4 h-4 text-[#10b981]" />
-              <span>Garantia de Escopo • 14 dias grátis sem cartão</span>
+              <span>Scope Protection • 14 days free, no credit card required</span>
             </div>
-            <button
-              onClick={() => {
-                setMobileMenuOpen(false);
-                onOpenTrial('pro');
-              }}
+            <a
+              href="https://app.aldolima.dev.br"
+              target="_blank"
+              rel="noopener noreferrer"
               className="w-full flex items-center justify-center gap-2 text-sm font-extrabold text-white py-3 rounded-2xl bg-gradient-to-r from-[#3525cd] to-[#4f46e5] shadow-lg shadow-[#3525cd]/30"
             >
-              <Lock className="w-4 h-4 text-[#10b981]" />
-              <span>Iniciar Teste Grátis Velloxis</span>
-            </button>
+              <Key className="w-4 h-4 text-amber-300" />
+              <span>Launch Velloxis App</span>
+            </a>
           </div>
         </div>
       )}
