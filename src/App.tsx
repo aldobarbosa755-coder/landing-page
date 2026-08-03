@@ -16,6 +16,7 @@ import { Footer } from './components/Footer';
 import { ChangelogDrawer } from './components/ChangelogDrawer';
 import { PricingPage } from './components/PricingPage';
 import { LegalModal } from './components/LegalModal';
+import { PolicyPage } from './components/PolicyPage';
 
 export default function App() {
   const [isTrialModalOpen, setIsTrialModalOpen] = useState(false);
@@ -25,9 +26,22 @@ export default function App() {
   const [selectedPlan, setSelectedPlan] = useState<string>('pro');
   const [currentPath, setCurrentPath] = useState<string>(() => window.location.pathname);
 
+  const navigateTo = (path: string) => {
+    window.history.pushState({}, '', path);
+    setCurrentPath(path);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const handleOpenLegal = (tab: 'all' | 'privacy' | 'terms' | 'refund' = 'all') => {
-    setLegalTab(tab);
-    setIsLegalModalOpen(true);
+    if (tab === 'privacy') {
+      navigateTo('/privacy');
+    } else if (tab === 'terms') {
+      navigateTo('/terms');
+    } else if (tab === 'refund') {
+      navigateTo('/refunds');
+    } else {
+      navigateTo('/terms');
+    }
   };
 
   useEffect(() => {
@@ -38,12 +52,6 @@ export default function App() {
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
-  const navigateTo = (path: string) => {
-    window.history.pushState({}, '', path);
-    setCurrentPath(path);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
   const handleOpenTrial = (plan: string = 'pro') => {
     window.open('https://app.aldolima.dev.br', '_blank', 'noopener,noreferrer');
   };
@@ -52,10 +60,45 @@ export default function App() {
     setIsTrialModalOpen(false);
   };
 
-  if (currentPath === '/pricing' || currentPath === '/pricing/') {
+  const normalizedPath = currentPath.toLowerCase().replace(/\/$/, '');
+
+  if (normalizedPath === '/pricing') {
     return (
       <PricingPage
         onNavigateHome={() => navigateTo('/')}
+        onOpenChangelog={() => setIsChangelogOpen(true)}
+      />
+    );
+  }
+
+  if (normalizedPath === '/terms' || normalizedPath === '/terms-of-service') {
+    return (
+      <PolicyPage
+        type="terms"
+        onNavigateHome={() => navigateTo('/')}
+        onNavigateTo={navigateTo}
+        onOpenChangelog={() => setIsChangelogOpen(true)}
+      />
+    );
+  }
+
+  if (normalizedPath === '/privacy' || normalizedPath === '/privacy-policy') {
+    return (
+      <PolicyPage
+        type="privacy"
+        onNavigateHome={() => navigateTo('/')}
+        onNavigateTo={navigateTo}
+        onOpenChangelog={() => setIsChangelogOpen(true)}
+      />
+    );
+  }
+
+  if (normalizedPath === '/refunds' || normalizedPath === '/refund' || normalizedPath === '/refund-policy') {
+    return (
+      <PolicyPage
+        type="refund"
+        onNavigateHome={() => navigateTo('/')}
+        onNavigateTo={navigateTo}
         onOpenChangelog={() => setIsChangelogOpen(true)}
       />
     );
