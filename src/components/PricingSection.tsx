@@ -20,18 +20,24 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onOpenTrial }) =
             const metaEnv = (import.meta as any).env || {};
             const clientToken = metaEnv.VITE_PADDLE_CLIENT_TOKEN || 'live_195af09cd4dcad3eb49692c55e2';
             const isLiveToken = clientToken.startsWith('live_');
-            const forceSandbox = metaEnv.VITE_PADDLE_ENV === 'sandbox' || clientToken.startsWith('test_');
 
-            // Set environment to sandbox ONLY if using test token and not live
-            if ((window as any).Paddle.Environment && forceSandbox && !isLiveToken) {
-              (window as any).Paddle.Environment.set('sandbox');
+            // Force Paddle SDK Environment: production for live_ tokens, sandbox for test_ tokens
+            if ((window as any).Paddle.Environment) {
+              if (isLiveToken || metaEnv.VITE_PADDLE_ENV === 'production') {
+                (window as any).Paddle.Environment.set('production');
+              } else {
+                (window as any).Paddle.Environment.set('sandbox');
+              }
             }
 
             if ((window as any).Paddle.Initialize && !(window as any).__paddle_initialized) {
               (window as any).Paddle.Initialize({
                 token: clientToken,
-                eventCallback: (event: any) => {
-                  console.log('Paddle Event:', event);
+                eventCallback: (data: any) => {
+                  console.log('Paddle Event:', data);
+                  if (data?.name === 'checkout.error') {
+                    console.error('Paddle Checkout Error Details:', data);
+                  }
                 },
               });
               (window as any).__paddle_initialized = true;
