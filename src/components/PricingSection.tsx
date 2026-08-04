@@ -19,13 +19,12 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onOpenTrial }) =
           try {
             const metaEnv = (import.meta as any).env || {};
             const clientToken = metaEnv.VITE_PADDLE_CLIENT_TOKEN || 'live_195af09cd4dcad3eb49692c55e2';
-            const isLiveToken = clientToken.startsWith('live_');
 
-            // Force Paddle SDK Environment: production for live_ tokens, sandbox for test_ tokens
+            // Paddle Billing v2 SDK defaults to production environment.
+            // ONLY set 'sandbox' if explicitly using a test token (test_...) or VITE_PADDLE_ENV === 'sandbox'.
+            // NEVER call set('production') because 'production' is NOT a valid environment parameter in Paddle JS v2.
             if ((window as any).Paddle.Environment) {
-              if (isLiveToken || metaEnv.VITE_PADDLE_ENV === 'production') {
-                (window as any).Paddle.Environment.set('production');
-              } else {
+              if (clientToken.startsWith('test_') || metaEnv.VITE_PADDLE_ENV === 'sandbox') {
                 (window as any).Paddle.Environment.set('sandbox');
               }
             }
@@ -82,6 +81,8 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onOpenTrial }) =
             : (metaEnv.VITE_PADDLE_PRICE_ENTERPRISE_MONTHLY || 'pri_01kz4hzd18djqsg05gcaad2wj8');
         }
 
+        console.log(`[Paddle] Opening checkout for plan ${planId} (${billingCycle}) with priceId: ${priceId}`);
+
         (window as any).Paddle.Checkout.open({
           items: [
             {
@@ -89,9 +90,13 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onOpenTrial }) =
               quantity: 1,
             },
           ],
+          settings: {
+            displayMode: 'overlay',
+            theme: 'dark',
+          },
         });
       } catch (err) {
-        console.log('Paddle Checkout fallback triggered', err);
+        console.error('Paddle Checkout fallback triggered', err);
         onOpenTrial(planId);
       }
     } else {
@@ -210,18 +215,37 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onOpenTrial }) =
 
                   {/* Price */}
                   <div className="pt-2">
-                    <div className="flex items-baseline gap-1.5">
-                      <span className="text-3xl sm:text-4xl font-black dark:text-white text-slate-950 font-sans tracking-tight">
-                        {displayPrice}
-                      </span>
-                      <span className="text-xs font-mono font-bold text-slate-400">
-                        {periodLabel}
-                      </span>
-                    </div>
-                    {subtextAnnual && (
-                      <p className="text-[10px] font-mono font-bold text-[#10b981] mt-1">
-                        {subtextAnnual}
-                      </p>
+                    {billingCycle === 'annual' && plan.monthlyPrice > 0 ? (
+                      <div>
+                        <div className="flex items-baseline gap-2">
+                          <span className="text-3xl sm:text-4xl font-black text-[#10b981] font-sans tracking-tight">
+                            {displayPrice}
+                          </span>
+                          <span className="text-xs font-mono font-bold text-slate-400">
+                            /month
+                          </span>
+                          <span className="text-xs font-mono font-bold line-through text-slate-400/80 ml-1">
+                            ${plan.monthlyPrice.toFixed(2)}
+                          </span>
+                        </div>
+                        {subtextAnnual && (
+                          <p className="text-[10px] font-mono font-bold text-[#10b981] mt-1 flex items-center gap-1.5 flex-wrap">
+                            <span>{subtextAnnual}</span>
+                            <span className="bg-[#10b981]/20 text-[#10b981] px-1.5 py-0.5 rounded text-[9px] uppercase font-black">
+                              Save 20%
+                            </span>
+                          </p>
+                        )}
+                      </div>
+                    ) : (
+                      <div className="flex items-baseline gap-1.5">
+                        <span className="text-3xl sm:text-4xl font-black dark:text-white text-slate-950 font-sans tracking-tight">
+                          {displayPrice}
+                        </span>
+                        <span className="text-xs font-mono font-bold text-slate-400">
+                          {periodLabel}
+                        </span>
+                      </div>
                     )}
                   </div>
 
