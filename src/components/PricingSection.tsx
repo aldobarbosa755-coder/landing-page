@@ -17,27 +17,27 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onOpenTrial }) =
         if ((window as any).Paddle) {
           setPaddleLoaded(true);
           try {
-            if (!(window as any).__paddle_initialized) {
-              const metaEnv = (import.meta as any).env || {};
-              const clientToken = metaEnv.VITE_PADDLE_CLIENT_TOKEN || 'live_195af09cd4dcad3eb49692c55e2';
-              const isLive = clientToken.startsWith('live_');
-              const paddleEnv = metaEnv.VITE_PADDLE_ENV || (isLive ? 'production' : 'sandbox');
+            const metaEnv = (import.meta as any).env || {};
+            const clientToken = metaEnv.VITE_PADDLE_CLIENT_TOKEN || 'live_195af09cd4dcad3eb49692c55e2';
+            const isLiveToken = clientToken.startsWith('live_');
+            const forceSandbox = metaEnv.VITE_PADDLE_ENV === 'sandbox' || clientToken.startsWith('test_');
 
-              if ((window as any).Paddle.Environment && paddleEnv === 'sandbox') {
-                (window as any).Paddle.Environment.set('sandbox');
-              }
-              if ((window as any).Paddle.Initialize) {
-                (window as any).Paddle.Initialize({
-                  token: clientToken,
-                  eventCallback: (event: any) => {
-                    console.log('Paddle Event:', event);
-                  },
-                });
-                (window as any).__paddle_initialized = true;
-              }
+            // Set environment to sandbox ONLY if using test token and not live
+            if ((window as any).Paddle.Environment && forceSandbox && !isLiveToken) {
+              (window as any).Paddle.Environment.set('sandbox');
+            }
+
+            if ((window as any).Paddle.Initialize && !(window as any).__paddle_initialized) {
+              (window as any).Paddle.Initialize({
+                token: clientToken,
+                eventCallback: (event: any) => {
+                  console.log('Paddle Event:', event);
+                },
+              });
+              (window as any).__paddle_initialized = true;
             }
           } catch (e) {
-            console.log('Paddle initialized');
+            console.error('Paddle init error:', e);
           }
         }
       };
@@ -153,8 +153,16 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onOpenTrial }) =
         {/* Pricing Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
           {pricingPlans.map((plan) => {
-            const priceText = plan.priceDisplayMonthly || `$${plan.monthlyPrice}.00`;
+            const displayPrice = billingCycle === 'annual'
+              ? (plan.priceDisplayAnnual || (plan.annualPrice > 0 ? `$${plan.annualPrice.toFixed(2)}` : '$0.00'))
+              : (plan.priceDisplayMonthly || `$${plan.monthlyPrice.toFixed(2)}`);
+
+            const periodLabel = plan.id === 'starter' ? '/forever' : '/month';
             const isPro = plan.id === 'pro';
+
+            const subtextAnnual = (billingCycle === 'annual' && plan.id !== 'starter')
+              ? (plan.id === 'pro' ? 'Billed annually as $278.40/yr' : 'Billed annually as $758.40/yr')
+              : null;
 
             return (
               <div
@@ -198,12 +206,17 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onOpenTrial }) =
                   <div className="pt-2">
                     <div className="flex items-baseline gap-1.5">
                       <span className="text-3xl sm:text-4xl font-black dark:text-white text-slate-950 font-sans tracking-tight">
-                        {priceText}
+                        {displayPrice}
                       </span>
                       <span className="text-xs font-mono font-bold text-slate-400">
-                        {plan.periodText || '/month'}
+                        {periodLabel}
                       </span>
                     </div>
+                    {subtextAnnual && (
+                      <p className="text-[10px] font-mono font-bold text-[#10b981] mt-1">
+                        {subtextAnnual}
+                      </p>
+                    )}
                   </div>
 
                   {/* Feature Checklist */}

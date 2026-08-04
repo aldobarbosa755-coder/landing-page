@@ -27,9 +27,9 @@ export const pricingPlans: PricingPlan[] = [
     name: 'Freelancer Core (Pro)',
     tagline: 'For freelancers, studios, and agencies operating at scale.',
     monthlyPrice: 29,
-    annualPrice: 29,
+    annualPrice: 23.20,
     priceDisplayMonthly: '$29.00',
-    priceDisplayAnnual: '$29.00',
+    priceDisplayAnnual: '$23.20',
     periodText: '/month',
     description: 'Complete Whitelabel with your agency brand, unlimited projects, and AI contract audits.',
     features: [
@@ -49,9 +49,9 @@ export const pricingPlans: PricingPlan[] = [
     name: 'Compliance Suite',
     tagline: 'For software houses, agencies, and high-volume operations.',
     monthlyPrice: 79,
-    annualPrice: 79,
+    annualPrice: 63.20,
     priceDisplayMonthly: '$79.00',
-    priceDisplayAnnual: '$79.00',
+    priceDisplayAnnual: '$63.20',
     periodText: '/month',
     description: 'Unlimited AI contract audits, verified security badges, and dedicated VIP support.',
     features: [

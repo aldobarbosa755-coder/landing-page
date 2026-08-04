@@ -25,27 +25,27 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onNavigateHome, onNavi
         if ((window as any).Paddle) {
           setPaddleLoaded(true);
           try {
-            if (!(window as any).__paddle_initialized) {
-              const metaEnv = (import.meta as any).env || {};
-              const clientToken = metaEnv.VITE_PADDLE_CLIENT_TOKEN || 'live_195af09cd4dcad3eb49692c55e2';
-              const isLive = clientToken.startsWith('live_');
-              const paddleEnv = metaEnv.VITE_PADDLE_ENV || (isLive ? 'production' : 'sandbox');
+            const metaEnv = (import.meta as any).env || {};
+            const clientToken = metaEnv.VITE_PADDLE_CLIENT_TOKEN || 'live_195af09cd4dcad3eb49692c55e2';
+            const isLiveToken = clientToken.startsWith('live_');
+            const forceSandbox = metaEnv.VITE_PADDLE_ENV === 'sandbox' || clientToken.startsWith('test_');
 
-              if ((window as any).Paddle.Environment && paddleEnv === 'sandbox') {
-                (window as any).Paddle.Environment.set('sandbox');
-              }
-              if ((window as any).Paddle.Initialize) {
-                (window as any).Paddle.Initialize({
-                  token: clientToken,
-                  eventCallback: (event: any) => {
-                    console.log('Paddle Event:', event);
-                  },
-                });
-                (window as any).__paddle_initialized = true;
-              }
+            // Set environment to sandbox ONLY if using test token and not live
+            if ((window as any).Paddle.Environment && forceSandbox && !isLiveToken) {
+              (window as any).Paddle.Environment.set('sandbox');
+            }
+
+            if ((window as any).Paddle.Initialize && !(window as any).__paddle_initialized) {
+              (window as any).Paddle.Initialize({
+                token: clientToken,
+                eventCallback: (event: any) => {
+                  console.log('Paddle Event:', event);
+                },
+              });
+              (window as any).__paddle_initialized = true;
             }
           } catch (e) {
-            console.log('Paddle initialized');
+            console.error('Paddle init error:', e);
           }
         }
       };
@@ -216,10 +216,15 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onNavigateHome, onNavi
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
             {pricingPlans.map((plan) => {
               const displayPrice = billingCycle === 'annual'
-                ? (plan.annualPrice > 0 ? `$${(plan.annualPrice * 0.8).toFixed(2)}` : '$0.00')
-                : (plan.priceDisplayMonthly || `$${plan.monthlyPrice}.00`);
+                ? (plan.priceDisplayAnnual || (plan.annualPrice > 0 ? `$${plan.annualPrice.toFixed(2)}` : '$0.00'))
+                : (plan.priceDisplayMonthly || `$${plan.monthlyPrice.toFixed(2)}`);
 
+              const periodLabel = plan.id === 'starter' ? '/forever' : '/month';
               const isPro = plan.id === 'pro';
+
+              const subtextAnnual = (billingCycle === 'annual' && plan.id !== 'starter')
+                ? (plan.id === 'pro' ? 'Billed annually as $278.40/yr' : 'Billed annually as $758.40/yr')
+                : null;
 
               return (
                 <div
@@ -263,12 +268,12 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onNavigateHome, onNavi
                           {displayPrice}
                         </span>
                         <span className="text-xs font-mono font-bold text-slate-400">
-                          {plan.periodText || '/month'}
+                          {periodLabel}
                         </span>
                       </div>
-                      {billingCycle === 'annual' && plan.monthlyPrice > 0 && (
-                        <p className="text-[10px] text-[#10b981] font-mono font-bold mt-1">
-                          Billed annually (${(plan.annualPrice * 0.8 * 12).toFixed(2)}/year)
+                      {subtextAnnual && (
+                        <p className="text-[10px] font-mono font-bold text-[#10b981] mt-1">
+                          {subtextAnnual}
                         </p>
                       )}
                     </div>
