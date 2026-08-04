@@ -23,8 +23,8 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onOpenTrial }) =
               const isLive = clientToken.startsWith('live_');
               const paddleEnv = metaEnv.VITE_PADDLE_ENV || (isLive ? 'production' : 'sandbox');
 
-              if ((window as any).Paddle.Environment) {
-                (window as any).Paddle.Environment.set(paddleEnv);
+              if ((window as any).Paddle.Environment && paddleEnv === 'sandbox') {
+                (window as any).Paddle.Environment.set('sandbox');
               }
               if ((window as any).Paddle.Initialize) {
                 (window as any).Paddle.Initialize({
