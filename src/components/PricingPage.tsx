@@ -25,18 +25,24 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onNavigateHome, onNavi
         if ((window as any).Paddle) {
           setPaddleLoaded(true);
           try {
-            const metaEnv = (import.meta as any).env || {};
-            const clientToken = metaEnv.VITE_PADDLE_CLIENT_TOKEN || 'live_195af09cd4dcad3eb49692c55e2';
-            const isLive = clientToken.startsWith('live_');
-            const paddleEnv = metaEnv.VITE_PADDLE_ENV || (isLive ? 'production' : 'sandbox');
+            if (!(window as any).__paddle_initialized) {
+              const metaEnv = (import.meta as any).env || {};
+              const clientToken = metaEnv.VITE_PADDLE_CLIENT_TOKEN || 'live_195af09cd4dcad3eb49692c55e2';
+              const isLive = clientToken.startsWith('live_');
+              const paddleEnv = metaEnv.VITE_PADDLE_ENV || (isLive ? 'production' : 'sandbox');
 
-            if ((window as any).Paddle.Environment) {
-              (window as any).Paddle.Environment.set(paddleEnv);
-            }
-            if ((window as any).Paddle.Initialize) {
-              (window as any).Paddle.Initialize({
-                token: clientToken,
-              });
+              if ((window as any).Paddle.Environment) {
+                (window as any).Paddle.Environment.set(paddleEnv);
+              }
+              if ((window as any).Paddle.Initialize) {
+                (window as any).Paddle.Initialize({
+                  token: clientToken,
+                  eventCallback: (event: any) => {
+                    console.log('Paddle Event:', event);
+                  },
+                });
+                (window as any).__paddle_initialized = true;
+              }
             }
           } catch (e) {
             console.log('Paddle initialized');
@@ -90,6 +96,11 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onNavigateHome, onNavi
         }
 
         (window as any).Paddle.Checkout.open({
+          settings: {
+            displayMode: 'overlay',
+            theme: 'dark',
+            locale: 'en',
+          },
           items: [
             {
               priceId,
@@ -161,16 +172,28 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onNavigateHome, onNavi
                 <code className="text-[#818cf8] font-bold">&lt;script src="https://cdn.paddle.com/paddle/v2/paddle.js"&gt;&lt;/script&gt;</code>
               </div>
 
-              {/* Paddle Domain Authorization Hint */}
-              <div className="max-w-xl text-xs dark:bg-[#0f172a]/80 bg-amber-500/10 border border-amber-500/30 p-3.5 rounded-2xl text-amber-600 dark:text-amber-300 text-left space-y-1 font-sans">
-                <div className="font-bold flex items-center gap-1.5 text-amber-700 dark:text-amber-200">
-                  <ShieldCheck className="w-4 h-4 text-amber-500 shrink-0" />
-                  <span>Solução para a mensagem "Something went wrong" do Paddle:</span>
+              {/* Paddle Domain Authorization Status */}
+              {typeof window !== 'undefined' && window.location.hostname.includes('velloxis.aldolima.dev.br') ? (
+                <div className="max-w-xl text-xs dark:bg-[#062c1d]/90 bg-emerald-500/10 border border-emerald-500/30 p-3.5 rounded-2xl text-emerald-600 dark:text-emerald-300 text-left space-y-1 font-sans">
+                  <div className="font-bold flex items-center gap-1.5 text-emerald-700 dark:text-emerald-200">
+                    <ShieldCheck className="w-4 h-4 text-emerald-500 shrink-0" />
+                    <span>Domínio Autorizado no Paddle: velloxis.aldolima.dev.br</span>
+                  </div>
+                  <p className="text-[11px] leading-relaxed opacity-90">
+                    O checkout do Paddle está ativo em ambiente de produção com Token Live <code className="font-mono text-[#818cf8]">live_195af0...</code> e os Price IDs configurados.
+                  </p>
                 </div>
-                <p className="text-[11px] leading-relaxed opacity-90">
-                  O Paddle bloqueia a janela de pagamento se a URL do site não estiver pré-aprovada. Vá no painel do Paddle em <strong>Developer Tools &rarr; Checkout Settings &rarr; Allowed Domains</strong> e autorize o domínio <strong>{typeof window !== 'undefined' ? window.location.hostname : 'seu-dominio.com'}</strong>.
-                </p>
-              </div>
+              ) : (
+                <div className="max-w-xl text-xs dark:bg-[#0f172a]/80 bg-amber-500/10 border border-amber-500/30 p-3.5 rounded-2xl text-amber-600 dark:text-amber-300 text-left space-y-1 font-sans">
+                  <div className="font-bold flex items-center gap-1.5 text-amber-700 dark:text-amber-200">
+                    <ShieldCheck className="w-4 h-4 text-amber-500 shrink-0" />
+                    <span>Paddle Ativo no Domínio de Produção: velloxis.aldolima.dev.br</span>
+                  </div>
+                  <p className="text-[11px] leading-relaxed opacity-90">
+                    Seu domínio principal <strong>velloxis.aldolima.dev.br</strong> está Aprovado no Paddle! Para abrir o checkout aqui na visualização de preview, adicione também <strong>{typeof window !== 'undefined' ? window.location.hostname : 'preview-url'}</strong> no Paddle em <em>Developer Tools &rarr; Checkout Settings &rarr; Allowed Domains</em>.
+                  </p>
+                </div>
+              )}
             </div>
 
             {/* Quick Legal Switcher Tabs */}
