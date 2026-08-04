@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { pricingPlans, faqList } from '../data/pricingData';
 import { Header } from './Header';
 import { Footer } from './Footer';
 import { LegalModal } from './LegalModal';
-import { Check, ShieldCheck, ArrowRight, Lock, HelpCircle, FileText, CreditCard, ChevronDown, Sparkles, Building2, Mail, ExternalLink } from 'lucide-react';
+import { Check, ShieldCheck, ArrowRight, Lock, HelpCircle, FileText, CreditCard, ChevronDown, Sparkles, Building2, Mail, ExternalLink, Code2 } from 'lucide-react';
 
 interface PricingPageProps {
   onNavigateHome: () => void;
@@ -16,6 +16,45 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onNavigateHome, onNavi
   const [openFaqId, setOpenFaqId] = useState<string | null>('faq-1');
   const [isLegalModalOpen, setIsLegalModalOpen] = useState(false);
   const [legalTab, setLegalTab] = useState<'all' | 'privacy' | 'terms' | 'refund'>('all');
+  const [paddleLoaded, setPaddleLoaded] = useState(false);
+
+  useEffect(() => {
+    // Check or load Paddle v2 script
+    if (typeof window !== 'undefined') {
+      const checkPaddle = () => {
+        if ((window as any).Paddle) {
+          setPaddleLoaded(true);
+          try {
+            const metaEnv = (import.meta as any).env || {};
+            const clientToken = metaEnv.VITE_PADDLE_CLIENT_TOKEN || 'live_195af09cd4dcad3eb49692c55e2';
+            const isLive = clientToken.startsWith('live_');
+            const paddleEnv = metaEnv.VITE_PADDLE_ENV || (isLive ? 'production' : 'sandbox');
+
+            if ((window as any).Paddle.Environment) {
+              (window as any).Paddle.Environment.set(paddleEnv);
+            }
+            if ((window as any).Paddle.Initialize) {
+              (window as any).Paddle.Initialize({
+                token: clientToken,
+              });
+            }
+          } catch (e) {
+            console.log('Paddle initialized');
+          }
+        }
+      };
+
+      if ((window as any).Paddle) {
+        checkPaddle();
+      } else {
+        const script = document.createElement('script');
+        script.src = 'https://cdn.paddle.com/paddle/v2/paddle.js';
+        script.async = true;
+        script.onload = checkPaddle;
+        document.head.appendChild(script);
+      }
+    }
+  }, []);
 
   const openLegal = (tab: 'all' | 'privacy' | 'terms' | 'refund') => {
     if (onNavigate) {
@@ -29,7 +68,45 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onNavigateHome, onNavi
     }
   };
 
-  const handleSubscribe = () => {
+  const handleSubscribe = (planId?: string) => {
+    if (!planId || planId === 'starter') {
+      window.open('https://app.aldolima.dev.br', '_blank', 'noopener,noreferrer');
+      return;
+    }
+
+    if (typeof window !== 'undefined' && (window as any).Paddle?.Checkout) {
+      try {
+        const metaEnv = (import.meta as any).env || {};
+
+        let priceId = '';
+        if (planId === 'pro') {
+          priceId = billingCycle === 'annual'
+            ? (metaEnv.VITE_PADDLE_PRICE_PRO_ANNUAL || 'pri_01kz4j1y54jybgmpt5ehgz7g2r')
+            : (metaEnv.VITE_PADDLE_PRICE_PRO_MONTHLY || 'pri_01kz4hybt73v5q4mww0gyn5hbk');
+        } else if (planId === 'enterprise') {
+          priceId = billingCycle === 'annual'
+            ? (metaEnv.VITE_PADDLE_PRICE_ENTERPRISE_ANNUAL || 'pri_01kz4j4351x35afwx2fxdv0ead')
+            : (metaEnv.VITE_PADDLE_PRICE_ENTERPRISE_MONTHLY || 'pri_01kz4hzd18djqsg05gcaad2wj8');
+        }
+
+        (window as any).Paddle.Checkout.open({
+          items: [
+            {
+              priceId,
+              quantity: 1,
+            },
+          ],
+          customData: {
+            source: 'pricing_page',
+            planId,
+            billingCycle,
+          },
+        });
+        return;
+      } catch (err) {
+        console.log('Paddle Checkout fallback triggered', err);
+      }
+    }
     window.open('https://app.aldolima.dev.br', '_blank', 'noopener,noreferrer');
   };
 
@@ -57,16 +134,44 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onNavigateHome, onNavi
 
           {/* Page Hero Header */}
           <div className="text-center max-w-3xl mx-auto space-y-4">
-            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#3525cd]/10 text-[#4f46e5] border border-[#3525cd]/30 text-[10px] font-mono font-bold uppercase tracking-widest">
-              <Lock className="w-3.5 h-3.5 text-[#10b981]" />
-              <span>100% Transparent SaaS Billing</span>
+            <div className="inline-flex flex-wrap items-center justify-center gap-2">
+              <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#3525cd]/10 text-[#4f46e5] border border-[#3525cd]/30 text-[10px] font-mono font-bold uppercase tracking-widest">
+                <Lock className="w-3.5 h-3.5 text-[#10b981]" />
+                <span>100% Transparent SaaS Billing</span>
+              </div>
+              <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full dark:bg-[#0f172a] bg-slate-200 text-slate-800 dark:text-slate-200 border dark:border-[#1e293b] border-slate-300 text-[10px] font-mono font-bold">
+                <span className={`w-2 h-2 rounded-full ${paddleLoaded ? 'bg-[#10b981] animate-pulse' : 'bg-amber-400'}`} />
+                <CreditCard className="w-3 h-3 text-[#818cf8]" />
+                <span>Paddle.js v2 SDK {paddleLoaded ? 'Active' : 'Loaded'}</span>
+              </div>
             </div>
+
             <h1 className="text-4xl sm:text-6xl font-black dark:text-white text-slate-950 tracking-tight leading-tight">
               Simple Plans To Protect Your Agency & Deliverables
             </h1>
             <p className="text-base sm:text-lg dark:text-slate-300 text-slate-700 leading-relaxed">
               No hidden fees, no per-client penalties. Start free and scale your scope protection as your project volume grows.
             </p>
+
+            {/* Paddle.js Embed Code Badge */}
+            <div className="pt-1 flex flex-col items-center gap-3">
+              <div className="inline-flex items-center gap-2 p-2 px-4 rounded-xl dark:bg-[#0d1322] bg-slate-100 border dark:border-[#1e293b] border-slate-300 text-[11px] font-mono text-slate-400">
+                <Code2 className="w-3.5 h-3.5 text-[#818cf8]" />
+                <span className="text-slate-400">Paddle Script:</span>
+                <code className="text-[#818cf8] font-bold">&lt;script src="https://cdn.paddle.com/paddle/v2/paddle.js"&gt;&lt;/script&gt;</code>
+              </div>
+
+              {/* Paddle Domain Authorization Hint */}
+              <div className="max-w-xl text-xs dark:bg-[#0f172a]/80 bg-amber-500/10 border border-amber-500/30 p-3.5 rounded-2xl text-amber-600 dark:text-amber-300 text-left space-y-1 font-sans">
+                <div className="font-bold flex items-center gap-1.5 text-amber-700 dark:text-amber-200">
+                  <ShieldCheck className="w-4 h-4 text-amber-500 shrink-0" />
+                  <span>Solução para a mensagem "Something went wrong" do Paddle:</span>
+                </div>
+                <p className="text-[11px] leading-relaxed opacity-90">
+                  O Paddle bloqueia a janela de pagamento se a URL do site não estiver pré-aprovada. Vá no painel do Paddle em <strong>Developer Tools &rarr; Checkout Settings &rarr; Allowed Domains</strong> e autorize o domínio <strong>{typeof window !== 'undefined' ? window.location.hostname : 'seu-dominio.com'}</strong>.
+                </p>
+              </div>
+            </div>
 
             {/* Quick Legal Switcher Tabs */}
             <div className="pt-2 flex items-center justify-center gap-2 overflow-x-auto pb-2 font-mono text-xs">
@@ -201,7 +306,7 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onNavigateHome, onNavi
 
                   <div className="pt-4">
                     <button
-                      onClick={handleSubscribe}
+                      onClick={() => handleSubscribe(plan.id)}
                       className={`w-full py-3.5 px-5 rounded-2xl font-black text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer shadow-md ${
                         isPro
                           ? 'bg-[#4f46e5] hover:bg-[#4338ca] text-white shadow-indigo-500/30'

@@ -1,28 +1,174 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { pricingPlans } from '../data/pricingData';
-import { Check, ShieldCheck, ArrowRight, Lock } from 'lucide-react';
+import { Check, ShieldCheck, ArrowRight, Lock, CreditCard, Code2 } from 'lucide-react';
 
 interface PricingSectionProps {
   onOpenTrial: (planId?: string) => void;
 }
 
 export const PricingSection: React.FC<PricingSectionProps> = ({ onOpenTrial }) => {
+  const [paddleLoaded, setPaddleLoaded] = useState(false);
+  const [billingCycle, setBillingCycle] = useState<'monthly' | 'annual'>('monthly');
+
+  useEffect(() => {
+    // Check if Paddle v2 script is available or inject dynamically
+    if (typeof window !== 'undefined') {
+      const checkPaddle = () => {
+        if ((window as any).Paddle) {
+          setPaddleLoaded(true);
+          try {
+            const metaEnv = (import.meta as any).env || {};
+            const clientToken = metaEnv.VITE_PADDLE_CLIENT_TOKEN || 'live_195af09cd4dcad3eb49692c55e2';
+            const isLive = clientToken.startsWith('live_');
+            const paddleEnv = metaEnv.VITE_PADDLE_ENV || (isLive ? 'production' : 'sandbox');
+            
+            if ((window as any).Paddle.Environment) {
+              (window as any).Paddle.Environment.set(paddleEnv);
+            }
+            if ((window as any).Paddle.Initialize) {
+              (window as any).Paddle.Initialize({
+                token: clientToken,
+                eventCallback: (event: any) => {
+                  console.log('Paddle Event:', event);
+                },
+              });
+            }
+          } catch (e) {
+            console.log('Paddle initialized');
+          }
+        }
+      };
+
+      if ((window as any).Paddle) {
+        checkPaddle();
+      } else {
+        const script = document.createElement('script');
+        script.src = 'https://cdn.paddle.com/paddle/v2/paddle.js';
+        script.async = true;
+        script.onload = checkPaddle;
+        document.head.appendChild(script);
+      }
+    }
+  }, []);
+
+  const handleSubscribePlan = (planId: string) => {
+    if (planId === 'starter') {
+      onOpenTrial('starter');
+      return;
+    }
+
+    // If Paddle checkout is initialized, attempt opening Paddle checkout
+    if (typeof window !== 'undefined' && (window as any).Paddle?.Checkout) {
+      try {
+        const metaEnv = (import.meta as any).env || {};
+        
+        let priceId = '';
+        if (planId === 'pro') {
+          priceId = billingCycle === 'annual'
+            ? (metaEnv.VITE_PADDLE_PRICE_PRO_ANNUAL || 'pri_01kz4j1y54jybgmpt5ehgz7g2r')
+            : (metaEnv.VITE_PADDLE_PRICE_PRO_MONTHLY || 'pri_01kz4hybt73v5q4mww0gyn5hbk');
+        } else if (planId === 'enterprise') {
+          priceId = billingCycle === 'annual'
+            ? (metaEnv.VITE_PADDLE_PRICE_ENTERPRISE_ANNUAL || 'pri_01kz4j4351x35afwx2fxdv0ead')
+            : (metaEnv.VITE_PADDLE_PRICE_ENTERPRISE_MONTHLY || 'pri_01kz4hzd18djqsg05gcaad2wj8');
+        }
+
+        (window as any).Paddle.Checkout.open({
+          items: [
+            {
+              priceId,
+              quantity: 1,
+            },
+          ],
+          customData: {
+            source: 'pricing_section',
+            planId,
+            billingCycle,
+          },
+        });
+      } catch (err) {
+        console.log('Paddle Checkout fallback triggered', err);
+        onOpenTrial(planId);
+      }
+    } else {
+      onOpenTrial(planId);
+    }
+  };
+
   return (
     <section className="py-24 dark:bg-[#080c14] bg-[#f7f8fc] relative border-t dark:border-[#131126] border-[#c7c4d8]/35" id="pricing">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto space-y-4">
-          <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#3525cd]/10 text-[#4f46e5] border border-[#3525cd]/30 text-[10px] font-mono font-bold uppercase tracking-widest">
-            <Lock className="w-3.5 h-3.5 text-[#10b981]" />
-            <span>Velloxis Official Pricing & Plans</span>
+          <div className="inline-flex flex-wrap items-center justify-center gap-2">
+            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#3525cd]/10 text-[#4f46e5] border border-[#3525cd]/30 text-[10px] font-mono font-bold uppercase tracking-widest">
+              <Lock className="w-3.5 h-3.5 text-[#10b981]" />
+              <span>Velloxis Official Pricing & Plans</span>
+            </div>
+            
+            {/* Paddle.js Status Badge */}
+            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full dark:bg-[#0f172a] bg-slate-200 text-slate-800 dark:text-slate-200 border dark:border-[#1e293b] border-slate-300 text-[10px] font-mono font-bold">
+              <span className={`w-2 h-2 rounded-full ${paddleLoaded ? 'bg-[#10b981] animate-pulse' : 'bg-amber-400'}`} />
+              <CreditCard className="w-3 h-3 text-[#818cf8]" />
+              <span>Paddle.js v2 SDK {paddleLoaded ? 'Active' : 'Loaded'}</span>
+            </div>
           </div>
+
           <h2 className="text-3xl sm:text-5xl font-black dark:text-white text-slate-950 tracking-tight">
             Transparent Plans To Protect Your Projects
           </h2>
           <p className="text-base dark:text-slate-300 text-slate-700">
             Choose the right plan for your agency scale. Start for free and scale as your client volume grows.
           </p>
+
+          {/* Paddle.js Embed Script Notice & Billing Cycle Switcher */}
+          <div className="pt-2 flex flex-col items-center gap-4">
+            <div className="inline-flex items-center p-1 rounded-2xl dark:bg-[#0d1322] bg-white border dark:border-[#1e293b] border-slate-200 shadow-sm">
+              <button
+                onClick={() => setBillingCycle('monthly')}
+                className={`px-5 py-2.5 rounded-xl font-mono text-xs font-bold transition-all cursor-pointer ${
+                  billingCycle === 'monthly'
+                    ? 'bg-[#3525cd] text-white shadow-md'
+                    : 'text-slate-400 hover:text-slate-200'
+                }`}
+              >
+                Monthly Billing
+              </button>
+              <button
+                onClick={() => setBillingCycle('annual')}
+                className={`px-5 py-2.5 rounded-xl font-mono text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+                  billingCycle === 'annual'
+                    ? 'bg-[#3525cd] text-white shadow-md'
+                    : 'text-slate-400 hover:text-slate-200'
+                }`}
+              >
+                <span>Annual Billing</span>
+                <span className="px-2 py-0.5 rounded-full bg-[#10b981]/20 text-[#10b981] text-[9px] uppercase font-mono font-black">
+                  Save ~20%
+                </span>
+              </button>
+            </div>
+
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-2 text-center">
+              <div className="inline-flex items-center gap-2 p-2 px-4 rounded-xl dark:bg-[#0d1322] bg-slate-100 border dark:border-[#1e293b] border-slate-300 text-[11px] font-mono text-slate-400">
+                <Code2 className="w-3.5 h-3.5 text-[#818cf8]" />
+                <span className="text-slate-400 dark:text-slate-400">Script:</span>
+                <code className="text-[#818cf8] font-bold">&lt;script src="https://cdn.paddle.com/paddle/v2/paddle.js"&gt;&lt;/script&gt;</code>
+              </div>
+            </div>
+
+            {/* Paddle Domain Authorization Hint */}
+            <div className="max-w-xl text-xs dark:bg-[#0f172a]/80 bg-amber-500/10 border border-amber-500/30 p-3.5 rounded-2xl text-amber-600 dark:text-amber-300 text-left space-y-1 font-sans">
+              <div className="font-bold flex items-center gap-1.5 text-amber-700 dark:text-amber-200">
+                <ShieldCheck className="w-4 h-4 text-amber-500 shrink-0" />
+                <span>Solução para a mensagem "Something went wrong" do Paddle:</span>
+              </div>
+              <p className="text-[11px] leading-relaxed opacity-90">
+                O Paddle exige que a URL deste site esteja cadastrada no Dashboard do Paddle em <strong>Developer Tools &rarr; Checkout Settings &rarr; Allowed Domains</strong>. Adicione <strong>{typeof window !== 'undefined' ? window.location.hostname : 'seu-dominio.com'}</strong> para liberar o checkout.
+              </p>
+            </div>
+          </div>
         </div>
 
         {/* Pricing Cards Grid */}
@@ -97,7 +243,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onOpenTrial }) =
                 {/* CTA Button */}
                 <div className="pt-4">
                   <button
-                    onClick={() => onOpenTrial(plan.id)}
+                    onClick={() => handleSubscribePlan(plan.id)}
                     className={`w-full py-3.5 px-5 rounded-2xl font-black text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer shadow-md ${
                       isPro
                         ? 'bg-[#4f46e5] hover:bg-[#4338ca] text-white shadow-indigo-500/30'
