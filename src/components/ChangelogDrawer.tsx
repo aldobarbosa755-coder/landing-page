@@ -11,48 +11,22 @@ type FilterCategory = 'all' | 'new' | 'improved' | 'fixed';
 
 export const ChangelogDrawer: React.FC<ChangelogDrawerProps> = ({ isOpen, onClose }) => {
   const [activeFilter, setActiveFilter] = useState<FilterCategory>('all');
-  const [lastSyncTime, setLastSyncTime] = useState<string>('Just now');
-  const [isSyncing, setIsSyncing] = useState<boolean>(false);
   const saasData = useSaaSVersion();
-
-  // Automatic live sync effect that listens or polls for SaaS release updates
-  useEffect(() => {
-    if (!isOpen) return;
-
-    const syncWithSaaS = async () => {
-      setIsSyncing(true);
-      try {
-        await syncAppVersion();
-      } catch (err) {
-        // Fallback handled inside syncAppVersion
-      } finally {
-        setTimeout(() => {
-          setIsSyncing(false);
-          const now = new Date();
-          setLastSyncTime(now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit' }));
-        }, 600);
-      }
-    };
-
-    syncWithSaaS();
-    const interval = setInterval(syncWithSaaS, 30000); // Auto-sync every 30s
-    return () => clearInterval(interval);
-  }, [isOpen]);
 
   if (!isOpen) return null;
 
   const releases = [
     {
-      version: 'v3.0.0',
+      version: 'v3.3.1',
       tag: 'LATEST',
       tagColor: 'bg-[#3525cd]/20 text-[#818cf8] border-[#3525cd]/40',
       date: 'August 05, 2026',
-      subtitle: 'Release Notes Drawer, SaaS Live Version Sync Engine, and Verified Trust Seals.',
+      subtitle: 'System Updates & Release Notes Drawer, SHA-256 Scope Lockdown, and Verified Trust Seals.',
       changes: [
         {
           type: 'new',
-          title: 'Release Notes & Live Changelog Drawer',
-          description: 'Interactive update notes drawer accessible from the footer, automatically syncing SaaS version updates.',
+          title: 'Release Notes & Live Changelog Drawer (v3.3.1)',
+          description: 'Interactive update notes drawer accessible from the footer, displaying latest SaaS platform version and release notes.',
         },
         {
           type: 'new',
@@ -140,18 +114,12 @@ export const ChangelogDrawer: React.FC<ChangelogDrawerProps> = ({ isOpen, onClos
             <div className="flex items-center gap-2 flex-wrap">
               <span className="w-2.5 h-2.5 rounded-full bg-[#10b981] animate-pulse" />
               <h2 className="text-base sm:text-lg font-black text-white flex items-center gap-2">
-                System Updates & Release Notes <span id="app-version-badge" className="text-[#818cf8] text-xs font-mono font-bold bg-[#3525cd]/20 px-2 py-0.5 rounded-full border border-[#3525cd]/40">v3.0.0</span>
+                System Updates & Release Notes <span id="app-version-badge" className="text-[#818cf8] text-xs font-mono font-bold bg-[#3525cd]/20 px-2 py-0.5 rounded-full border border-[#3525cd]/40">{saasData.version}</span>
               </h2>
             </div>
             <p className="text-xs text-slate-300">
-              Track platform enhancements. SaaS changes are automatically synchronized here.
+              Track platform enhancements, release notes, and version history.
             </p>
-            <div className="flex items-center gap-2 pt-0.5">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#10b981]/15 text-[#10b981] border border-[#10b981]/30 text-[11px] font-mono font-bold">
-                <RefreshCw className={`w-3 h-3 ${isSyncing ? 'animate-spin' : ''}`} />
-                <span>Auto-Sync with SaaS: {lastSyncTime}</span>
-              </span>
-            </div>
           </div>
 
           <button
@@ -284,7 +252,7 @@ export const ChangelogDrawer: React.FC<ChangelogDrawerProps> = ({ isOpen, onClos
         <div className="p-4 border-t border-[#1e293b] bg-[#080c14] flex flex-wrap items-center justify-between gap-3 text-xs text-slate-400 font-mono">
           <div className="flex items-center gap-2">
             <ShieldCheck className="w-4 h-4 text-[#10b981]" />
-            <span>Velloxis Auto-Sync <span id="app-version-badge">v3.0.0</span> • Direct Feed</span>
+            <span>Velloxis Verified <span id="app-version-badge">{saasData.version}</span> • Direct Feed</span>
           </div>
           <button
             onClick={onClose}

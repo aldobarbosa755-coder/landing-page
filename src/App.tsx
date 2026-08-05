@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { syncAppVersion } from './utils/versionSync';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { InteractiveDashboardMockup } from './components/InteractiveDashboardMockup';
@@ -53,9 +52,6 @@ export default function App() {
       setCurrentPath(window.location.pathname);
     };
     window.addEventListener('popstate', handlePopState);
-
-    // Initial synchronization of SaaS version and changelog summary
-    syncAppVersion();
 
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
