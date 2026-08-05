@@ -106,7 +106,7 @@ export const ChangelogDrawer: React.FC<ChangelogDrawerProps> = ({ isOpen, onClos
   return (
     <div className="fixed inset-0 z-50 overflow-hidden bg-slate-950/80 backdrop-blur-sm flex justify-end">
       {/* Side Drawer Panel */}
-      <div className="w-full max-w-2xl bg-[#0d1322] border-l border-[#1e293b] text-slate-100 h-full flex flex-col shadow-2xl animate-in slide-in-from-right duration-300">
+      <div className="w-full max-w-2xl bg-[#0d1322] border-l border-[#1e293b] text-slate-100 h-full flex flex-col shadow-2xl">
         
         {/* Drawer Header */}
         <div className="p-5 sm:p-6 border-b border-[#1e293b] bg-[#080c14] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
