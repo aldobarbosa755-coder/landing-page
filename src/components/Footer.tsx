@@ -38,9 +38,28 @@ export const Footer: React.FC<FooterProps> = ({ onOpenChangelog, onOpenLegal }) 
                   className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#3525cd]/20 hover:bg-[#3525cd]/30 text-[#818cf8] border border-[#3525cd]/40 text-[10px] font-mono font-bold transition-all cursor-pointer shadow-sm hover:scale-105"
                 >
                   <Sparkles className="w-3 h-3 text-amber-400" />
-                  <span>Changelog v2.5.0 LATEST ⚡</span>
+                  <span>Changelog <span id="app-version-badge">v3.0.0</span> ⚡</span>
                 </button>
               )}
+            </div>
+
+            {/* Live SaaS Changelog Auto-Sync Card */}
+            <div className="p-3.5 rounded-2xl bg-[#080c14] border border-[#131126] text-xs font-mono space-y-1.5 max-w-sm">
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#818cf8]" />
+                  <span className="text-[10px] font-bold text-slate-300 uppercase tracking-wider">SaaS Version:</span>
+                  <span id="app-version-badge" className="px-2 py-0.5 rounded bg-[#3525cd]/30 text-[#818cf8] font-bold text-[10px] border border-[#3525cd]/40">
+                    v3.0.0
+                  </span>
+                </div>
+                <span id="app-release-date" className="text-[10px] text-slate-500 font-mono">
+                  Sincronizado
+                </span>
+              </div>
+              <p id="app-changelog-summary" className="text-slate-400 text-xs font-sans italic line-clamp-2">
+                Carregando novidades...
+              </p>
             </div>
           </div>
 

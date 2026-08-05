@@ -1,107 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { pricingPlans } from '../data/pricingData';
-import { Check, ShieldCheck, ArrowRight, Lock, CreditCard } from 'lucide-react';
+import { Check, ShieldCheck, ArrowRight, Lock } from 'lucide-react';
 
 interface PricingSectionProps {
   onOpenTrial: (planId?: string) => void;
 }
 
 export const PricingSection: React.FC<PricingSectionProps> = ({ onOpenTrial }) => {
-  const [paddleLoaded, setPaddleLoaded] = useState(false);
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'annual'>('monthly');
 
-  useEffect(() => {
-    // Check if Paddle v2 script is available or inject dynamically
-    if (typeof window !== 'undefined') {
-      const checkPaddle = () => {
-        if ((window as any).Paddle) {
-          setPaddleLoaded(true);
-          try {
-            const metaEnv = (import.meta as any).env || {};
-            const clientToken = metaEnv.VITE_PADDLE_CLIENT_TOKEN || 'live_195af09cd4dcad3eb49692c55e2';
-
-            // Paddle Billing v2 SDK defaults to production environment.
-            // ONLY set 'sandbox' if explicitly using a test token (test_...) or VITE_PADDLE_ENV === 'sandbox'.
-            // NEVER call set('production') because 'production' is NOT a valid environment parameter in Paddle JS v2.
-            if ((window as any).Paddle.Environment) {
-              if (clientToken.startsWith('test_') || metaEnv.VITE_PADDLE_ENV === 'sandbox') {
-                (window as any).Paddle.Environment.set('sandbox');
-              }
-            }
-
-            if ((window as any).Paddle.Initialize && !(window as any).__paddle_initialized) {
-              (window as any).Paddle.Initialize({
-                token: clientToken,
-                eventCallback: (data: any) => {
-                  console.log('Paddle Event:', data);
-                  if (data?.name === 'checkout.error') {
-                    console.error('Paddle Checkout Error Details:', data);
-                  }
-                },
-              });
-              (window as any).__paddle_initialized = true;
-            }
-          } catch (e) {
-            console.error('Paddle init error:', e);
-          }
-        }
-      };
-
-      if ((window as any).Paddle) {
-        checkPaddle();
-      } else {
-        const script = document.createElement('script');
-        script.src = 'https://cdn.paddle.com/paddle/v2/paddle.js';
-        script.async = true;
-        script.onload = checkPaddle;
-        document.head.appendChild(script);
-      }
-    }
-  }, []);
-
   const handleSubscribePlan = (planId: string) => {
-    if (planId === 'starter') {
-      onOpenTrial('starter');
-      return;
-    }
-
-    // If Paddle checkout is initialized, attempt opening Paddle checkout
-    if (typeof window !== 'undefined' && (window as any).Paddle?.Checkout) {
-      try {
-        const metaEnv = (import.meta as any).env || {};
-        
-        let priceId = '';
-        if (planId === 'pro') {
-          priceId = billingCycle === 'annual'
-            ? (metaEnv.VITE_PADDLE_PRICE_PRO_ANNUAL || 'pri_01kz4j1y54jybgmpt5ehgz7g2r')
-            : (metaEnv.VITE_PADDLE_PRICE_PRO_MONTHLY || 'pri_01kz4hybt73v5q4mww0gyn5hbk');
-        } else if (planId === 'enterprise') {
-          priceId = billingCycle === 'annual'
-            ? (metaEnv.VITE_PADDLE_PRICE_ENTERPRISE_ANNUAL || 'pri_01kz4j4351x35afwx2fxdv0ead')
-            : (metaEnv.VITE_PADDLE_PRICE_ENTERPRISE_MONTHLY || 'pri_01kz4hzd18djqsg05gcaad2wj8');
-        }
-
-        console.log(`[Paddle] Opening checkout for plan ${planId} (${billingCycle}) with priceId: ${priceId}`);
-
-        (window as any).Paddle.Checkout.open({
-          items: [
-            {
-              priceId,
-              quantity: 1,
-            },
-          ],
-          settings: {
-            displayMode: 'overlay',
-            theme: 'dark',
-          },
-        });
-      } catch (err) {
-        console.error('Paddle Checkout fallback triggered', err);
-        onOpenTrial(planId);
-      }
-    } else {
-      onOpenTrial(planId);
-    }
+    onOpenTrial(planId);
   };
 
   return (
@@ -115,13 +24,6 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onOpenTrial }) =
               <Lock className="w-3.5 h-3.5 text-[#10b981]" />
               <span>Velloxis Official Pricing & Plans</span>
             </div>
-            
-            {/* Paddle.js Status Badge */}
-            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full dark:bg-[#0f172a] bg-slate-200 text-slate-800 dark:text-slate-200 border dark:border-[#1e293b] border-slate-300 text-[10px] font-mono font-bold">
-              <span className={`w-2 h-2 rounded-full ${paddleLoaded ? 'bg-[#10b981] animate-pulse' : 'bg-amber-400'}`} />
-              <CreditCard className="w-3 h-3 text-[#818cf8]" />
-              <span>Paddle.js v2 SDK {paddleLoaded ? 'Active' : 'Loaded'}</span>
-            </div>
           </div>
 
           <h2 className="text-3xl sm:text-5xl font-black dark:text-white text-slate-950 tracking-tight">
@@ -131,7 +33,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onOpenTrial }) =
             Choose the right plan for your agency scale. Start for free and scale as your client volume grows.
           </p>
 
-          {/* Paddle.js Embed Script Notice & Billing Cycle Switcher */}
+          {/* Billing Cycle Switcher */}
           <div className="pt-2 flex flex-col items-center gap-4">
             <div className="inline-flex items-center p-1 rounded-2xl dark:bg-[#0d1322] bg-white border dark:border-[#1e293b] border-slate-200 shadow-sm">
               <button

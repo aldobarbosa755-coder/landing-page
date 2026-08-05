@@ -1,7 +1,7 @@
 import React from 'react';
 import { Header } from './Header';
 import { Footer } from './Footer';
-import { FileText, ShieldCheck, Lock, CheckCircle2, Mail, ExternalLink, ArrowLeft, CreditCard, Scale } from 'lucide-react';
+import { FileText, ShieldCheck, Lock, CheckCircle2, Mail, ArrowLeft, Scale } from 'lucide-react';
 
 interface TermsPageProps {
   onNavigate: (path: string) => void;
@@ -35,7 +35,7 @@ export const TermsPage: React.FC<TermsPageProps> = ({ onNavigate, onOpenTrial, o
               </div>
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#10b981]/15 text-[#10b981] border border-[#10b981]/30 text-xs font-mono font-bold uppercase tracking-wider">
                 <ShieldCheck className="w-3.5 h-3.5" />
-                <span>Paddle Merchant Compliant</span>
+                <span>PCI & Security Compliant</span>
               </div>
             </div>
           </div>
@@ -145,10 +145,10 @@ export const TermsPage: React.FC<TermsPageProps> = ({ onNavigate, onOpenTrial, o
             <section className="space-y-4">
               <h2 className="text-xl font-extrabold dark:text-white text-slate-900 flex items-center gap-2 tracking-tight">
                 <span className="w-8 h-8 rounded-xl bg-[#3525cd]/20 text-[#818cf8] flex items-center justify-center font-mono text-sm shrink-0">4</span>
-                Merchant of Record & Subscriptions (Paddle.com)
+                Subscriptions & Billing Terms
               </h2>
               <p>
-                Our order process is conducted by our online reseller <strong>Paddle.com Market Limited ("Paddle")</strong>. Paddle is the Merchant of Record for all our orders. Paddle handles all customer service inquiries and returns for transactions processed through their checkout.
+                All subscriptions and orders for <strong>Velloxis</strong> are processed through encrypted payment infrastructure. We handle customer service inquiries and support for all account billing activities.
               </p>
               <ul className="space-y-3 pt-2">
                 <li className="flex items-start gap-3">
@@ -182,15 +182,6 @@ export const TermsPage: React.FC<TermsPageProps> = ({ onNavigate, onOpenTrial, o
                 >
                   <Mail className="w-4 h-4" />
                   <span>Email: aldobarbosa755@gmail.com</span>
-                </a>
-                <a
-                  href="https://paddle.net"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-5 py-3 rounded-xl dark:bg-[#0f172a] bg-slate-200 dark:text-slate-200 text-slate-800 border dark:border-[#1e293b] border-slate-300 font-mono font-bold text-xs transition-all inline-flex items-center gap-2"
-                >
-                  <ExternalLink className="w-4 h-4 text-[#10b981]" />
-                  <span>Paddle Buyer Support (paddle.net)</span>
                 </a>
               </div>
             </section>

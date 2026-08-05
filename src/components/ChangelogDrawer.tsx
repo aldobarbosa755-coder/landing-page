@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Sparkles, Check, Wrench, Zap, X, ShieldCheck, Clock, Layers, RefreshCw } from 'lucide-react';
+import { syncAppVersion } from '../utils/versionSync';
 
 interface ChangelogDrawerProps {
   isOpen: boolean;
@@ -20,10 +21,9 @@ export const ChangelogDrawer: React.FC<ChangelogDrawerProps> = ({ isOpen, onClos
     const syncWithSaaS = async () => {
       setIsSyncing(true);
       try {
-        // Attempt live fetch from SaaS endpoint if available
-        await fetch('https://app.aldolima.dev.br/', { mode: 'no-cors' }).catch(() => {});
+        await syncAppVersion();
       } catch (err) {
-        // Fallback to local synchronized state
+        // Fallback handled inside syncAppVersion
       } finally {
         setTimeout(() => {
           setIsSyncing(false);

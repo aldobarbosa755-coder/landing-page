@@ -137,7 +137,7 @@ export const PrivacyPage: React.FC<PrivacyPageProps> = ({ onNavigate, onOpenTria
                 Financial & Payment Processing Data
               </h2>
               <p>
-                Payment processing for subscriptions is handled exclusively by <strong>Paddle.com Market Limited ("Paddle")</strong>. Velloxis never stores, transmits, or processes raw credit card numbers or banking passwords on its servers. All checkout sessions take place inside Paddle's PCI-DSS Level 1 certified environment.
+                Payment processing for subscriptions is handled exclusively by encrypted payment gateways. Velloxis never stores, transmits, or processes raw credit card numbers or banking passwords on its servers. All checkout transactions take place inside secure PCI-DSS Level 1 certified environments.
               </p>
             </section>
 

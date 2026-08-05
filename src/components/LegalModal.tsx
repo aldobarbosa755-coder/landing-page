@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ShieldCheck, X, FileText, CheckCircle2, Lock, CreditCard, ExternalLink, Copy, Check } from 'lucide-react';
+import { ShieldCheck, X, FileText, CheckCircle2 } from 'lucide-react';
 
 interface LegalModalProps {
   isOpen: boolean;
@@ -9,7 +9,6 @@ interface LegalModalProps {
 
 export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, onClose, defaultTab = 'all' }) => {
   const [activeTab, setActiveTab] = useState<'all' | 'privacy' | 'terms' | 'refund'>(defaultTab);
-  const [copied, setCopied] = useState(false);
 
   // Sync activeTab when defaultTab changes on modal open
   React.useEffect(() => {
@@ -17,13 +16,6 @@ export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, onClose, default
   }, [defaultTab, isOpen]);
 
   if (!isOpen) return null;
-
-  const handleCopyPaddleText = () => {
-    const text = `Velloxis is a Client Onboarding & Scope Lockdown SaaS platform for freelancers and digital agencies. Payments are processed by Paddle.com Market Limited, acting as Merchant of Record. Contact aldobarbosa755@gmail.com for support.`;
-    navigator.clipboard.writeText(text);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
 
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4">
@@ -40,7 +32,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, onClose, default
                 Privacy Policy & Terms
               </h2>
               <p className="text-xs text-slate-400 font-medium mt-0.5">
-                Includes Paddle Merchant Refund & Cancellation Policy
+                Includes Refund & Cancellation Policy
               </p>
             </div>
           </div>
@@ -150,7 +142,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, onClose, default
                 </h3>
               </div>
               <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">
-                By using our platform to generate project delivery reports, structure industrial design briefs, or integrate billing via Paddle, you agree to the conditions outlined below:
+                By using our platform to generate project delivery reports, structure industrial design briefs, or access account features, you agree to the conditions outlined below:
               </p>
               <ul className="space-y-3 pt-1">
                 <li className="flex items-start gap-2.5">
@@ -175,12 +167,12 @@ export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, onClose, default
             </div>
           )}
 
-          {/* SECTION 3: REFUND & CANCELLATION POLICY (PADDLE SAAS) */}
+          {/* SECTION 3: REFUND & CANCELLATION POLICY */}
           {(activeTab === 'all' || activeTab === 'refund') && (
             <div className="space-y-4">
               <div className="flex items-center justify-between border-b border-[#1e293b] pb-2">
                 <h3 className="text-sm font-black text-white font-mono uppercase tracking-wider">
-                  3. REFUND & CANCELLATION POLICY (PADDLE SAAS)
+                  3. REFUND & CANCELLATION POLICY
                 </h3>
                 <span className="px-2.5 py-0.5 rounded-full bg-[#10b981]/15 text-[#10b981] border border-[#10b981]/30 text-[10px] font-mono font-bold uppercase">
                   14-DAY GUARANTEE
@@ -188,7 +180,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, onClose, default
               </div>
               
               <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">
-                All digital transactions and SaaS subscription payments for <strong className="text-white">Velloxis</strong> are processed through <strong className="text-white">Paddle.com Market Limited ("Paddle")</strong>, our authorized Merchant of Record. Paddle is responsible for secure checkout handling, tax compliance, invoicing, and refund processing.
+                All digital transactions and SaaS subscription payments for <strong className="text-white">Velloxis</strong> are securely processed. We handle checkout security, tax compliance, invoicing, and instant refund processing.
               </p>
 
               {/* Green Box */}
@@ -203,7 +195,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, onClose, default
                 <ul className="space-y-2.5 pt-1">
                   <li className="flex items-start gap-2.5 text-xs sm:text-sm">
                     <span className="text-[#10b981] font-bold">•</span>
-                    <span><strong className="text-white">Subscription Cancellation:</strong> You may cancel your SaaS subscription at any time via your account settings or through the billing link in your Paddle email receipts.</span>
+                    <span><strong className="text-white">Subscription Cancellation:</strong> You may cancel your SaaS subscription at any time via your account settings or email support.</span>
                   </li>
                   <li className="flex items-start gap-2.5 text-xs sm:text-sm">
                     <span className="text-[#10b981] font-bold">•</span>
@@ -211,28 +203,9 @@ export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, onClose, default
                   </li>
                   <li className="flex items-start gap-2.5 text-xs sm:text-sm">
                     <span className="text-[#10b981] font-bold">•</span>
-                    <span><strong className="text-white">How to Request Refund:</strong> Email support directly at <a href="mailto:aldobarbosa755@gmail.com" className="text-[#818cf8] underline font-mono font-bold">aldobarbosa755@gmail.com</a> or access Paddle Buyer Support at <a href="https://paddle.net" target="_blank" rel="noopener noreferrer" className="text-[#10b981] underline font-mono font-bold inline-flex items-center gap-1">https://paddle.net</a>.</span>
+                    <span><strong className="text-white">How to Request Refund:</strong> Email support directly at <a href="mailto:aldobarbosa755@gmail.com" className="text-[#818cf8] underline font-mono font-bold">aldobarbosa755@gmail.com</a>.</span>
                   </li>
                 </ul>
-              </div>
-
-              {/* Vendor Copy Helper */}
-              <div className="p-4 rounded-xl bg-[#0d1322] border border-[#1e293b] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-                <div className="space-y-1">
-                  <span className="text-[10px] font-mono uppercase text-[#818cf8] font-bold block tracking-wider">
-                    PADDLE VENDOR ONBOARDING FIELD COPY HELPERS:
-                  </span>
-                  <p className="text-xs font-mono text-slate-300">
-                    Copy "What will you sell on Paddle?" text
-                  </p>
-                </div>
-                <button
-                  onClick={handleCopyPaddleText}
-                  className="px-3.5 py-1.5 rounded-lg bg-[#0f172a] hover:bg-[#1e293b] text-slate-200 border border-[#1e293b] font-mono text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer shrink-0"
-                >
-                  {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
-                  <span>{copied ? 'Copied!' : 'Copy'}</span>
-                </button>
               </div>
 
             </div>

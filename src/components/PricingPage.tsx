@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { pricingPlans, faqList } from '../data/pricingData';
 import { Header } from './Header';
 import { Footer } from './Footer';
@@ -16,56 +16,6 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onNavigateHome, onNavi
   const [openFaqId, setOpenFaqId] = useState<string | null>('faq-1');
   const [isLegalModalOpen, setIsLegalModalOpen] = useState(false);
   const [legalTab, setLegalTab] = useState<'all' | 'privacy' | 'terms' | 'refund'>('all');
-  const [paddleLoaded, setPaddleLoaded] = useState(false);
-
-  useEffect(() => {
-    // Check or load Paddle v2 script
-    if (typeof window !== 'undefined') {
-      const checkPaddle = () => {
-        if ((window as any).Paddle) {
-          setPaddleLoaded(true);
-          try {
-            const metaEnv = (import.meta as any).env || {};
-            const clientToken = metaEnv.VITE_PADDLE_CLIENT_TOKEN || 'live_195af09cd4dcad3eb49692c55e2';
-
-            // Paddle Billing v2 SDK defaults to production environment.
-            // ONLY set 'sandbox' if explicitly using a test token (test_...) or VITE_PADDLE_ENV === 'sandbox'.
-            // NEVER call set('production') because 'production' is NOT a valid environment parameter in Paddle JS v2.
-            if ((window as any).Paddle.Environment) {
-              if (clientToken.startsWith('test_') || metaEnv.VITE_PADDLE_ENV === 'sandbox') {
-                (window as any).Paddle.Environment.set('sandbox');
-              }
-            }
-
-            if ((window as any).Paddle.Initialize && !(window as any).__paddle_initialized) {
-              (window as any).Paddle.Initialize({
-                token: clientToken,
-                eventCallback: (data: any) => {
-                  console.log('Paddle Event:', data);
-                  if (data?.name === 'checkout.error') {
-                    console.error('Paddle Checkout Error Details:', data);
-                  }
-                },
-              });
-              (window as any).__paddle_initialized = true;
-            }
-          } catch (e) {
-            console.error('Paddle init error:', e);
-          }
-        }
-      };
-
-      if ((window as any).Paddle) {
-        checkPaddle();
-      } else {
-        const script = document.createElement('script');
-        script.src = 'https://cdn.paddle.com/paddle/v2/paddle.js';
-        script.async = true;
-        script.onload = checkPaddle;
-        document.head.appendChild(script);
-      }
-    }
-  }, []);
 
   const openLegal = (tab: 'all' | 'privacy' | 'terms' | 'refund') => {
     if (onNavigate) {
@@ -80,45 +30,6 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onNavigateHome, onNavi
   };
 
   const handleSubscribe = (planId?: string) => {
-    if (!planId || planId === 'starter') {
-      window.open('https://app.aldolima.dev.br', '_blank', 'noopener,noreferrer');
-      return;
-    }
-
-    if (typeof window !== 'undefined' && (window as any).Paddle?.Checkout) {
-      try {
-        const metaEnv = (import.meta as any).env || {};
-
-        let priceId = '';
-        if (planId === 'pro') {
-          priceId = billingCycle === 'annual'
-            ? (metaEnv.VITE_PADDLE_PRICE_PRO_ANNUAL || 'pri_01kz4j1y54jybgmpt5ehgz7g2r')
-            : (metaEnv.VITE_PADDLE_PRICE_PRO_MONTHLY || 'pri_01kz4hybt73v5q4mww0gyn5hbk');
-        } else if (planId === 'enterprise') {
-          priceId = billingCycle === 'annual'
-            ? (metaEnv.VITE_PADDLE_PRICE_ENTERPRISE_ANNUAL || 'pri_01kz4j4351x35afwx2fxdv0ead')
-            : (metaEnv.VITE_PADDLE_PRICE_ENTERPRISE_MONTHLY || 'pri_01kz4hzd18djqsg05gcaad2wj8');
-        }
-
-        console.log(`[Paddle Page] Opening checkout for plan ${planId} (${billingCycle}) with priceId: ${priceId}`);
-
-        (window as any).Paddle.Checkout.open({
-          items: [
-            {
-              priceId,
-              quantity: 1,
-            },
-          ],
-          settings: {
-            displayMode: 'overlay',
-            theme: 'dark',
-          },
-        });
-        return;
-      } catch (err) {
-        console.error('Paddle Checkout fallback triggered', err);
-      }
-    }
     window.open('https://app.aldolima.dev.br', '_blank', 'noopener,noreferrer');
   };
 
@@ -140,7 +51,7 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onNavigateHome, onNavi
             </button>
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#10b981]/15 text-[#10b981] border border-[#10b981]/30 text-xs font-mono font-bold uppercase tracking-wider">
               <ShieldCheck className="w-3.5 h-3.5" />
-              <span>Paddle Merchant of Record Compliant</span>
+              <span>Verified Scope Protection</span>
             </div>
           </div>
 
@@ -150,11 +61,6 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onNavigateHome, onNavi
               <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#3525cd]/10 text-[#4f46e5] border border-[#3525cd]/30 text-[10px] font-mono font-bold uppercase tracking-widest">
                 <Lock className="w-3.5 h-3.5 text-[#10b981]" />
                 <span>100% Transparent SaaS Billing</span>
-              </div>
-              <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full dark:bg-[#0f172a] bg-slate-200 text-slate-800 dark:text-slate-200 border dark:border-[#1e293b] border-slate-300 text-[10px] font-mono font-bold">
-                <span className={`w-2 h-2 rounded-full ${paddleLoaded ? 'bg-[#10b981] animate-pulse' : 'bg-amber-400'}`} />
-                <CreditCard className="w-3 h-3 text-[#818cf8]" />
-                <span>Paddle.js v2 SDK {paddleLoaded ? 'Active' : 'Loaded'}</span>
               </div>
             </div>
 
@@ -408,16 +314,16 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onNavigateHome, onNavi
             </div>
           </div>
 
-          {/* Paddle Merchant of Record & Legal Compliance Statement */}
+          {/* Billing & Legal Compliance Statement */}
           <div className="p-8 rounded-3xl dark:bg-[#0d1322] bg-white border dark:border-[#131126] border-slate-200 shadow-xl space-y-6">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b dark:border-[#1e293b] border-slate-200 pb-6">
               <div className="space-y-1">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#3525cd]/15 text-[#818cf8] border border-[#3525cd]/30 text-xs font-mono font-bold uppercase">
                   <CreditCard className="w-3.5 h-3.5" />
-                  <span>Merchant of Record Disclosure</span>
+                  <span>Billing & Order Security</span>
                 </div>
                 <h3 className="text-xl font-extrabold dark:text-white text-slate-900">
-                  Payments & Order Processing via Paddle.com
+                  Payments & Secure Subscription Management
                 </h3>
               </div>
               <div className="px-3.5 py-1.5 rounded-full bg-[#10b981]/15 text-[#10b981] border border-[#10b981]/30 text-xs font-mono font-bold flex items-center gap-1.5">
@@ -430,10 +336,10 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onNavigateHome, onNavi
               <div className="space-y-3">
                 <h4 className="font-bold dark:text-white text-slate-900 flex items-center gap-2">
                   <Building2 className="w-4 h-4 text-[#818cf8]" />
-                  Authorized Reseller & Billing Support
+                  Secure Billing Support
                 </h4>
                 <p>
-                  Our order process is conducted by our online reseller <strong>Paddle.com Market Limited ("Paddle")</strong>. Paddle is the Merchant of Record for all our orders. Paddle handles customer service inquiries, taxes, and return processing.
+                  All transactions and subscription plans for <strong>Velloxis</strong> are securely processed. We handle customer service inquiries, tax compliance, and instant cancellation requests.
                 </p>
                 <div className="pt-2 flex flex-wrap gap-2">
                   <button
@@ -477,12 +383,6 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onNavigateHome, onNavi
                     <span className="text-slate-400">Billing Portal:</span>
                     <a href="https://app.aldolima.dev.br" target="_blank" rel="noopener noreferrer" className="font-bold text-[#10b981] underline">
                       app.aldolima.dev.br
-                    </a>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-slate-400">Paddle Buyer Help:</span>
-                    <a href="https://paddle.net" target="_blank" rel="noopener noreferrer" className="font-bold text-[#818cf8] underline inline-flex items-center gap-1">
-                      paddle.net <ExternalLink className="w-3 h-3" />
                     </a>
                   </div>
                 </div>
