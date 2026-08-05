@@ -22,11 +22,9 @@ import {
 } from 'lucide-react';
 import { AuditEvent, ProjectScopeItem } from '../types';
 
-interface InteractiveDashboardMockupProps {
-  onOpenChangelog?: () => void;
-}
+interface InteractiveDashboardMockupProps {}
 
-export const InteractiveDashboardMockup: React.FC<InteractiveDashboardMockupProps> = ({ onOpenChangelog }) => {
+export const InteractiveDashboardMockup: React.FC<InteractiveDashboardMockupProps> = () => {
   const [activeTab, setActiveTab] = useState<'whitelabel-dashboard' | 'onboarding-form' | 'client-tracking' | 'audit-trail'>('whitelabel-dashboard');
 
   // Whitelabel Agency Customization State

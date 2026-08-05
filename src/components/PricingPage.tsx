@@ -8,10 +8,9 @@ import { Check, ShieldCheck, ArrowRight, Lock, HelpCircle, FileText, CreditCard,
 interface PricingPageProps {
   onNavigateHome: () => void;
   onNavigate?: (path: string) => void;
-  onOpenChangelog?: () => void;
 }
 
-export const PricingPage: React.FC<PricingPageProps> = ({ onNavigateHome, onNavigate, onOpenChangelog }) => {
+export const PricingPage: React.FC<PricingPageProps> = ({ onNavigateHome, onNavigate }) => {
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'annual'>('monthly');
   const [openFaqId, setOpenFaqId] = useState<string | null>('faq-1');
   const [isLegalModalOpen, setIsLegalModalOpen] = useState(false);
@@ -436,7 +435,7 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onNavigateHome, onNavi
       </main>
 
       {/* Footer */}
-      <Footer onOpenChangelog={onOpenChangelog} onOpenLegal={openLegal} />
+      <Footer onOpenLegal={openLegal} />
 
       {/* Legal Policy Modal */}
       <LegalModal

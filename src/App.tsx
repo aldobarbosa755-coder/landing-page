@@ -13,7 +13,6 @@ import { ConversionCtaBanner } from './components/ConversionCtaBanner';
 import { TrialModal } from './components/TrialModal';
 import { FloatingBar } from './components/FloatingBar';
 import { Footer } from './components/Footer';
-import { ChangelogDrawer } from './components/ChangelogDrawer';
 import { PricingPage } from './components/PricingPage';
 import { TermsPage } from './components/TermsPage';
 import { PrivacyPage } from './components/PrivacyPage';
@@ -22,7 +21,6 @@ import { LegalModal } from './components/LegalModal';
 
 export default function App() {
   const [isTrialModalOpen, setIsTrialModalOpen] = useState(false);
-  const [isChangelogOpen, setIsChangelogOpen] = useState(false);
   const [isLegalModalOpen, setIsLegalModalOpen] = useState(false);
   const [legalTab, setLegalTab] = useState<'all' | 'privacy' | 'terms' | 'refund'>('all');
   const [selectedPlan, setSelectedPlan] = useState<string>('pro');
@@ -72,7 +70,6 @@ export default function App() {
         <PricingPage
           onNavigateHome={() => navigateTo('/')}
           onNavigate={navigateTo}
-          onOpenChangelog={() => setIsChangelogOpen(true)}
         />
       );
     }
@@ -82,7 +79,6 @@ export default function App() {
         <TermsPage
           onNavigate={navigateTo}
           onOpenTrial={() => handleOpenTrial('pro')}
-          onOpenChangelog={() => setIsChangelogOpen(true)}
         />
       );
     }
@@ -92,7 +88,6 @@ export default function App() {
         <PrivacyPage
           onNavigate={navigateTo}
           onOpenTrial={() => handleOpenTrial('pro')}
-          onOpenChangelog={() => setIsChangelogOpen(true)}
         />
       );
     }
@@ -102,7 +97,6 @@ export default function App() {
         <RefundsPage
           onNavigate={navigateTo}
           onOpenTrial={() => handleOpenTrial('pro')}
-          onOpenChangelog={() => setIsChangelogOpen(true)}
         />
       );
     }
@@ -153,7 +147,6 @@ export default function App() {
 
         {/* Footer */}
         <Footer
-          onOpenChangelog={() => setIsChangelogOpen(true)}
           onOpenLegal={handleOpenLegal}
         />
 
@@ -172,11 +165,6 @@ export default function App() {
         isOpen={isTrialModalOpen}
         onClose={handleCloseTrial}
         defaultPlan={selectedPlan}
-      />
-
-      <ChangelogDrawer
-        isOpen={isChangelogOpen}
-        onClose={() => setIsChangelogOpen(false)}
       />
 
       <LegalModal

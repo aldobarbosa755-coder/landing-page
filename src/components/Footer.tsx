@@ -1,16 +1,12 @@
 import React from 'react';
-import { ShieldCheck, Sparkles } from 'lucide-react';
+import { ShieldCheck } from 'lucide-react';
 import { VelloxisLogo } from './VelloxisLogo';
-import { useSaaSVersion } from '../utils/versionSync';
 
 interface FooterProps {
-  onOpenChangelog?: () => void;
   onOpenLegal?: (tab: 'all' | 'privacy' | 'terms' | 'refund') => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ onOpenChangelog, onOpenLegal }) => {
-  const saasData = useSaaSVersion();
-  const currentVersion = saasData?.version || 'v3.3.1';
+export const Footer: React.FC<FooterProps> = ({ onOpenLegal }) => {
 
   return (
     <footer className="dark:bg-[#080c14] bg-[#0f172a] border-t dark:border-[#131126] border-slate-800 pt-16 pb-12 text-slate-400 text-xs">
@@ -35,16 +31,6 @@ export const Footer: React.FC<FooterProps> = ({ onOpenChangelog, onOpenLegal }) 
                 <span className="w-2 h-2 rounded-full bg-[#10b981] animate-pulse" />
                 <span className="text-slate-300 font-bold uppercase tracking-wider">SHA-256 Trail Active • 99.99% Uptime</span>
               </div>
-
-              {onOpenChangelog && (
-                <button
-                  onClick={onOpenChangelog}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#3525cd]/20 hover:bg-[#3525cd]/30 text-[#818cf8] border border-[#3525cd]/40 text-[10px] font-mono font-bold transition-all cursor-pointer shadow-sm hover:scale-105"
-                >
-                  <Sparkles className="w-3 h-3 text-amber-400" />
-                  <span>Changelog <span id="app-version-badge">{currentVersion}</span> ⚡</span>
-                </button>
-              )}
             </div>
           </div>
 

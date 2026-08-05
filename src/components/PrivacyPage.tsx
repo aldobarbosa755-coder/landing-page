@@ -6,10 +6,9 @@ import { Lock, ShieldCheck, CheckCircle2, Mail, ExternalLink, ArrowLeft, Eye, Da
 interface PrivacyPageProps {
   onNavigate: (path: string) => void;
   onOpenTrial: () => void;
-  onOpenChangelog?: () => void;
 }
 
-export const PrivacyPage: React.FC<PrivacyPageProps> = ({ onNavigate, onOpenTrial, onOpenChangelog }) => {
+export const PrivacyPage: React.FC<PrivacyPageProps> = ({ onNavigate, onOpenTrial }) => {
   return (
     <div className="min-h-screen dark:bg-[#080c14] bg-[#f7f8fc] text-slate-100 font-sans selection:bg-[#3525cd] selection:text-white antialiased">
       {/* Header */}
@@ -167,7 +166,7 @@ export const PrivacyPage: React.FC<PrivacyPageProps> = ({ onNavigate, onOpenTria
       </main>
 
       {/* Footer */}
-      <Footer onOpenChangelog={onOpenChangelog} onOpenLegal={(tab) => {
+      <Footer onOpenLegal={(tab) => {
         if (tab === 'terms') onNavigate('/terms');
         else if (tab === 'privacy') onNavigate('/privacy');
         else if (tab === 'refund') onNavigate('/refunds');

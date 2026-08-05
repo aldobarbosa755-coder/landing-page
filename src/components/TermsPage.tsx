@@ -6,10 +6,9 @@ import { FileText, ShieldCheck, Lock, CheckCircle2, Mail, ArrowLeft, Scale } fro
 interface TermsPageProps {
   onNavigate: (path: string) => void;
   onOpenTrial: () => void;
-  onOpenChangelog?: () => void;
 }
 
-export const TermsPage: React.FC<TermsPageProps> = ({ onNavigate, onOpenTrial, onOpenChangelog }) => {
+export const TermsPage: React.FC<TermsPageProps> = ({ onNavigate, onOpenTrial }) => {
   return (
     <div className="min-h-screen dark:bg-[#080c14] bg-[#f7f8fc] text-slate-100 font-sans selection:bg-[#3525cd] selection:text-white antialiased">
       {/* Header */}
@@ -192,7 +191,7 @@ export const TermsPage: React.FC<TermsPageProps> = ({ onNavigate, onOpenTrial, o
       </main>
 
       {/* Footer */}
-      <Footer onOpenChangelog={onOpenChangelog} onOpenLegal={(tab) => {
+      <Footer onOpenLegal={(tab) => {
         if (tab === 'terms') onNavigate('/terms');
         else if (tab === 'privacy') onNavigate('/privacy');
         else if (tab === 'refund') onNavigate('/refunds');
