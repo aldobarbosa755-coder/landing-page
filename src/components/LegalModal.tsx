@@ -19,7 +19,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, onClose, default
 
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4">
-      <div className="w-full max-w-3xl bg-[#080c14] border border-[#1e293b] text-slate-100 rounded-3xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+      <div className="w-full max-w-3xl bg-[#080c14] border border-[#1e293b] text-slate-100 rounded-3xl shadow-2xl overflow-hidden my-8 relative">
         
         {/* Modal Header */}
         <div className="p-6 border-b border-[#131126] bg-[#070b14] flex items-center justify-between">
@@ -207,7 +207,23 @@ export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, onClose, default
                   </li>
                 </ul>
               </div>
+            </div>
+          )}
 
+          {/* SECTION 4: SHA-256 CRYPTOGRAPHIC VERIFICATION */}
+          {activeTab === 'all' && (
+            <div className="space-y-4 border-t border-[#1e293b] pt-6">
+              <div className="flex items-center justify-between border-b border-[#1e293b] pb-2">
+                <h3 className="text-sm font-black text-white font-mono uppercase tracking-wider">
+                  4. SHA-256 CRYPTOGRAPHIC VERIFICATION
+                </h3>
+                <span className="px-2.5 py-0.5 rounded-full bg-[#3525cd]/20 text-[#818cf8] border border-[#3525cd]/40 text-[10px] font-mono font-bold uppercase">
+                  IMMUTABLE PROOF
+                </span>
+              </div>
+              <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">
+                All client onboarding sign-offs and scope lockdown agreements are cryptographically hashed using SHA-256 standards. This guarantees immutable proof of client approval and protects project terms against scope creep.
+              </p>
             </div>
           )}
 

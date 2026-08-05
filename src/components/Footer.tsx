@@ -1,6 +1,7 @@
 import React from 'react';
 import { ShieldCheck, Sparkles } from 'lucide-react';
 import { VelloxisLogo } from './VelloxisLogo';
+import { useSaaSVersion } from '../utils/versionSync';
 
 interface FooterProps {
   onOpenChangelog?: () => void;
@@ -8,6 +9,11 @@ interface FooterProps {
 }
 
 export const Footer: React.FC<FooterProps> = ({ onOpenChangelog, onOpenLegal }) => {
+  const saasData = useSaaSVersion();
+  const currentVersion = saasData?.version || 'v3.0.0';
+  const currentDate = saasData?.date || 'Sincronizado';
+  const currentSummary = saasData?.summary || 'Sincronizado automaticamente com app.aldolima.dev.br';
+
   return (
     <footer className="dark:bg-[#080c14] bg-[#0f172a] border-t dark:border-[#131126] border-slate-800 pt-16 pb-12 text-slate-400 text-xs">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
@@ -38,7 +44,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenChangelog, onOpenLegal }) 
                   className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#3525cd]/20 hover:bg-[#3525cd]/30 text-[#818cf8] border border-[#3525cd]/40 text-[10px] font-mono font-bold transition-all cursor-pointer shadow-sm hover:scale-105"
                 >
                   <Sparkles className="w-3 h-3 text-amber-400" />
-                  <span>Changelog <span id="app-version-badge">v3.0.0</span> ⚡</span>
+                  <span>Changelog <span id="app-version-badge">{currentVersion}</span> ⚡</span>
                 </button>
               )}
             </div>
@@ -50,15 +56,15 @@ export const Footer: React.FC<FooterProps> = ({ onOpenChangelog, onOpenLegal }) 
                   <span className="w-1.5 h-1.5 rounded-full bg-[#818cf8]" />
                   <span className="text-[10px] font-bold text-slate-300 uppercase tracking-wider">SaaS Version:</span>
                   <span id="app-version-badge" className="px-2 py-0.5 rounded bg-[#3525cd]/30 text-[#818cf8] font-bold text-[10px] border border-[#3525cd]/40">
-                    v3.0.0
+                    {currentVersion}
                   </span>
                 </div>
                 <span id="app-release-date" className="text-[10px] text-slate-500 font-mono">
-                  Sincronizado
+                  {currentDate}
                 </span>
               </div>
               <p id="app-changelog-summary" className="text-slate-400 text-xs font-sans italic line-clamp-2">
-                Carregando novidades...
+                {currentSummary}
               </p>
             </div>
           </div>

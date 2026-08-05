@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Sparkles, Check, Wrench, Zap, X, ShieldCheck, Clock, Layers, RefreshCw } from 'lucide-react';
-import { syncAppVersion } from '../utils/versionSync';
+import { syncAppVersion, useSaaSVersion } from '../utils/versionSync';
 
 interface ChangelogDrawerProps {
   isOpen: boolean;
@@ -13,6 +13,7 @@ export const ChangelogDrawer: React.FC<ChangelogDrawerProps> = ({ isOpen, onClos
   const [activeFilter, setActiveFilter] = useState<FilterCategory>('all');
   const [lastSyncTime, setLastSyncTime] = useState<string>('Just now');
   const [isSyncing, setIsSyncing] = useState<boolean>(false);
+  const saasData = useSaaSVersion();
 
   // Automatic live sync effect that listens or polls for SaaS release updates
   useEffect(() => {
@@ -42,11 +43,11 @@ export const ChangelogDrawer: React.FC<ChangelogDrawerProps> = ({ isOpen, onClos
 
   const releases = [
     {
-      version: 'v2.5.0',
+      version: 'v3.0.0',
       tag: 'LATEST',
       tagColor: 'bg-[#3525cd]/20 text-[#818cf8] border-[#3525cd]/40',
-      date: 'July 24, 2026',
-      subtitle: 'Release Notes Drawer, GitHub/Figma/Discord Ecosystem, and Verified Trust Seals.',
+      date: 'August 05, 2026',
+      subtitle: 'Release Notes Drawer, SaaS Live Version Sync Engine, and Verified Trust Seals.',
       changes: [
         {
           type: 'new',
@@ -139,7 +140,7 @@ export const ChangelogDrawer: React.FC<ChangelogDrawerProps> = ({ isOpen, onClos
             <div className="flex items-center gap-2 flex-wrap">
               <span className="w-2.5 h-2.5 rounded-full bg-[#10b981] animate-pulse" />
               <h2 className="text-base sm:text-lg font-black text-white flex items-center gap-2">
-                System Updates & Release Notes <span className="text-[#818cf8] text-xs font-mono font-bold bg-[#3525cd]/20 px-2 py-0.5 rounded-full border border-[#3525cd]/40">v2.5.0</span>
+                System Updates & Release Notes <span id="app-version-badge" className="text-[#818cf8] text-xs font-mono font-bold bg-[#3525cd]/20 px-2 py-0.5 rounded-full border border-[#3525cd]/40">v3.0.0</span>
               </h2>
             </div>
             <p className="text-xs text-slate-300">
@@ -283,7 +284,7 @@ export const ChangelogDrawer: React.FC<ChangelogDrawerProps> = ({ isOpen, onClos
         <div className="p-4 border-t border-[#1e293b] bg-[#080c14] flex flex-wrap items-center justify-between gap-3 text-xs text-slate-400 font-mono">
           <div className="flex items-center gap-2">
             <ShieldCheck className="w-4 h-4 text-[#10b981]" />
-            <span>Velloxis Auto-Sync v2.5.0 • Direct Feed</span>
+            <span>Velloxis Auto-Sync <span id="app-version-badge">v3.0.0</span> • Direct Feed</span>
           </div>
           <button
             onClick={onClose}
