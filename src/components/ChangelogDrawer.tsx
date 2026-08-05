@@ -17,15 +17,38 @@ export const ChangelogDrawer: React.FC<ChangelogDrawerProps> = ({ isOpen, onClos
 
   const releases = [
     {
-      version: 'v3.3.1',
+      version: saasData?.version || 'v3.3.2',
       tag: 'LATEST',
       tagColor: 'bg-[#3525cd]/20 text-[#818cf8] border-[#3525cd]/40',
-      date: 'August 05, 2026',
+      date: saasData?.date || 'August 05, 2026',
+      subtitle: saasData?.summary || 'Global Express CORS middleware enabled for seamless multi-domain landing page dynamic sync.',
+      changes: saasData?.items?.map((i) => ({
+        type: i.category || i.type || 'improved',
+        title: i.title,
+        description: i.description,
+      })) || [
+        {
+          type: 'improved',
+          title: 'Global CORS Middleware & Dynamic Payload',
+          description: 'Applied top-level Express CORS headers to all routes and preflights, supporting dynamic fetch from velloxis.aldolima.dev.br.',
+        },
+        {
+          type: 'new',
+          title: 'Release Notes & Live Changelog Sync',
+          description: 'Interactive update notes drawer accessible from the footer, displaying latest SaaS platform version and release notes.',
+        },
+      ],
+    },
+    {
+      version: 'v3.3.1',
+      tag: 'STABLE',
+      tagColor: 'bg-[#10b981]/20 text-[#10b981] border-[#10b981]/40',
+      date: 'August 04, 2026',
       subtitle: 'System Updates & Release Notes Drawer, SHA-256 Scope Lockdown, and Verified Trust Seals.',
       changes: [
         {
           type: 'new',
-          title: 'Release Notes & Live Changelog Drawer (v3.3.1)',
+          title: 'Release Notes & Live Changelog Drawer',
           description: 'Interactive update notes drawer accessible from the footer, displaying latest SaaS platform version and release notes.',
         },
         {
@@ -37,16 +60,6 @@ export const ChangelogDrawer: React.FC<ChangelogDrawerProps> = ({ isOpen, onClos
           type: 'improved',
           title: 'Verified Trust Seals & Badges',
           description: 'Verifiable trust seal badges for freelancers to embed on LinkedIn proposals, boosting conversion rates.',
-        },
-        {
-          type: 'improved',
-          title: 'Enhanced Dark Mode Contrast',
-          description: 'Refined visual hierarchy in dark mode for headers, SHA-256 security badges, and deliverable previews.',
-        },
-        {
-          type: 'fixed',
-          title: 'Auto-Fit Layout Alignment in Client Portal',
-          description: 'Fixed responsive alignment of progress cards and Master Key action triggers on mobile viewports.',
         },
       ],
     },
