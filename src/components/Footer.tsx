@@ -7,7 +7,6 @@ interface FooterProps {
 }
 
 export const Footer: React.FC<FooterProps> = ({ onOpenLegal }) => {
-
   return (
     <footer className="dark:bg-[#080c14] bg-[#0f172a] border-t dark:border-[#131126] border-slate-800 pt-16 pb-12 text-slate-400 text-xs">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
@@ -25,7 +24,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenLegal }) => {
               Client Onboarding SaaS Platform, Scope Lockdown, and Legal Protection designed for freelancers, agencies, and digital studios.
             </p>
 
-            {/* System Status & Version Pill */}
+            {/* System Status */}
             <div className="flex flex-wrap items-center gap-2">
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#080c14] border border-[#131126] text-[10px] font-mono">
                 <span className="w-2 h-2 rounded-full bg-[#10b981] animate-pulse" />
