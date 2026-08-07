@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { motion } from 'motion/react';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
-import { InteractiveDashboardMockup } from './components/InteractiveDashboardMockup';
 import { SocialProofLogos } from './components/SocialProofLogos';
 import { PainVsSolution } from './components/PainVsSolution';
 import { FeatureTabs } from './components/FeatureTabs';
@@ -46,6 +46,7 @@ export default function App() {
   };
 
   useEffect(() => {
+    document.documentElement.classList.add('dark');
     const handlePopState = () => {
       setCurrentPath(window.location.pathname);
     };
@@ -102,7 +103,7 @@ export default function App() {
     }
 
     return (
-      <div className="min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-indigo-500 selection:text-white antialiased">
+      <div className="min-h-screen bg-[#080c14] text-slate-100 font-sans selection:bg-indigo-500 selection:text-white antialiased">
         {/* Navigation Header */}
         <Header onOpenTrial={handleOpenTrial} onNavigate={navigateTo} />
 
@@ -117,32 +118,85 @@ export default function App() {
             }}
           />
 
-          {/* Live Interactive Product Playground */}
-          <InteractiveDashboardMockup />
-
           {/* Social Proof & Trusted Logos */}
-          <SocialProofLogos />
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <SocialProofLogos />
+          </motion.div>
 
           {/* Pain vs Solution Comparison */}
-          <PainVsSolution onOpenTrial={() => handleOpenTrial('pro')} />
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <PainVsSolution onOpenTrial={() => handleOpenTrial('pro')} />
+          </motion.div>
 
           {/* Feature Explorer Tabs */}
-          <FeatureTabs onOpenTrial={() => handleOpenTrial('pro')} />
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <FeatureTabs onOpenTrial={() => handleOpenTrial('pro')} />
+          </motion.div>
 
           {/* Interactive ROI Calculator */}
-          <RoiCalculator onOpenTrial={(plan) => handleOpenTrial(plan || 'pro')} />
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <RoiCalculator onOpenTrial={(plan) => handleOpenTrial(plan || 'pro')} />
+          </motion.div>
 
           {/* Real Customer Testimonials */}
-          <TestimonialsSection onOpenTrial={() => handleOpenTrial('pro')} />
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <TestimonialsSection onOpenTrial={() => handleOpenTrial('pro')} />
+          </motion.div>
 
           {/* Pricing Tiers & Guarantees */}
-          <PricingSection onOpenTrial={handleOpenTrial} />
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <PricingSection onOpenTrial={handleOpenTrial} />
+          </motion.div>
 
           {/* FAQ Accordion */}
-          <FaqSection />
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <FaqSection />
+          </motion.div>
 
           {/* Bottom Conversion Banner */}
-          <ConversionCtaBanner onOpenTrial={handleOpenTrial} />
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <ConversionCtaBanner onOpenTrial={handleOpenTrial} />
+          </motion.div>
         </main>
 
         {/* Footer */}

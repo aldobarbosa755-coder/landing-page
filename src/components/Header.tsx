@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { ShieldCheck, Menu, X, ArrowRight, Sun, Moon, Key, Sparkles } from 'lucide-react';
+import { ShieldCheck, Menu, X, ArrowRight, Key, Sparkles } from 'lucide-react';
+import { motion } from 'motion/react';
 import { VelloxisLogo } from './VelloxisLogo';
 
 interface HeaderProps {
@@ -10,7 +11,6 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({ onOpenTrial, onNavigate }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isDark, setIsDark] = useState(true);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,25 +20,12 @@ export const Header: React.FC<HeaderProps> = ({ onOpenTrial, onNavigate }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const toggleTheme = () => {
-    setIsDark(!isDark);
-    if (isDark) {
-      document.documentElement.classList.remove('dark');
-    } else {
-      document.documentElement.classList.add('dark');
-    }
-  };
-
-  useEffect(() => {
-    document.documentElement.classList.add('dark');
-  }, []);
-
   const navLinks = [
-    { name: 'Features', href: '#features' },
-    { name: 'Live Simulator', href: '#demo' },
-    { name: 'ROI Calculator', href: '#calculator' },
-    { name: 'Use Cases', href: '#testimonials' },
-    { name: 'Pricing', href: '/pricing' },
+    { name: 'O que Resolve', href: '#solution' },
+    { name: 'Funcionalidades', href: '#features' },
+    { name: 'Calculadora ROI', href: '#calculator' },
+    { name: 'Casos Práticos', href: '#testimonials' },
+    { name: 'Planos & Preços', href: '#pricing' },
     { name: 'FAQ', href: '#faq' },
   ];
 
@@ -53,24 +40,32 @@ export const Header: React.FC<HeaderProps> = ({ onOpenTrial, onNavigate }) => {
       }
       setMobileMenuOpen(false);
     } else if (href.startsWith('#')) {
+      e.preventDefault();
       if (window.location.pathname !== '/') {
-        e.preventDefault();
         if (onNavigate) {
           onNavigate('/' + href);
         } else {
           window.history.pushState({}, '', '/' + href);
           window.dispatchEvent(new Event('popstate'));
         }
-        setMobileMenuOpen(false);
+      } else {
+        const targetEl = document.querySelector(href);
+        if (targetEl) {
+          targetEl.scrollIntoView({ behavior: 'smooth' });
+        }
       }
+      setMobileMenuOpen(false);
     }
   };
 
   return (
-    <header
+    <motion.header
+      initial={{ y: -80, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? 'bg-[#080c14]/90 dark:bg-[#080c14]/90 bg-white/90 backdrop-blur-md border-b border-[#131126] dark:border-[#131126] border-[#c7c4d8]/35 shadow-xl py-3'
+          ? 'bg-[#080c14]/90 backdrop-blur-md border-b border-[#131126] shadow-xl py-3'
           : 'bg-transparent py-5'
       }`}
     >
@@ -87,13 +82,13 @@ export const Header: React.FC<HeaderProps> = ({ onOpenTrial, onNavigate }) => {
           </a>
 
           {/* Desktop Nav Links */}
-          <nav className="hidden md:flex items-center gap-0.5 lg:gap-1 bg-slate-900/80 dark:bg-[#0f172a]/90 bg-slate-100/90 p-1.5 rounded-full border border-[#131126] dark:border-[#131126] border-[#c7c4d8]/35 backdrop-blur-md">
+          <nav className="hidden md:flex items-center gap-0.5 lg:gap-1 bg-[#0f172a]/90 p-1.5 rounded-full border border-[#131126] backdrop-blur-md shadow-sm">
             {navLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
                 onClick={(e) => handleLinkClick(e, link.href)}
-                className="text-xs lg:text-sm font-bold whitespace-nowrap dark:text-slate-300 text-slate-700 hover:text-[#4f46e5] dark:hover:text-white px-3 lg:px-4 py-1.5 rounded-full hover:bg-[#3525cd]/15 transition-all duration-200"
+                className="text-xs lg:text-sm font-bold whitespace-nowrap text-slate-300 hover:text-white px-3 lg:px-4 py-1.5 rounded-full hover:bg-[#3525cd]/15 transition-all duration-200"
               >
                 {link.name}
               </a>
@@ -102,19 +97,11 @@ export const Header: React.FC<HeaderProps> = ({ onOpenTrial, onNavigate }) => {
 
           {/* Right Action Buttons */}
           <div className="hidden lg:flex items-center gap-2.5 shrink-0">
-            <button
-              onClick={toggleTheme}
-              className="p-2 rounded-xl dark:bg-[#0f172a] bg-slate-100 dark:text-slate-300 text-slate-700 hover:text-[#3525cd] dark:hover:text-white border border-[#131126] dark:border-[#131126] border-[#c7c4d8]/35 transition-colors cursor-pointer"
-              title="Toggle Light/Dark Theme"
-            >
-              {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-[#3525cd]" />}
-            </button>
-
             <a
               href="https://app.aldolima.dev.br"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-xs font-bold whitespace-nowrap dark:text-slate-300 text-slate-700 hover:text-[#3525cd] dark:hover:text-white px-3 py-2 transition-colors cursor-pointer"
+              className="text-xs font-bold whitespace-nowrap text-slate-300 hover:text-white px-3 py-2 transition-colors cursor-pointer"
             >
               Log In
             </a>
@@ -131,12 +118,6 @@ export const Header: React.FC<HeaderProps> = ({ onOpenTrial, onNavigate }) => {
           {/* Mobile Menu Button */}
           <div className="flex items-center gap-2 md:hidden">
             <button
-              onClick={toggleTheme}
-              className="p-2 rounded-xl bg-slate-800/80 text-slate-300 border border-slate-700"
-            >
-              {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-[#3525cd]" />}
-            </button>
-            <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-2 rounded-xl bg-slate-800/80 text-slate-300 border border-slate-700"
               aria-label="Open Menu"
@@ -149,7 +130,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenTrial, onNavigate }) => {
 
       {/* Mobile Menu Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-[#080c14]/95 dark:bg-[#080c14]/95 bg-white/95 backdrop-blur-xl border-b border-[#131126] px-4 pt-4 pb-6 space-y-4 shadow-2xl">
+        <div className="md:hidden dark:bg-[#080c14]/95 bg-white/95 backdrop-blur-xl border-b dark:border-[#131126] border-slate-200 px-4 pt-4 pb-6 space-y-4 shadow-2xl">
           <div className="flex flex-col space-y-1">
             {navLinks.map((link) => (
               <a
@@ -180,6 +161,6 @@ export const Header: React.FC<HeaderProps> = ({ onOpenTrial, onNavigate }) => {
           </div>
         </div>
       )}
-    </header>
+    </motion.header>
   );
 };

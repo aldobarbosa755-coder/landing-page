@@ -106,7 +106,7 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onNavigateHome, onNavi
                   className={`px-5 py-2.5 rounded-xl text-xs font-extrabold transition-all cursor-pointer ${
                     billingCycle === 'monthly'
                       ? 'bg-[#3525cd] text-white shadow-md'
-                      : 'dark:text-slate-400 text-slate-600 hover:text-white'
+                      : 'dark:text-slate-400 text-slate-600 dark:hover:text-slate-200 hover:text-slate-950'
                   }`}
                 >
                   Monthly Billing
@@ -116,7 +116,7 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onNavigateHome, onNavi
                   className={`px-5 py-2.5 rounded-xl text-xs font-extrabold transition-all cursor-pointer flex items-center gap-1.5 ${
                     billingCycle === 'annual'
                       ? 'bg-[#3525cd] text-white shadow-md'
-                      : 'dark:text-slate-400 text-slate-600 hover:text-white'
+                      : 'dark:text-slate-400 text-slate-600 dark:hover:text-slate-200 hover:text-slate-950'
                   }`}
                 >
                   <span>Annual Billing</span>

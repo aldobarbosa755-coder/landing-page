@@ -3,93 +3,93 @@ import { FeatureDetail } from '../types';
 export const featureDetails: FeatureDetail[] = [
   {
     id: 'whitelabel-dashboard',
-    title: 'Freelancer & Whitelabel Agency Dashboard',
-    subtitle: 'Centralized project management featuring your own brand identity and legal compliance reporting.',
-    badge: 'Module 01 • Management & Branding',
-    description: 'Customize with your agency logo, domain, and colors. Track projects split into clear phases (Onboarding, In Production, Approved, Archived) and generate legal sign-off certificates in PDF.',
+    title: 'Web Designer & Developer Whitelabel Hub',
+    subtitle: 'Centralized client project management featuring your web studio brand identity and legal protection.',
+    badge: 'Module 01 • Web Studio Management',
+    description: 'Customize with your web design agency logo, custom domain, and brand colors. Track website projects split into clear phases (Briefing, Figma UI Design, Frontend Dev, Staging Approval) and export certified sign-off PDFs.',
     bullets: [
-      'Full whitelabel with custom logo, custom domain, and custom color palette',
-      'Centralized Kanban pipeline grouped by approval stage',
-      'One-click automated Project Completion & Final Acceptance Certificate',
-      'Team member management with role-based security & RLS permissions'
+      'Full whitelabel with custom logo, custom subdomain, and custom color palette',
+      'Centralized web project pipeline grouped by approval stage',
+      'One-click automated Website Handover & Final Acceptance Certificate',
+      'Client access management with role-based security & RLS permissions'
     ],
     interfaceType: 'whitelabel-dashboard',
     statNumber: '100%',
-    statText: 'Whitelabel with your own custom branding'
+    statText: 'Whitelabel branded for your Web Agency'
   },
   {
     id: 'onboarding-form',
-    title: 'Autonomous Onboarding Form (FormSteps)',
-    subtitle: 'Guided asset collection collecting client logos, brand specs, and credentials without meetings.',
-    badge: 'Module 02 • Onboarding & Scope Freezing',
-    description: 'Guide clients step-by-step through submitting logos, fonts, visual references, and credentials. Once signed and submitted, project scope freezes automatically against accidental modifications.',
+    title: 'Autonomous Web Onboarding Form (FormSteps)',
+    subtitle: 'Guided asset collection for logos, website copy, color palettes, and hosting credentials.',
+    badge: 'Module 02 • Asset Collection & Scope Lock',
+    description: 'Guide web design clients step-by-step through uploading SVG logos, typography specs, page copy, and CMS credentials on day one. Once signed, the website briefing freezes automatically.',
     bullets: [
-      'Smart step-by-step form for assets, branding, and access credentials',
-      'Validation of image resolution & vector file formats upon upload',
-      'Automated Scope Lockdown right after client briefing signature',
-      'Eliminates lost emails and redundant status alignment calls'
+      'Smart step-by-step form for vector logos, website content, and DNS/CMS credentials',
+      'Automatic validation of image resolutions & vector file formats upon upload',
+      'Automated Website Scope Lockdown right after client briefing signature',
+      'Eliminates lost email chains and endless alignment calls'
     ],
     interfaceType: 'onboarding-form',
     statNumber: '85%',
-    statText: 'Reduction in asset collection time'
+    statText: 'Reduction in client asset collection delay'
   },
   {
     id: 'client-tracking',
     title: 'Client Portal with Device Locking & Scope Lock',
-    subtitle: 'Single-device security binding with 1-click transparent milestone sign-off.',
-    badge: 'Module 03 • Client Portal & Scope Lock',
-    description: 'The client portal binds exclusively to the first device that accesses the secure link (/p/[accessToken]). Out-of-scope requests require validation via an Atomic Security Master Key (e.g. FP-••••-Q4).',
+    subtitle: 'Single-device security binding with 1-click Figma design and staging site approval.',
+    badge: 'Module 03 • Client Portal & Staging Shield',
+    description: 'The web project portal binds exclusively to the first client device that accesses the secure link (/p/[accessToken]). Out-of-scope page or feature requests require a Master Key (e.g., FP-88B2-Q4) to unlock.',
     bullets: [
-      'Device-Lock: Automatic binding preventing unauthorized link sharing',
-      'One-click approval for project deliverables and milestones',
-      'Scope Lockdown barrier blocking unbudgeted feature requests',
-      'Atomic consumption of masked Security Master Keys for scope re-openings'
+      'Device-Lock: Automatic binding preventing unauthorized staging link sharing',
+      'One-click approval for website wireframes, Figma UI, and live staging builds',
+      'Scope Lockdown barrier blocking unbudgeted page & feature additions',
+      'Atomic consumption of Security Master Keys for paid scope change orders'
     ],
     interfaceType: 'client-tracking',
     statNumber: '$0',
-    statText: 'Unpaid scope creep feature losses'
+    statText: 'Unpaid website revision losses'
   },
   {
     id: 'audit-trail',
     title: 'SHA-256 Cryptographic Audit Trail',
-    subtitle: 'Immutable event log with certified public validation seals for legal protection.',
-    badge: 'Module 04 • Legal Shield',
-    description: 'Automated generation of audit logs containing timestamp, IP address, device specs, and SHA-256 Hashes for every approval or modification, creating indisputable documentary proof against scope disputes.',
+    subtitle: 'Immutable event log with certified public validation seals for legal contract protection.',
+    badge: 'Module 04 • Legal Shield for Web Freelancers',
+    description: 'Automated generation of audit logs containing timestamp, IP address, browser fingerprint, and SHA-256 Hashes for every web design approval, protecting freelancers against chargebacks and unpaid disputes.',
     bullets: [
-      'Unique and tamper-evident SHA-256 cryptographic hash per decision',
-      'Complete log of IP, device ID, approximate geo-location & UTC timestamp',
+      'Unique and tamper-evident SHA-256 cryptographic hash per approval decision',
+      'Complete log of client IP, device ID, geo-location & UTC timestamp',
       'Public verification seal accessible via QR Code & database RLS',
-      'Instant export of Certified Audit PDF reports for contracts'
+      'Instant export of Certified Audit PDF reports for contracts & payment processors'
     ],
     interfaceType: 'audit-trail',
     statNumber: '100%',
-    statText: 'Protection against disputes and payment chargebacks'
+    statText: 'Dispute & chargeback protection'
   }
 ];
 
 export const painVsSolution = [
   {
-    painTitle: 'Infinite Unpaid Scope Creep',
-    painDesc: 'Clients request unlimited revisions mid-project, claiming "this was already implied in the original quote".',
+    painTitle: 'Infinite Unpaid Website Revisions',
+    painDesc: 'Web clients request extra pages, custom animations, and layout overhauls mid-build, claiming "this was already implied".',
     solutionTitle: 'Automated Scope Lockdown',
-    solutionDesc: 'The briefing and deliverables are formally approved and locked. Any scope re-opening requires consuming a Master Key.'
+    solutionDesc: 'The website briefing and page deliverable list are locked upon signature. Adding new pages requires consuming a Master Key.'
   },
   {
-    painTitle: 'Disorganized Asset Collection & Endless Meetings',
-    painDesc: 'Frustrating email threads searching for high-resolution logos, color palettes, credentials, and copy.',
+    painTitle: 'Disorganized Asset Gathering & Missing Copy',
+    painDesc: 'Frustrating email threads searching for vector logos, color codes, high-res images, and website text.',
     solutionTitle: 'Autonomous Onboarding Engine',
-    solutionDesc: 'A smart step-by-step form (FormSteps) guides the client through submitting all required assets on day one.'
+    solutionDesc: 'A guided step-by-step form (FormSteps) collects all website assets, copy, and credentials upfront on day one.'
   },
   {
-    painTitle: 'Project Disputes & Chargeback Claims',
-    painDesc: 'Lack of formal sign-off records leads to arguments over deadlines, deliverables, and unfounded claims.',
+    painTitle: 'Client Payment Disputes & Chargebacks',
+    painDesc: 'Lack of formal digital sign-off records leads to arguments over website completion and withheld final payments.',
     solutionTitle: 'SHA-256 Cryptographic Audit Trail',
-    solutionDesc: 'An immutable encrypted log of every decision with IP, timestamp, and SHA-256 hash valid as certified legal evidence.'
+    solutionDesc: 'An immutable encrypted log of every design & staging approval with IP, timestamp, and SHA-256 hash valid as legal proof.'
   },
   {
-    painTitle: 'Leaked Progress & Homologation Links',
-    painDesc: 'Private project review links are forwarded without control to third parties or competitors.',
+    painTitle: 'Uncontrolled Staging Link Sharing',
+    painDesc: 'Private website staging links are leaked to unvetted third parties or competitors before launch.',
     solutionTitle: 'Device-Lock Fingerprint Security',
-    solutionDesc: 'The client portal locks exclusively to the first browser and device that opens the project URL.'
+    solutionDesc: 'The client portal locks exclusively to the first browser and device that accesses the client project link.'
   }
 ];

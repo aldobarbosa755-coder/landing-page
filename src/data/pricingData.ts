@@ -81,26 +81,62 @@ export const faqList: FaqItem[] = [
   },
   {
     id: 'faq-3',
+    question: 'Can I set maximum limits for revisions and change requests in advance?',
+    answer: 'Yes! You can define clear parameters during project creation, such as "up to 2 revision rounds per phase". Once reached, the system automatically prompts the client to generate an additional work order before submitting new requests.',
+    category: 'Scope Lockdown'
+  },
+  {
+    id: 'faq-4',
     question: 'How does Device Locking protect project preview links?',
     answer: 'When a secure client portal link (/p/[accessToken]) is created, Velloxis registers the browser fingerprint and device of the initial session. If the link is forwarded or leaked to unauthorized third parties, access is blocked and your agency is instantly notified.',
     category: 'Device-Lock'
   },
   {
-    id: 'faq-4',
+    id: 'faq-5',
+    question: 'What happens if a client tries to open a preview link on a different browser or phone?',
+    answer: 'The system detects the unrecognized device signature and requires authorization or blocks access according to your security settings. This prevents competitors or unauthorized stakeholders from reviewing unreleased staging work.',
+    category: 'Device-Lock'
+  },
+  {
+    id: 'faq-6',
     question: 'Are SHA-256 Cryptographic Audit Trails legally valid?',
     answer: 'Yes! Velloxis Audit Trails capture immutable UTC timestamps, IP addresses, browser device specs, and generate a tamper-proof SHA-256 cryptographic hash for every sign-off and approval. This provides indisputable documentary evidence to protect against scope disputes and chargebacks.',
     category: 'Security & SHA-256'
   },
   {
-    id: 'faq-5',
+    id: 'faq-7',
+    question: 'Where is the cryptographic proof stored and how can it be verified?',
+    answer: 'Every approval generates a downloadable, certified PDF Audit Certificate containing the raw SHA-256 hash string, server timestamps, and digital fingerprint. Anyone can verify the hash integrity on public verification portals or in court.',
+    category: 'Security & SHA-256'
+  },
+  {
+    id: 'faq-8',
     question: 'Does my client need to create an account or install an app?',
     answer: 'No! The client experience is 100% frictionless. They access your custom URL directly from their browser on mobile or desktop, complete the onboarding form, and sign digitally in under 3 minutes.',
     category: 'General'
   },
   {
-    id: 'faq-6',
+    id: 'faq-9',
+    question: 'Can I import my existing contract templates or onboarding questionnaires?',
+    answer: 'Absolutely. Velloxis provides pre-built templates for Web Design, UI/UX, Custom Software Development, and Branding projects, but you can fully customize every question, field, and agreement clause.',
+    category: 'General'
+  },
+  {
+    id: 'faq-10',
     question: 'How does Whitelabel customization work?',
-    answer: 'On Pro and Enterprise plans, you can completely remove Velloxis branding and insert your agency logo, brand colors, and even run the portal on your own custom subdomain (e.g., portal.youragency.com).',
+    answer: 'On Pro and Enterprise plans, you can completely remove Velloxis branding and insert your agency logo, brand colors, custom email signatures, and even run the portal on your own custom domain (e.g., portal.youragency.com).',
+    category: 'Pricing & Whitelabel'
+  },
+  {
+    id: 'faq-11',
+    question: 'Can I start on the free plan and upgrade later as my agency grows?',
+    answer: 'Yes! The Starter plan is 100% free forever for up to 1 active project and 3 PDF certificates. Whenever you need unlimited projects or full agency whitelabeling, you can upgrade instantly in 1 click.',
+    category: 'Pricing & Whitelabel'
+  },
+  {
+    id: 'faq-12',
+    question: 'Is there any long-term lock-in or cancellation fee?',
+    answer: 'None at all. All monthly plans are pay-as-you-go with no commitments. Annual plans come with a 20% discount and a 30-day money-back guarantee.',
     category: 'Pricing & Whitelabel'
   }
 ];
